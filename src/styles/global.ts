@@ -16,7 +16,7 @@ export const globalStyles = css`
     color: #2f2f2f;
     background-color: #dedede;
 
-    background-image: url(${booksBackgroundImg.src}); // TODO fix opacity
+    background-image: url(${booksBackgroundImg.src});
   }
 
   input,
@@ -24,6 +24,9 @@ export const globalStyles = css`
     font: normal 1rem Lato, sans-serif;
     -webkit-font-smoothing: antialiased;
     color: #2f2f2f;
+  }
+
+  button {
     font-weight: 500;
   }
 

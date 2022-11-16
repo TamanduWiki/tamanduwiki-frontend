@@ -19,10 +19,16 @@ const variantStyles = {
 export const StyledButton = styled.button<StyledButtonProps>`
   padding: 16px;
   border-radius: 4px;
+  box-shadow: 2px 2px 8px 1px #dedede;
   border: none;
   cursor: pointer;
+  transition: all 0.05s;
 
   ${({ fluid }) => fluid && css`width: 100%`};
 
   ${({ variant }) => variantStyles[variant]};
+
+  &:active {
+    box-shadow: none;
+  }
 `;
