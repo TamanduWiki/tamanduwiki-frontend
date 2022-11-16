@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 
-import assetImg from '@/assets/images/image_14.png';
+import booksBackgroundImg from '@/assets/images/books_background.png';
 
 export const globalStyles = css`
   html {
@@ -11,43 +11,42 @@ export const globalStyles = css`
   body {
     height: inherit;
     width: inherit;
-    font: 400 1rem Ubuntu, sans-serif;
+    font: 400 1rem Lato, sans-serif;
     -webkit-font-smoothing: antialiased;
-    color: #212121;
-    line-height: 1.5;
+    color: #2f2f2f;
     background-color: #dedede;
 
-    background-image: url(${assetImg.src}); // TODO fix opacity
+    background-image: url(${booksBackgroundImg.src}); // TODO fix opacity
   }
 
   input,
   button {
-    font: normal 1rem Ubuntu, sans-serif;
+    font: normal 1rem Lato, sans-serif;
     -webkit-font-smoothing: antialiased;
-    color: #212121;
+    color: #2f2f2f;
     font-weight: 500;
   }
 
   h1 {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 2.5rem;
     line-height: 1.25;
   }
 
   h2 {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 2.25rem;
     line-height: 1.25;
   }
 
   h3 {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 2rem;
     line-height: 1.25;
   }
 
   h4 {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1.5rem;
     line-height: 1.25;
   }
