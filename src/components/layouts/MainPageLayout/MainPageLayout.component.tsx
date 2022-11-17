@@ -22,6 +22,7 @@ import {
   MockContainer4,
   PageContainer,
   SideSection,
+  StickySideContainer,
 } from "./MainPageLayout.styles";
 
 interface Props {
@@ -68,11 +69,13 @@ const MainPageLayout = ({ children }: Props) => {
       <ContentContainer>
         <Content>
           <SideSection>
-            <MockContainer1 />
+            <StickySideContainer>
+              <MockContainer1 />
 
-            <MockContainer2 />
+              <MockContainer2 />
 
-            <MockContainer3 />
+              <MockContainer3 />
+            </StickySideContainer>
           </SideSection>
 
           <MainSection>

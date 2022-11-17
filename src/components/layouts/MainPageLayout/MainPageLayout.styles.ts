@@ -56,7 +56,6 @@ export const ContentContainer = styled.div`
 
 export const Content = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
   height: 100%;
   gap: 24px;
@@ -65,10 +64,10 @@ export const Content = styled.div`
 
 export const SideSection = styled.div`
   min-width: 264px;
-  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  height: 100%;
 
   @media (max-width: 1140px) {
     display: none;
@@ -83,6 +82,18 @@ export const MainSection = styled.div`
 
   gap: 16px;
 `;
+
+export const StickySideContainer = styled.div`
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 96px;
+
+  display: flex;
+  width: 100%;
+  height: fit-content;
+  gap: 16px;
+  flex-direction: column;
+`
 
 export const MockContainer1 = styled.div`
   width: 100%;
