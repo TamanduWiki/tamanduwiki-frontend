@@ -1,15 +1,31 @@
-import Link from "next/link";
-
-import Flex from "@/components/Flex";
-import Button from "@/components/Button";
+import Flex from "@/components/common/Flex";
+import MainPageLayout from "@/components/layouts/MainPageLayout";
 
 const HomePage = () => {
   return (
-    <Flex align="center" justify="center" gap="16px" style={{ height: "100vh" }}>
-      <Link href="/signup"><Button variant="secondary">Cadastro</Button></Link>
+    <MainPageLayout>
+      <Flex gap="16px" direction="column">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tincidunt vitae purus vitae maximus. Vestibulum a orci iaculis, mattis turpis nec, sollicitudin velit. Nullam nisl risus, hendrerit eget scelerisque sit amet, bibendum ut arcu. Quisque laoreet arcu a ante vulputate aliquet. Morbi vitae mauris vel justo dictum interdum a ac risus. Nulla vel placerat ex. Praesent nisl odio, ultricies volutpat volutpat nec, molestie eget nulla. Vestibulum ac odio auctor arcu lobortis laoreet a eu justo. Nam consectetur at purus vitae auctor. Nunc malesuada blandit ipsum sed elementum. Praesent non lectus leo. Fusce in molestie lacus, nec scelerisque lectus.</p>
 
-      <Link href="/login"><Button>Login</Button></Link>
-    </Flex>
+        <p>Quisque a ante bibendum ante gravida molestie. Suspendisse porttitor condimentum accumsan. Maecenas hendrerit neque sed lorem mollis, ut lacinia leo laoreet. Phasellus eu sapien mi. Proin posuere aliquam suscipit. Etiam maximus scelerisque vestibulum. Integer porttitor mauris sem, ut facilisis odio lacinia vitae. Vestibulum laoreet sit amet mauris sit amet pellentesque. Fusce nisl ex, congue a quam quis, pharetra vulputate est. Integer sagittis semper tortor, vel egestas nulla iaculis in.</p>
+
+        <p>Maecenas scelerisque fringilla laoreet. Aenean euismod, libero eget rutrum volutpat, metus urna maximus quam, quis ultricies tellus odio vel dui. Aliquam lacinia sem non sapien lacinia molestie. Donec commodo tempor est non facilisis. Mauris dapibus ultrices erat non porttitor. Pellentesque vulputate lorem vitae pulvinar vulputate. Proin commodo sem non porttitor pharetra. In augue velit, posuere et lectus in, iaculis cursus purus.</p>
+
+        <p>In bibendum vitae nulla in convallis. Maecenas lobortis mi sit amet hendrerit tempor. Ut eget mi eget enim tincidunt ornare at non dolor. Nulla sed augue eu ex maximus pretium. Aliquam sit amet viverra libero. Nullam commodo, orci vel commodo pellentesque, tortor eros blandit augue, quis facilisis nisl diam quis justo. Nam suscipit vel nisi eget viverra. Donec non eros mattis, convallis metus ac, aliquet orci. Ut varius, nunc sit amet interdum blandit, ipsum ante volutpat tellus, ut pharetra dui arcu id ipsum. Etiam molestie, diam at rutrum interdum, est leo porttitor lorem, sed porta leo massa id mi. Nulla a tellus quis odio vulputate iaculis. Mauris in lectus vitae orci pharetra semper vitae et ex. Maecenas vulputate scelerisque metus, in mattis felis hendrerit eu. Vestibulum risus purus, suscipit quis quam eu, cursus fermentum arcu. Vestibulum non nibh porta, lobortis elit in, facilisis ligula. Donec iaculis nunc tortor.</p>
+
+        <p>Sed lectus tellus, pellentesque ut suscipit eget, accumsan vitae ipsum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent porttitor consequat justo. Integer fermentum sit amet tellus vitae facilisis. Maecenas in tincidunt turpis. Aenean sit amet bibendum odio. Praesent sagittis, risus placerat elementum convallis, sapien dui pulvinar nisi, eu fringilla felis urna ac tortor. Suspendisse potenti. Pellentesque luctus tortor id felis feugiat, eleifend porttitor neque consectetur. Phasellus eleifend fermentum semper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tincidunt vitae purus vitae maximus. Vestibulum a orci iaculis, mattis turpis nec, sollicitudin velit. Nullam nisl risus, hendrerit eget scelerisque sit amet, bibendum ut arcu. Quisque laoreet arcu a ante vulputate aliquet. Morbi vitae mauris vel justo dictum interdum a ac risus. Nulla vel placerat ex. Praesent nisl odio, ultricies volutpat volutpat nec, molestie eget nulla. Vestibulum ac odio auctor arcu lobortis laoreet a eu justo. Nam consectetur at purus vitae auctor. Nunc malesuada blandit ipsum sed elementum. Praesent non lectus leo. Fusce in molestie lacus, nec scelerisque lectus.</p>
+
+        <p>Quisque a ante bibendum ante gravida molestie. Suspendisse porttitor condimentum accumsan. Maecenas hendrerit neque sed lorem mollis, ut lacinia leo laoreet. Phasellus eu sapien mi. Proin posuere aliquam suscipit. Etiam maximus scelerisque vestibulum. Integer porttitor mauris sem, ut facilisis odio lacinia vitae. Vestibulum laoreet sit amet mauris sit amet pellentesque. Fusce nisl ex, congue a quam quis, pharetra vulputate est. Integer sagittis semper tortor, vel egestas nulla iaculis in.</p>
+
+        <p>Maecenas scelerisque fringilla laoreet. Aenean euismod, libero eget rutrum volutpat, metus urna maximus quam, quis ultricies tellus odio vel dui. Aliquam lacinia sem non sapien lacinia molestie. Donec commodo tempor est non facilisis. Mauris dapibus ultrices erat non porttitor. Pellentesque vulputate lorem vitae pulvinar vulputate. Proin commodo sem non porttitor pharetra. In augue velit, posuere et lectus in, iaculis cursus purus.</p>
+
+        <p>In bibendum vitae nulla in convallis. Maecenas lobortis mi sit amet hendrerit tempor. Ut eget mi eget enim tincidunt ornare at non dolor. Nulla sed augue eu ex maximus pretium. Aliquam sit amet viverra libero. Nullam commodo, orci vel commodo pellentesque, tortor eros blandit augue, quis facilisis nisl diam quis justo. Nam suscipit vel nisi eget viverra. Donec non eros mattis, convallis metus ac, aliquet orci. Ut varius, nunc sit amet interdum blandit, ipsum ante volutpat tellus, ut pharetra dui arcu id ipsum. Etiam molestie, diam at rutrum interdum, est leo porttitor lorem, sed porta leo massa id mi. Nulla a tellus quis odio vulputate iaculis. Mauris in lectus vitae orci pharetra semper vitae et ex. Maecenas vulputate scelerisque metus, in mattis felis hendrerit eu. Vestibulum risus purus, suscipit quis quam eu, cursus fermentum arcu. Vestibulum non nibh porta, lobortis elit in, facilisis ligula. Donec iaculis nunc tortor.</p>
+
+        <p>Sed lectus tellus, pellentesque ut suscipit eget, accumsan vitae ipsum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent porttitor consequat justo. Integer fermentum sit amet tellus vitae facilisis. Maecenas in tincidunt turpis. Aenean sit amet bibendum odio. Praesent sagittis, risus placerat elementum convallis, sapien dui pulvinar nisi, eu fringilla felis urna ac tortor. Suspendisse potenti. Pellentesque luctus tortor id felis feugiat, eleifend porttitor neque consectetur. Phasellus eleifend fermentum semper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+      </Flex>
+    </MainPageLayout>
   );
 };
 

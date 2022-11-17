@@ -63,7 +63,7 @@ export const globalStyles = css`
     box-sizing: border-box;
   }
 
-  ::-webkit-scrollbar {
+  /* ::-webkit-scrollbar {
     width: 4px;
   }
 
@@ -80,5 +80,5 @@ export const globalStyles = css`
   ::-webkit-scrollbar-thumb:hover {
     background: gray; // TODO change
     transition: background 250ms;
-  }
+  } */
 `;

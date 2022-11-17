@@ -6,6 +6,7 @@ export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 interface StyledButtonProps {
   variant: ButtonVariant;
   fluid?: boolean;
+  size?: "lg" | "md";
 }
 
 // TODO use Design System tokens
@@ -17,12 +18,13 @@ const variantStyles = {
 
 // TODO use Design System tokens
 export const StyledButton = styled.button<StyledButtonProps>`
-  padding: 16px;
+  padding: ${({ size }) => size === "lg" ? "16px" : "12px"};
   border-radius: 4px;
   box-shadow: 2px 2px 8px 1px #dedede;
   border: none;
   cursor: pointer;
   transition: all 0.05s;
+  line-height: 1;
 
   ${({ fluid }) => fluid && css`width: 100%`};
 
