@@ -69,9 +69,9 @@ const MainPageLayout = ({ children }: Props) => {
       <ContentContainer>
         <Content>
           <SideSection>
-            <StickySideContainer>
-              <MockContainer1 />
+            <MockContainer1 />
 
+            <StickySideContainer>
               <MockContainer2 />
 
               <MockContainer3 />
