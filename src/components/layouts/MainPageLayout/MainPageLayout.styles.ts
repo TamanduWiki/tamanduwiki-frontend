@@ -49,6 +49,8 @@ export const ContentContainer = styled.div`
 
   grid-area: content;
 
+  margin-bottom: 24px;
+
   @media (max-width: 1140px) {
     padding: 0 8px;
   }
@@ -117,14 +119,6 @@ export const MockContainer3 = styled.div`
   background-color: white;
 
   height: 284px;
-`;
-
-export const MockContainer4 = styled.div`
-  width: 100%;
-  border-radius: 8px;
-  background-color: white;
-
-  padding: 16px;
 `;
 
 export const HeaderButtonsContainer = styled.div`

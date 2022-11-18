@@ -1,8 +1,9 @@
 import Head from 'next/head';
 import { Global, ThemeProvider } from "@emotion/react";
 import { AppProps } from "next/app";
+import { Toaster } from 'react-hot-toast';
 
-import loadingImg from "@/assets/animated/page_loading_outlined.svg";
+import loadingImg from "@/assets/animated/page_loading.svg";
 
 import { globalStyles } from "@/styles";
 import "@/styles/fonts.css";
@@ -33,6 +34,8 @@ function App({ Component, pageProps }: AppProps) {
       {/* <Head><link rel="icon" href="/images/bacchi-dev-icon.ico" /></Head> */}
 
       <Global styles={globalStyles} />
+
+      <Toaster />
 
       {loading ? <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '100vw' }}><Image src={loadingImg} alt="loading_img"/></div> : <Component {...pageProps} />}
       {/* <ThemeProvider theme={theme}>

@@ -7,12 +7,13 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement>{
   variant?: ButtonVariant;
   size?: "lg" | "md";
   fluid?: boolean;
+  loading?: boolean;
 }
 
-const Button = ({ children, variant = "primary", fluid, size = "lg", ...rest }: Props) => {
+const Button = ({ children, variant = "primary", fluid, size = "lg", loading, ...rest }: Props) => {
   return (
     <StyledButton variant={variant} fluid={fluid} size={size} {...rest}>
-      {children}
+      {loading ? 'Carregando...' : children}
     </StyledButton>
   );
 }

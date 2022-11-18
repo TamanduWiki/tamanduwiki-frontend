@@ -19,11 +19,11 @@ import {
   MockContainer1,
   MockContainer2,
   MockContainer3,
-  MockContainer4,
   PageContainer,
   SideSection,
   StickySideContainer,
 } from "./MainPageLayout.styles";
+import Flex from '@/components/common/Flex';
 
 interface Props {
   children: React.ReactNode;
@@ -69,21 +69,23 @@ const MainPageLayout = ({ children }: Props) => {
       <ContentContainer>
         <Content>
           <SideSection>
-            <MockContainer1 />
+            <Flex backgroundColor="white" borderRadius="md" padding="16px" style={{ height: "72px"  }}>
+              itens
+            </Flex>
 
             <StickySideContainer>
-              <MockContainer2 />
+              <Flex backgroundColor="white" borderRadius="md" padding="16px" style={{ height: "184px" }}>
+                itens
+              </Flex>
 
-              <MockContainer3 />
+              <Flex backgroundColor="white" borderRadius="md" padding="16px" style={{ height: "184px" }}>
+                itens
+              </Flex>
             </StickySideContainer>
           </SideSection>
 
           <MainSection>
-            <MockContainer2 />
-
-            <MockContainer4>
-              {children}
-            </MockContainer4>
+            {children}
           </MainSection>
         </Content>
       </ContentContainer>
