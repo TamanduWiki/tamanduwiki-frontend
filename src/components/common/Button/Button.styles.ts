@@ -11,7 +11,7 @@ interface StyledButtonProps {
 
 // TODO use Design System tokens
 const variantStyles = {
-  primary: css`background: #5AC229`,
+  primary: css`background: #5AC229; color: #ffffff`,
   secondary: css`background: #E9E9E9`,
   tertiary: css`border: 1px solid #E9E9E9`, // TODO fix border color
 };
@@ -25,6 +25,8 @@ export const StyledButton = styled.button<StyledButtonProps>`
   cursor: pointer;
   transition: all 0.05s;
   line-height: 1;
+  position: relative;
+  min-height: ${({ size }) => size === "lg" ? "48px" : "40px"};
 
   ${({ fluid }) => fluid && css`width: 100%`};
 

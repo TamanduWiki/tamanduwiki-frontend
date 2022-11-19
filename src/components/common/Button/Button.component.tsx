@@ -1,4 +1,8 @@
+import Image from 'next/image';
 import { ButtonHTMLAttributes } from "react";
+
+import loadingWhiteImg from '@/assets/animated/loading_balls_white.svg';
+import loadingBlackImg from '@/assets/animated/loading_balls_black.svg';
 
 import { ButtonVariant, StyledButton } from "./Button.styles";
 
@@ -13,7 +17,17 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement>{
 const Button = ({ children, variant = "primary", fluid, size = "lg", loading, ...rest }: Props) => {
   return (
     <StyledButton variant={variant} fluid={fluid} size={size} {...rest}>
-      {loading ? 'Carregando...' : children}
+      {loading
+        ? (
+          <Image
+            height={48}
+            alt="button_loading"
+            src={variant === "primary" ? loadingWhiteImg : loadingBlackImg}
+            style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto' }}
+          />
+        )
+        : children
+      }
     </StyledButton>
   );
 }

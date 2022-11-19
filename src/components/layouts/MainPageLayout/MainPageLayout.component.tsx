@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { FiMenu } from 'react-icons/fi';
 
 import logoImg from "@/assets/images/logo.svg";
@@ -16,20 +17,26 @@ import {
   MainHeader,
   MainHeaderContainer,
   MainSection,
-  MockContainer1,
-  MockContainer2,
-  MockContainer3,
   PageContainer,
   SideSection,
   StickySideContainer,
 } from "./MainPageLayout.styles";
 import Flex from '@/components/common/Flex';
+import useDebounce from '@/hooks/useDebounce';
 
 interface Props {
   children: React.ReactNode;
+  onSearch?: (searchValue: string) => void;
 }
 
-const MainPageLayout = ({ children }: Props) => {
+const MainPageLayout = ({ children, onSearch }: Props) => {
+  const [search, setSearch] = useState('');
+  const debouncedSearch = useDebounce(search);
+
+  useEffect(() => {
+    if (onSearch) onSearch(debouncedSearch)
+  }, [debouncedSearch, onSearch]);
+
   return (
     <PageContainer>
       <MainHeaderContainer>
@@ -47,6 +54,8 @@ const MainPageLayout = ({ children }: Props) => {
               fluid
               name="search"
               placeholder="Pesquisar por nome da página ou por categoria..."
+              onChange={event => setSearch(event.target.value as string)}
+              value={search}
             />
           </HeaderInputContainer>
 

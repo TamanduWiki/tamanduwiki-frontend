@@ -3,7 +3,7 @@ import { Global, ThemeProvider } from "@emotion/react";
 import { AppProps } from "next/app";
 import { Toaster } from 'react-hot-toast';
 
-import loadingImg from "@/assets/animated/page_loading.svg";
+import loadingImg from "@/assets/animated/loading_balls_green.svg";
 
 import { globalStyles } from "@/styles";
 import "@/styles/fonts.css";
@@ -31,11 +31,11 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      {/* <Head><link rel="icon" href="/images/bacchi-dev-icon.ico" /></Head> */}
+      <Head><link rel="icon" href="/images/ufabcwiki_icon.ico" /></Head>
 
       <Global styles={globalStyles} />
 
-      <Toaster />
+      <Toaster position="top-right" toastOptions={{ duration: 8000 }}/>
 
       {loading ? <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '100vw' }}><Image src={loadingImg} alt="loading_img"/></div> : <Component {...pageProps} />}
       {/* <ThemeProvider theme={theme}>

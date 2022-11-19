@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
+import Head from "next/head";
 
 import undrawnBuildingImages from "@/assets/images/undraw_building_blocks_re_5ahy.svg";
 
@@ -17,14 +18,18 @@ const BuildingBlocksImg = styled(Image)`
 
 const LoginPage = () => {
   return (
-    <SimplePageLayout bottomLink={{ href: "/", label: "Voltar ao início" }}>
-      <p>Página em construção...</p>
+    <>
+      <Head><title>Privacidade - UFABCwiki</title></Head>
 
-      <BuildingBlocksImg
-        src={undrawnBuildingImages}
-        alt="undraw_building_blocks"
-      />
-    </SimplePageLayout>
+      <SimplePageLayout bottomLink={{ href: "/", label: "Voltar ao início" }}>
+        <p>Página em construção...</p>
+
+        <BuildingBlocksImg
+          src={undrawnBuildingImages}
+          alt="undraw_building_blocks"
+        />
+      </SimplePageLayout>
+    </>
   );
 };
 

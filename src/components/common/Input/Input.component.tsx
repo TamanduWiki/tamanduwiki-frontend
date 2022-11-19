@@ -1,5 +1,6 @@
+import { Field, FieldProps } from "formik";
 import { InputHTMLAttributes } from "react";
-import { InputContainer, StyledField, StyledInput, StyledLabel } from "./Input.styles";
+import { ErrorMsg, InputContainer, LabelContainer, StyledInput, StyledLabel } from "./Input.styles";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -19,11 +20,31 @@ const Input = ({ name, label, placeholder, fluid, formikField, ...rest }: Props)
   );
 
   return (
-    <InputContainer fluid={fluid}>
-      {label && <StyledLabel htmlFor="name">{label}</StyledLabel>}
+    <Field name={name}>
+      {({ meta, field }: FieldProps) =>
+        <InputContainer fluid={fluid}>
+          <LabelContainer>
+            {label &&
+              <StyledLabel htmlFor="name">
+                {label}
+              </StyledLabel>
+            }
 
-      <StyledField name={name} placeholder={placeholder} {...rest} />
-    </InputContainer>
+          {meta.touched && !!meta.error &&
+            <ErrorMsg>{meta.error}</ErrorMsg>
+          }
+          </LabelContainer>
+
+          <StyledInput
+            name={name}
+            placeholder={placeholder}
+            errored={meta.touched && !!meta.error}
+            {...rest}
+            {...field}
+          />
+        </InputContainer>
+      }
+    </Field>
   )
 };
 

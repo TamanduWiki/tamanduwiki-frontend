@@ -48,8 +48,7 @@ export const ContentContainer = styled.div`
   justify-content: center;
 
   grid-area: content;
-
-  margin-bottom: 24px;
+  padding-bottom: 24px;
 
   @media (max-width: 1140px) {
     padding: 0 8px;
@@ -61,7 +60,7 @@ export const Content = styled.div`
   justify-content: center;
   height: 100%;
   gap: 24px;
-  max-width: 1140px;
+  width: 1140px;
 `;
 
 export const SideSection = styled.div`
@@ -96,30 +95,6 @@ export const StickySideContainer = styled.div`
   gap: 16px;
   flex-direction: column;
 `
-
-export const MockContainer1 = styled.div`
-  width: 100%;
-  border-radius: 8px;
-  background-color: white;
-
-  height: 72px;
-`;
-
-export const MockContainer2 = styled.div`
-  width: 100%;
-  border-radius: 8px;
-  background-color: white;
-
-  height: 184px;
-`;
-
-export const MockContainer3 = styled.div`
-  width: 100%;
-  border-radius: 8px;
-  background-color: white;
-
-  height: 284px;
-`;
 
 export const HeaderButtonsContainer = styled.div`
   display: flex;
