@@ -14,11 +14,11 @@ export const Content = styled.div`
   justify-content: center;
   height: 100%;
   width: 1140px;
-  padding: 48px;
-  gap: 48px;
+  padding: ${({ theme }) => theme.spacing["3xl"]};
+  gap: ${({ theme }) => theme.spacing["3xl"]};
 
   @media (max-width: 540px) {
-    padding: 48px 8px;
+    padding: ${({ theme }) => `${theme.spacing["3xl"]} ${theme.spacing.xs}`};
     justify-content: space-around;
   }
 `;
@@ -28,16 +28,16 @@ export const MainAreaContent = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 32px;
+  gap: ${({ theme }) => theme.spacing.xl};
   width: 560px;
-  padding: 32px;
-  border-radius: 8px;
+  padding: ${({ theme }) => theme.spacing.xl};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
 
   background-color: white;
 
   @media (max-width: 540px) {
     width: 100%;
-    padding: 24px 16px;
-    gap: 24px;
+    padding: ${({ theme }) => `${theme.spacing.lg} ${theme.spacing.md}`};
+    gap: ${({ theme }) => theme.spacing.md};
   }
 `;

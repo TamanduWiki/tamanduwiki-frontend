@@ -1,12 +1,17 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { FiMenu } from 'react-icons/fi';
+import { FiBarChart, FiBookOpen, FiClock, FiFeather, FiHelpCircle, FiHome, FiMenu, FiUser } from 'react-icons/fi';
 
 import logoImg from "@/assets/images/logo.svg";
 
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
+import Flex from '@/components/common/Flex';
+
+import useDebounce from '@/hooks/useDebounce';
+
+import { theme } from '@/styles/theme';
 
 import {
   Content,
@@ -21,8 +26,6 @@ import {
   SideSection,
   StickySideContainer,
 } from "./MainPageLayout.styles";
-import Flex from '@/components/common/Flex';
-import useDebounce from '@/hooks/useDebounce';
 
 interface Props {
   children: React.ReactNode;
@@ -78,17 +81,53 @@ const MainPageLayout = ({ children, onSearch }: Props) => {
       <ContentContainer>
         <Content>
           <SideSection>
-            <Flex backgroundColor="white" borderRadius="md" padding="16px" style={{ height: "72px"  }}>
-              itens
+            <Flex backgroundColor="white" borderRadius="sm" padding="md" direction="column">
+              <Link href="/" style={{ textDecoration: "none" }}>
+                <Flex align="center" gap="xs" padding="xs" style={{ color: theme.colors.neutral[400] }}>
+                  <FiHome size={24} /> Página inicial
+                </Flex>
+              </Link>
             </Flex>
 
             <StickySideContainer>
-              <Flex backgroundColor="white" borderRadius="md" padding="16px" style={{ height: "184px" }}>
-                itens
+              <Flex backgroundColor="white" borderRadius="sm" padding="md" gap="md" direction="column">
+                <Link href="/" style={{ textDecoration: "none" }}>
+                  <Flex align="center" gap="xs" padding="xs" style={{ color: theme.colors.neutral[400] }}>
+                    <FiBookOpen size={24} /> Sugestões
+                  </Flex>
+                </Link>
+
+                <Link href="/" style={{ textDecoration: "none" }}>
+                  <Flex align="center" gap="xs" padding="xs" style={{ color: theme.colors.neutral[400] }}>
+                    <FiClock size={24} /> Últimas alterações
+                  </Flex>
+                </Link>
+
+                <Link href="/" style={{ textDecoration: "none" }}>
+                  <Flex align="center" gap="xs" padding="xs" style={{ color: theme.colors.neutral[400] }}>
+                    <FiHelpCircle size={24} /> Sobre
+                  </Flex>
+                </Link>
               </Flex>
 
-              <Flex backgroundColor="white" borderRadius="md" padding="16px" style={{ height: "184px" }}>
-                itens
+              <Flex backgroundColor="white" borderRadius="sm" padding="md" gap="md" direction="column">
+                <Link href="/" style={{ textDecoration: "none" }}>
+                  <Flex align="center" gap="xs" padding="xs" style={{ color: theme.colors.neutral[400] }}>
+                    <FiUser size={24} /> Teste 1
+                  </Flex>
+                </Link>
+
+                <Link href="/" style={{ textDecoration: "none" }}>
+                  <Flex align="center" gap="xs" padding="xs" style={{ color: theme.colors.neutral[400] }}>
+                    <FiBarChart size={24} /> Teste 2
+                  </Flex>
+                </Link>
+
+                <Link href="/" style={{ textDecoration: "none" }}>
+                  <Flex align="center" gap="xs" padding="xs" style={{ color: theme.colors.neutral[400] }}>
+                    <FiFeather size={24} /> Teste 3
+                  </Flex>
+                </Link>
               </Flex>
             </StickySideContainer>
           </SideSection>

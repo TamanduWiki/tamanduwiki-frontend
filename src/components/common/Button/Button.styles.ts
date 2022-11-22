@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { theme } from '@/styles/theme';
+
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 
 interface StyledButtonProps {
@@ -9,24 +11,22 @@ interface StyledButtonProps {
   size?: "lg" | "md";
 }
 
-// TODO use Design System tokens
 const variantStyles = {
-  primary: css`background: #5AC229; color: #ffffff`,
-  secondary: css`background: #E9E9E9`,
-  tertiary: css`border: 1px solid #E9E9E9`, // TODO fix border color
+  primary: css`background: ${theme.colors.primary}; color: ${theme.colors.neutral[100]}`,
+  secondary: css`background: ${theme.colors.neutral[200]}`,
+  tertiary: css`border: 1px solid ${theme.colors.neutral[200]}`,
 };
 
-// TODO use Design System tokens
 export const StyledButton = styled.button<StyledButtonProps>`
-  padding: ${({ size }) => size === "lg" ? "16px" : "12px"};
-  border-radius: 4px;
-  box-shadow: 2px 2px 8px 1px #dedede;
+  padding: ${({ theme, size }) => size === "lg" ? theme.spacing.md : theme.spacing.sm};
+  border-radius: ${({ theme }) => theme.borderRadius.xs};
+  box-shadow: 2px 2px 8px 1px ${({ theme }) => theme.colors.neutral[200]};
   border: none;
   cursor: pointer;
   transition: all 0.05s;
   line-height: 1;
   position: relative;
-  min-height: ${({ size }) => size === "lg" ? "48px" : "40px"};
+  min-height: ${({ theme, size }) => size === "lg" ? theme.spacing["3xl"] : theme.spacing.xxl};
 
   ${({ fluid }) => fluid && css`width: 100%`};
 

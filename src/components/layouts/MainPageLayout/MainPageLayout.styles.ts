@@ -6,7 +6,7 @@ export const PageContainer = styled.div`
   grid-template-rows: 80px auto;
   grid-template-areas: 'header' 'content';
 
-  gap: 24px;
+  gap: ${({ theme }) => theme.spacing.lg};
   min-height: 100vh;
 `;
 
@@ -17,14 +17,14 @@ export const MainHeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 8px 1px #dedede;
+  box-shadow: 0 0 8px 1px ${({ theme }) => theme.colors.neutral[200]};
 
   position: fixed;
 
   grid-area: header;
 
   @media (max-width: 1140px) {
-    padding: 0 8px;
+    padding: 0 ${({ theme }) => theme.spacing.xs}
   }
 `;
 
@@ -33,7 +33,7 @@ export const MainHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: ${({ theme }) => theme.spacing.lg};
 
   @media (max-width: 760px) {
     gap: 0;
@@ -48,10 +48,10 @@ export const ContentContainer = styled.div`
   justify-content: center;
 
   grid-area: content;
-  padding-bottom: 24px;
+  padding-bottom: ${({ theme }) => theme.spacing.lg};
 
   @media (max-width: 1140px) {
-    padding: 0 8px;
+    padding: 0 ${({ theme }) => theme.spacing.xs}
   }
 `;
 
@@ -59,15 +59,20 @@ export const Content = styled.div`
   display: flex;
   justify-content: center;
   height: 100%;
-  gap: 24px;
+  gap: ${({ theme }) => theme.spacing.lg};
   width: 1140px;
+
+  @media (max-width: 1140px) {
+    width: auto;
+    max-width: 1140px;
+  }
 `;
 
 export const SideSection = styled.div`
   min-width: 264px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: ${({ theme }) => theme.spacing.md};
   height: 100%;
 
   @media (max-width: 1140px) {
@@ -81,7 +86,7 @@ export const MainSection = styled.div`
   display: flex;
   flex-direction: column;
 
-  gap: 16px;
+  gap: ${({ theme }) => theme.spacing.md};
 `;
 
 export const StickySideContainer = styled.div`
@@ -92,13 +97,13 @@ export const StickySideContainer = styled.div`
   display: flex;
   width: 100%;
   height: fit-content;
-  gap: 16px;
+  gap: ${({ theme }) => theme.spacing.md};
   flex-direction: column;
 `
 
 export const HeaderButtonsContainer = styled.div`
   display: flex;
-  gap: 16px;
+  gap: ${({ theme }) => theme.spacing.md};
 
   @media (max-width: 760px) {
     display: none;

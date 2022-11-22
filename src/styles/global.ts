@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 
 import booksBackgroundImg from '@/assets/images/books_background.png';
+import { theme } from "./theme";
 
 export const globalStyles = css`
   html {
@@ -13,8 +14,8 @@ export const globalStyles = css`
     width: inherit;
     font: 400 1rem Lato, sans-serif;
     -webkit-font-smoothing: antialiased;
-    color: #2f2f2f;
-    background-color: #dedede;
+    color: ${theme.colors.neutral[700]};
+    background-color: #dedede; // Design System Exception
 
     background-image: url(${booksBackgroundImg.src});
   }
@@ -23,7 +24,7 @@ export const globalStyles = css`
   button {
     font: normal 1rem Lato, sans-serif;
     -webkit-font-smoothing: antialiased;
-    color: #2f2f2f;
+    color: ${theme.colors.neutral[700]};
   }
 
   button {
@@ -62,23 +63,4 @@ export const globalStyles = css`
     outline: 0;
     box-sizing: border-box;
   }
-
-  /* ::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: black; // TODO change
-    border-radius: 4px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #444444;
-    border-radius: 8px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: gray; // TODO change
-    transition: background 250ms;
-  } */
 `;

@@ -6,7 +6,7 @@ interface LinkButtonProps {
 }
 
 const LinkButton = styled(Link)<LinkButtonProps>`
-  color: ${({ variant }) => !variant || variant === "primary" ? "#5AC229" : "#2f2f2f"};
+  color: ${({ theme, variant }) => !variant || variant === "primary" ? theme.colors.primary : theme.colors.neutral[700]};
 `;
 
 export default LinkButton;

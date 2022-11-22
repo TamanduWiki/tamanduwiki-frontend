@@ -1,15 +1,18 @@
-import Head from 'next/head';
 import { Global, ThemeProvider } from "@emotion/react";
 import { AppProps } from "next/app";
+import Head from 'next/head';
+import Image from 'next/image';
+import { Router } from 'next/router';
+import { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 
 import loadingImg from "@/assets/animated/loading_balls_green.svg";
 
+import Flex from "@/components/common/Flex";
+
 import { globalStyles } from "@/styles";
+import { theme } from '@/styles/theme';
 import "@/styles/fonts.css";
-import { Router } from 'next/router';
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
 
 function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -37,10 +40,16 @@ function App({ Component, pageProps }: AppProps) {
 
       <Toaster position="top-right" toastOptions={{ duration: 8000 }}/>
 
-      {loading ? <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '100vw' }}><Image src={loadingImg} alt="loading_img"/></div> : <Component {...pageProps} />}
-      {/* <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-      </ThemeProvider> */}
+      <ThemeProvider theme={theme}>
+        {loading
+          ? (
+            <Flex align="center" justify="center" style={{ height: '100vh', width: '100vw' }}>
+              <Image src={loadingImg} alt="loading_img" />
+            </Flex>
+          )
+          : <Component {...pageProps} />
+        }
+      </ThemeProvider>
     </>
   );
 };

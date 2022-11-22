@@ -8,7 +8,6 @@ import Flex from "@/components/common/Flex";
 import MainPageLayout from "@/components/layouts/MainPageLayout";
 
 import api from "@/infra/api";
-import { delay } from "@/utils";
 
 interface IPage {
   id: string,
@@ -38,7 +37,7 @@ const HomePage = () => {
       <Head><title>UFABCwiki</title></Head>
 
       <MainPageLayout onSearch={handleSearchPages}>
-        <Flex gap="16px" direction="column" borderRadius="md" backgroundColor="white" padding="16px" style={{ minWidth: "100%", minHeight: "100%" }}>
+        <Flex gap="md" direction="column" borderRadius="sm" backgroundColor="white" padding="md" style={{ minWidth: "100%", minHeight: "100%" }}>
           {pagesLoading &&
             <Flex height="fit-parent" width="fit-parent" align="center" justify="center">
               <Image src={loadingImg} alt="loading_img"/>
