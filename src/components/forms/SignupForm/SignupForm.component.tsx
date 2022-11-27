@@ -7,7 +7,7 @@ import Input from "@/components/common/Input";
 
 import api from "@/infra/api";
 
-import { handleFormSubmissionError } from "@/utils";
+import { handleError } from "@/utils";
 
 import PasswordStrengthMeter from "./PasswordStrengthMeter";
 
@@ -39,7 +39,7 @@ const SignupForm = () => {
 
       await router.push("/login");
     } catch(error) {
-      handleFormSubmissionError(error)
+      handleError(error)
     } finally {
       setSubmitting(false);
     }

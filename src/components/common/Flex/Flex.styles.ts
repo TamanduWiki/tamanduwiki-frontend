@@ -1,4 +1,5 @@
 import { ThemeBorderRadiusOption } from '@/styles/theme/borderRadius';
+import { ColorToken } from '@/styles/theme/colors';
 import { ThemeSpacingOption } from '@/styles/theme/spacing';
 import styled from '@emotion/styled';
 
@@ -9,8 +10,9 @@ export interface StyledDivProps {
   align?: 'baseline' | 'center' | 'flex-end' | 'flex-start';
   width?: 'hug-content' | 'fit-parent';
   height?: 'hug-content' | 'fit-parent';
-  backgroundColor?: 'transparent' | "white";
-  borderRadius?: ThemeBorderRadiusOption;
+  bgColor?: ColorToken;
+  color?: ColorToken;
+  radius?: ThemeBorderRadiusOption;
   gap?: ThemeSpacingOption;
   padding?: ThemeSpacingOption;
   margin?: ThemeSpacingOption;
@@ -23,9 +25,10 @@ export const StyledDiv = styled.div<StyledDivProps>`
   align-items: ${({ align }) => align || 'flex-start'};
   width: ${({ width }) => width === 'fit-parent' ? '100%' : 'auto'};
   height: ${({ height }) => height === 'fit-parent' ? '100%' : 'auto'};
-  background-color: ${({ backgroundColor }) => backgroundColor || 'transparent'};
+  background-color: ${({ theme, bgColor }) => bgColor ? theme.colors[bgColor] : 'transparent'};
   gap: ${({ theme, gap }) => gap ? theme.spacing[gap] : '0'};
   margin: ${({ theme, margin }) => margin ? theme.spacing[margin] : '0'};
   padding: ${({ theme, padding }) => padding ? theme.spacing[padding] : '0'};
-  border-radius: ${({ theme, borderRadius }) => theme.borderRadius[borderRadius]};
+  border-radius: ${({ theme, radius }) => theme.borderRadius[radius]};
+  color: ${({ theme, color }) => color && theme.colors[color]};
 `;

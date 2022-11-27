@@ -1,7 +1,8 @@
 import { AxiosError } from "axios";
+
 import toast from "react-hot-toast";
 
-export const handleFormSubmissionError = (error: any) => {
+export const handleError = (error: any) => {
   if (error instanceof AxiosError && error?.response?.data?.message) {
     toast.error(error?.response?.data?.message);
   } else {

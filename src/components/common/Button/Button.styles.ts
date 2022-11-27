@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 import { theme } from '@/styles/theme';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
+export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'warning';
 
 interface StyledButtonProps {
   variant: ButtonVariant;
@@ -12,21 +12,36 @@ interface StyledButtonProps {
 }
 
 const variantStyles = {
-  primary: css`background: ${theme.colors.primary}; color: ${theme.colors.neutral[100]}`,
-  secondary: css`background: ${theme.colors.neutral[200]}`,
-  tertiary: css`border: 1px solid ${theme.colors.neutral[200]}`,
+  primary: css`background: ${theme.colors.primary}; color: ${theme.colors.neutral_100}`,
+  secondary: css`background: ${theme.colors.neutral_200}`,
+  tertiary: css`
+    box-shadow: none;
+    background: transparent;
+    color: ${theme.colors.primary};
+    padding: 0;
+    min-height: auto;
+    max-height: auto;
+  `,
+  warning: css`background: ${theme.colors.error}; color: ${theme.colors.neutral_100}`
 };
 
 export const StyledButton = styled.button<StyledButtonProps>`
-  padding: ${({ theme, size }) => size === "lg" ? theme.spacing.md : theme.spacing.sm};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${({ theme }) => theme.spacing.xxs};
+  padding: 0 ${({ theme }) => theme.spacing.md};
   border-radius: ${({ theme }) => theme.borderRadius.xs};
-  box-shadow: 2px 2px 8px 1px ${({ theme }) => theme.colors.neutral[200]};
+  box-shadow: 2px 2px 8px 1px ${({ theme }) => theme.colors.neutral_200};
   border: none;
   cursor: pointer;
   transition: all 0.05s;
   line-height: 1;
   position: relative;
-  min-height: ${({ theme, size }) => size === "lg" ? theme.spacing["3xl"] : theme.spacing.xxl};
+  min-height: ${({ size }) => size === "md" ? '40px' : '48px'};
+  max-height: ${({ size }) => size === "md" ? '40px' : '48px'};
+
+  white-space: nowrap;
 
   ${({ fluid }) => fluid && css`width: 100%`};
 

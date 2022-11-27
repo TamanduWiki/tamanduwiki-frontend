@@ -1,3 +1,3 @@
 export * from './delay';
-export * from './handleFormSubmissionError';
+export * from './handleError';
 export * from './password';

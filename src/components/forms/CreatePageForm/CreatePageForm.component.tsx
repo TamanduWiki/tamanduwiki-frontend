@@ -1,0 +1,119 @@
+import { Formik, FormikHelpers } from "formik";
+import toast from "react-hot-toast";
+// import { useRouter } from "next/router";
+
+import Button from "@/components/common/Button";
+import Input from "@/components/common/Input";
+
+import api from "@/infra/api";
+
+import { handleError } from "@/utils";
+
+import { StyledForm } from "./CreatePageForm.styles";
+import { schema } from "./CreatePageForm.validations";
+import { useState } from "react";
+
+interface Values {
+  title: string;
+  content: string;
+  slug: string;
+  // image: any;
+}
+
+const initialValues = {
+  title: '',
+  content: '',
+  slug: '',
+  // image: undefined,
+}
+
+const getBase64 = async (file: File) => {
+  if (!file) return undefined;
+
+  return new Promise(resolve => {
+    // Make new FileReader
+    let reader = new FileReader();
+
+    // Convert the file to base64 text
+    reader.readAsDataURL(file);
+
+    // on reader load somthing...
+    reader.onload = () => {
+      // Make a fileInfo Object
+      const baseURL = reader.result;
+
+      resolve(baseURL);
+    };
+  });
+};
+
+const CreatePageForm = () => {
+  // const router = useRouter();
+
+  const [image, setImage] = useState<File | undefined>();
+
+  const onSubmit = async (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
+    try {
+      const imageBase64 = await getBase64(image);
+
+      await api.post("/pages", { ...values, imageBase64, imageFileType: 'png' });
+
+      toast.success("Página criada com sucesso");
+
+      // await router.push("/login");
+    } catch(error) {
+      handleError(error)
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={schema}
+    >
+      {({ isSubmitting, setFieldValue }) =>
+        <StyledForm>
+          <Input
+            fluid
+            name="title"
+            label="Título"
+            placeholder="Ex.: Bases Matemáticas"
+            formikField
+          />
+
+          <Input
+            fluid
+            name="content"
+            label="Conteúdo"
+            placeholder="Ex.: A expressão Lorem ipsum em design gráfico e editoração é um texto padrão em latim utilizado na produção gráfica para preencher os espaços de texto em publicações para testar e ajustar aspectos visuais antes de utilizar conteúdo real..."
+            formikField
+          />
+
+          <Input
+            fluid
+            name="slug"
+            label="Slug"
+            placeholder="Ex.: bases-matematicas"
+            formikField
+          />
+
+          <input type="file" name="image" onChange={event => setImage(event.currentTarget.files[0])} />
+
+          <Button
+            fluid
+            type="submit"
+            disabled={isSubmitting}
+            loading={isSubmitting}
+          >
+            Criar Página
+          </Button>
+        </StyledForm>
+      }
+    </Formik>
+  );
+};
+
+export default CreatePageForm;

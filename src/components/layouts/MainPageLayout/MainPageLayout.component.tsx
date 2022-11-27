@@ -1,7 +1,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FiBarChart, FiBookOpen, FiClock, FiFeather, FiHelpCircle, FiHome, FiMenu, FiUser } from 'react-icons/fi';
+import { IconType } from 'react-icons';
+import {
+  FiFeather,
+  FiHome,
+  FiLogIn,
+  FiMenu,
+  FiUserPlus,
+} from 'react-icons/fi';
 
 import logoImg from "@/assets/images/logo.svg";
 
@@ -10,8 +18,6 @@ import Input from '@/components/common/Input';
 import Flex from '@/components/common/Flex';
 
 import useDebounce from '@/hooks/useDebounce';
-
-import { theme } from '@/styles/theme';
 
 import {
   Content,
@@ -29,15 +35,43 @@ import {
 
 interface Props {
   children: React.ReactNode;
+  initialSearchValue?: string;
+  sideText?: string;
   onSearch?: (searchValue: string) => void;
 }
 
-const MainPageLayout = ({ children, onSearch }: Props) => {
-  const [search, setSearch] = useState('');
+interface SidebarNavBtnProps {
+  href: string;
+  icon: IconType;
+  label: string;
+}
+
+const SidebarNavBtn = ({ href, icon: Icon, label }: SidebarNavBtnProps) => {
+  const { pathname } = useRouter();
+
+  return (
+    <Link href={href} style={{ textDecoration: "none" }}>
+      <Flex
+        color={pathname === href ? 'primary' : 'neutral_400'}
+        align="center"
+        padding="xs"
+        gap="xs"
+      >
+        <Icon size={24} /> {label}
+      </Flex>
+    </Link>
+  )
+}
+
+const MainPageLayout = ({ children, onSearch, initialSearchValue, sideText }: Props) => {
+  const router = useRouter();
+
+  const [search, setSearch] = useState(initialSearchValue || '');
   const debouncedSearch = useDebounce(search);
 
   useEffect(() => {
     if (onSearch) onSearch(debouncedSearch)
+    else if (!!debouncedSearch) router.push(`/?searchPage=${debouncedSearch}`)
   }, [debouncedSearch, onSearch]);
 
   return (
@@ -63,13 +97,13 @@ const MainPageLayout = ({ children, onSearch }: Props) => {
           </HeaderInputContainer>
 
           <HeaderButtonsContainer>
-            <Link href="/signup">
+            <Link href="/signup" style={{ textDecoration: 'none' }}>
               <Button variant="secondary" size="md">
                 Cadastro
               </Button>
             </Link>
 
-            <Link href="/login">
+            <Link href="/login" style={{ textDecoration: 'none' }}>
               <Button size="md">
                 Login
               </Button>
@@ -81,54 +115,39 @@ const MainPageLayout = ({ children, onSearch }: Props) => {
       <ContentContainer>
         <Content>
           <SideSection>
-            <Flex backgroundColor="white" borderRadius="sm" padding="md" direction="column">
-              <Link href="/" style={{ textDecoration: "none" }}>
-                <Flex align="center" gap="xs" padding="xs" style={{ color: theme.colors.neutral[400] }}>
-                  <FiHome size={24} /> Página inicial
-                </Flex>
-              </Link>
-            </Flex>
+            {/* Podem ser colocadas coisas aqui não sticky */}
 
             <StickySideContainer>
-              <Flex backgroundColor="white" borderRadius="sm" padding="md" gap="md" direction="column">
-                <Link href="/" style={{ textDecoration: "none" }}>
-                  <Flex align="center" gap="xs" padding="xs" style={{ color: theme.colors.neutral[400] }}>
-                    <FiBookOpen size={24} /> Sugestões
-                  </Flex>
-                </Link>
+              <Flex bgColor="neutral_100" radius="sm" padding="md" gap="md" direction="column">
+                <SidebarNavBtn href="/" icon={FiHome} label="Página inicial" />
 
-                <Link href="/" style={{ textDecoration: "none" }}>
-                  <Flex align="center" gap="xs" padding="xs" style={{ color: theme.colors.neutral[400] }}>
-                    <FiClock size={24} /> Últimas alterações
-                  </Flex>
-                </Link>
-
-                <Link href="/" style={{ textDecoration: "none" }}>
-                  <Flex align="center" gap="xs" padding="xs" style={{ color: theme.colors.neutral[400] }}>
-                    <FiHelpCircle size={24} /> Sobre
-                  </Flex>
-                </Link>
+                <SidebarNavBtn href="/create-page" icon={FiFeather} label="Criar página" />
               </Flex>
 
-              <Flex backgroundColor="white" borderRadius="sm" padding="md" gap="md" direction="column">
-                <Link href="/" style={{ textDecoration: "none" }}>
-                  <Flex align="center" gap="xs" padding="xs" style={{ color: theme.colors.neutral[400] }}>
-                    <FiUser size={24} /> Teste 1
-                  </Flex>
-                </Link>
+              {router.pathname === '/' &&
+                <Flex bgColor="neutral_100" radius="sm" padding="md" gap="md" direction="column">
+                  {sideText}
 
-                <Link href="/" style={{ textDecoration: "none" }}>
-                  <Flex align="center" gap="xs" padding="xs" style={{ color: theme.colors.neutral[400] }}>
-                    <FiBarChart size={24} /> Teste 2
-                  </Flex>
-                </Link>
+                  {/* <p>Aqui vão os filtros de busca...</p>
 
-                <Link href="/" style={{ textDecoration: "none" }}>
-                  <Flex align="center" gap="xs" padding="xs" style={{ color: theme.colors.neutral[400] }}>
-                    <FiFeather size={24} /> Teste 3
+                  <p>Ainda não foi implementado</p>
+
+                  <Flex align="center" gap="xs">
+                    <input type="checkbox" name="filtro_1" />
+                    <label htmlFor="filtro_1">Filtro 1</label>
                   </Flex>
-                </Link>
-              </Flex>
+
+                  <Flex align="center" gap="xs">
+                    <input type="checkbox" name="filtro_2" />
+                    <label htmlFor="filtro_2">Filtro 2</label>
+                  </Flex>
+
+                  <Flex align="center" gap="xs">
+                    <input type="checkbox" name="filtro_2" />
+                    <label htmlFor="filtro_2">Filtro 2</label>
+                  </Flex> */}
+                </Flex>
+              }
             </StickySideContainer>
           </SideSection>
 

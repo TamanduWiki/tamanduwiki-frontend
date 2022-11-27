@@ -32,11 +32,11 @@ export const StyledInput = styled.input<{ errored?: boolean }>`
   border-radius: ${({ theme }) => theme.borderRadius.xs};
   border: 1px solid ${({ theme, errored }) => errored
     ? theme.colors.error
-    : theme.colors.neutral[300]
+    : theme.colors.neutral_300
   };
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.neutral[400]};
+    color: ${({ theme }) => theme.colors.neutral_400};
     font-weight: 400;
   }
 `;

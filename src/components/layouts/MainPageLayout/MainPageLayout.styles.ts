@@ -17,9 +17,10 @@ export const MainHeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 8px 1px ${({ theme }) => theme.colors.neutral[200]};
+  box-shadow: 0 0 8px 1px ${({ theme }) => theme.colors.neutral_200};
 
   position: fixed;
+  z-index: 100;
 
   grid-area: header;
 
@@ -51,7 +52,8 @@ export const ContentContainer = styled.div`
   padding-bottom: ${({ theme }) => theme.spacing.lg};
 
   @media (max-width: 1140px) {
-    padding: 0 ${({ theme }) => theme.spacing.xs}
+    padding: 0 ${({ theme }) => theme.spacing.xs};
+    padding-bottom: ${({ theme }) => theme.spacing.sm};
   }
 `;
 
@@ -63,7 +65,7 @@ export const Content = styled.div`
   width: 1140px;
 
   @media (max-width: 1140px) {
-    width: auto;
+    width: 100%;
     max-width: 1140px;
   }
 `;
@@ -81,12 +83,16 @@ export const SideSection = styled.div`
 `;
 
 export const MainSection = styled.div`
-  width: 100%;
+  width: calc(1140px - 264px - 24px);
   height: 100%;
   display: flex;
   flex-direction: column;
 
   gap: ${({ theme }) => theme.spacing.md};
+
+  @media (max-width: 1140px) {
+    width: 100%;
+  }
 `;
 
 export const StickySideContainer = styled.div`

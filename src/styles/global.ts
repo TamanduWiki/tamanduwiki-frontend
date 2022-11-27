@@ -14,7 +14,7 @@ export const globalStyles = css`
     width: inherit;
     font: 400 1rem Lato, sans-serif;
     -webkit-font-smoothing: antialiased;
-    color: ${theme.colors.neutral[700]};
+    color: ${theme.colors.neutral_700};
     background-color: #dedede; // Design System Exception
 
     background-image: url(${booksBackgroundImg.src});
@@ -24,7 +24,7 @@ export const globalStyles = css`
   button {
     font: normal 1rem Lato, sans-serif;
     -webkit-font-smoothing: antialiased;
-    color: ${theme.colors.neutral[700]};
+    color: ${theme.colors.neutral_700};
   }
 
   button {
