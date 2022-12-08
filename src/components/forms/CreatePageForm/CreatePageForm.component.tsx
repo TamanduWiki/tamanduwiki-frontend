@@ -1,6 +1,6 @@
-import { Formik, FormikHelpers } from "formik";
+import { Formik, FormikHelpers, useFormik } from "formik";
 import toast from "react-hot-toast";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
@@ -12,6 +12,7 @@ import { handleError } from "@/utils";
 import { StyledForm } from "./CreatePageForm.styles";
 import { schema } from "./CreatePageForm.validations";
 import { useState } from "react";
+import TextareaInput from "@/components/common/TextareaInput";
 
 interface Values {
   title: string;
@@ -48,7 +49,7 @@ const getBase64 = async (file: File) => {
 };
 
 const CreatePageForm = () => {
-  // const router = useRouter();
+  const router = useRouter();
 
   const [image, setImage] = useState<File | undefined>();
 
@@ -56,11 +57,13 @@ const CreatePageForm = () => {
     try {
       const imageBase64 = await getBase64(image);
 
-      await api.post("/pages", { ...values, imageBase64, imageFileType: 'png' });
+      const data = await api
+        .post<{ slug: string }>("/pages", { ...values, imageBase64, imageFileType: 'png' })
+        .then(({ data }) => data);
 
       toast.success("Página criada com sucesso");
 
-      // await router.push("/login");
+      await router.push(`/pages/${data.slug}`);
     } catch(error) {
       handleError(error)
     } finally {
@@ -74,7 +77,7 @@ const CreatePageForm = () => {
       onSubmit={onSubmit}
       validationSchema={schema}
     >
-      {({ isSubmitting, setFieldValue }) =>
+      {({ isSubmitting }) =>
         <StyledForm>
           <Input
             fluid
@@ -86,21 +89,28 @@ const CreatePageForm = () => {
 
           <Input
             fluid
-            name="content"
-            label="Conteúdo"
-            placeholder="Ex.: A expressão Lorem ipsum em design gráfico e editoração é um texto padrão em latim utilizado na produção gráfica para preencher os espaços de texto em publicações para testar e ajustar aspectos visuais antes de utilizar conteúdo real..."
-            formikField
-          />
-
-          <Input
-            fluid
             name="slug"
             label="Slug"
             placeholder="Ex.: bases-matematicas"
             formikField
           />
 
-          <input type="file" name="image" onChange={event => setImage(event.currentTarget.files[0])} />
+          <TextareaInput
+            fluid
+            name="content"
+            label="Conteúdo"
+            placeholder="Ex.: A expressão Lorem ipsum em design gráfico e editoração é um texto padrão em latim utilizado na produção gráfica para preencher os espaços de texto em publicações para testar e ajustar aspectos visuais antes de utilizar conteúdo real..."
+            formikField
+          />
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            Imagem da página
+            <input
+              type="file"
+              name="image"
+              onChange={event => setImage(event.currentTarget.files[0])}
+            />
+          </div>
 
           <Button
             fluid

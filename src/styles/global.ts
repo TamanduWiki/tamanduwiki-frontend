@@ -12,7 +12,7 @@ export const globalStyles = css`
   body {
     height: inherit;
     width: inherit;
-    font: 400 1rem Lato, sans-serif;
+    font: 400 1rem WorkSans, sans-serif;
     -webkit-font-smoothing: antialiased;
     color: ${theme.colors.neutral_700};
     background-color: #dedede; // Design System Exception
@@ -21,8 +21,9 @@ export const globalStyles = css`
   }
 
   input,
+  textarea,
   button {
-    font: normal 1rem Lato, sans-serif;
+    font: normal 1rem WorkSans, sans-serif;
     -webkit-font-smoothing: antialiased;
     color: ${theme.colors.neutral_700};
   }
@@ -32,26 +33,26 @@ export const globalStyles = css`
   }
 
   h1 {
-    font-weight: 500;
-    font-size: 2.5rem;
-    line-height: 1.25;
-  }
-
-  h2 {
-    font-weight: 500;
-    font-size: 2.25rem;
-    line-height: 1.25;
-  }
-
-  h3 {
-    font-weight: 500;
+    font-weight: 700;
     font-size: 2rem;
     line-height: 1.25;
   }
 
-  h4 {
-    font-weight: 500;
+  h2 {
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-weight: 600;
     font-size: 1.5rem;
+    line-height: 1.25;
+  }
+
+  h4 {
+    font-weight: 600;
+    font-size: 1.25rem;
     line-height: 1.25;
   }
 
@@ -63,4 +64,23 @@ export const globalStyles = css`
     outline: 0;
     box-sizing: border-box;
   }
+
+  /* ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: ${theme.colors.neutral_200}; // TODO change
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ${theme.colors.neutral_300};
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: gray; // TODO change
+    transition: background 250ms;
+  } */
 `;

@@ -31,7 +31,6 @@ export const StyledButton = styled.button<StyledButtonProps>`
   justify-content: center;
   gap: ${({ theme }) => theme.spacing.xxs};
   padding: 0 ${({ theme }) => theme.spacing.md};
-  border-radius: ${({ theme }) => theme.borderRadius.xs};
   box-shadow: 2px 2px 8px 1px ${({ theme }) => theme.colors.neutral_200};
   border: none;
   cursor: pointer;

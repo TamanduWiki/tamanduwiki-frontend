@@ -1,9 +1,7 @@
 import styled from "@emotion/styled";
-import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useCallback, useState } from "react";
-import { FiTrash2 } from "react-icons/fi";
 
 import loadingImg from "@/assets/animated/loading_balls_green.svg";
 
@@ -24,28 +22,22 @@ const PageContainer = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
+  padding: 32px 24px;
+
+  & + & {
+    border-top: 1px solid ${({ theme }) => theme.colors.neutral_200};
+  }
 
   @media (max-width: 540px) {
     flex-direction: column;
 
-    img {
-      width: 100%;
-      height: 160px;
-    }
-  }
-`
-
-const StyledButton = styled(Button)`
-  @media (max-width: 540px) {
-    display: none;
+    padding: 8px;
   }
 
-  padding: 0 4px;
 `
 
 const ImageContainer = styled.div`
-  border-radius: ${({ theme }) => theme.borderRadius.xs};
-  box-shadow: inset 0px 0px 8px 0.5px ${({ theme }) => theme.colors.neutral_600};
+  border-radius: 1px;
 
   min-width: 112px;
   height: 112px;
@@ -56,6 +48,24 @@ const ImageContainer = styled.div`
   @media (max-width: 540px) {
     width: 100%;
     height: 160px;
+    border-radius: 8px;
+  }
+`
+
+const MainContainer = styled.div<{ noContent: boolean }>`
+  display: flex;
+  width: 100%;
+  padding: ${({ theme }) => theme.spacing.xl};
+  height: ${({ noContent }) => noContent ? '100%' : 'auto'};
+  flex-direction: column;
+
+  @media (max-width: 540px) {
+    padding: 0;
+    gap: 24px;
+
+    h1 {
+      padding: 24px;
+    }
   }
 `
 
@@ -80,7 +90,7 @@ interface IListPagesResponse {
   meta: IMetaProps;
 }
 
-const HomePage = ({ initialSearchParam }) => {
+const HomePage = () => {
   const router = useRouter()
 
   const [pagesMeta, setPagesMeta] = useState<IMetaProps>({ total: 0, per: 10, page: 1 });
@@ -133,88 +143,57 @@ const HomePage = ({ initialSearchParam }) => {
 
       <MainPageLayout
         onSearch={handleSearchPages}
-        initialSearchValue={initialSearchParam}
-        sideText={`Mostrando ${pages.length} de ${pagesMeta.total} páginas`}
+        bottomComponent={`Mostrando ${pages.length} de ${pagesMeta.total} itens`}
       >
-        {/* Colocar isso aqui quando já estiver logado */}
-
-        {/* <Flex gap="md" align="center" justify="space-between" radius="sm" bgColor="neutral_100" padding="md" style={{ minWidth: "100%" }}>
-          <h4>Que tal deixar uma contribuição?</h4>
-
-          <Link href="/create-page" style={{ textDecoration: 'none' }}>
-            <Button size="md">
-              Criar Página
-            </Button>
-          </Link>
-        </Flex> */}
-
-        <Flex
-          gap="lg"
-          radius="sm"
-          padding="md"
-          direction="column"
-          width="fit-parent"
-          height="fit-parent"
-          bgColor="neutral_100"
-        >
+        <MainContainer noContent={!initialLoad && !pages.length}>
           {initialLoad &&
             <Flex height="fit-parent" width="fit-parent" align="center" justify="center">
               <Image src={loadingImg} alt="loading_img"/>
             </Flex>
           }
 
-          {!initialLoad && pages.map((page, index) =>
-            <>
-              {index !== 0 &&
-                <div
-                  style={{
-                    height: '1px',
-                    width: '100%',
-                    backgroundColor: theme.colors.neutral_200
-                  }}
-                />
-              }
+          <h1>Últimas alterações</h1>
 
-              <PageContainer style={{ cursor: 'pointer' }} onClick={() => router.push(`/${page.id}`)}>
-                <ImageContainer style={{ backgroundImage: `url(${page.imageUrl})` }} />
+          {!initialLoad && pages.map((page) =>
+            <PageContainer style={{ cursor: 'pointer' }} onClick={() => router.push(`/pages/${page.slug}`)}>
+              <ImageContainer style={{ backgroundImage: `url(${page.imageUrl})` }} />
 
-                <Flex
-                  gap="xs"
-                  direction="column"
-                  width="fit-parent"
-                  justify="space-between"
-                >
-                  <Flex direction="column" width="fit-parent" gap="xs">
-                    <h3>{page.title}</h3>
+              <Flex
+                gap="xs"
+                direction="column"
+                width="fit-parent"
+                justify="space-between"
+              >
+                <Flex direction="column" width="fit-parent" gap="xs">
+                  <h3>{page.title}</h3>
 
-                    <p
-                      style={{
-                        overflow: 'hidden',
-                        color: theme.colors.neutral_400,
-                        width: '100%',
-                        maxHeight: '40px'
-                      }}
-                    >
-                      {page.content}
-                    </p>
+                  <p
+                    style={{
+                      overflow: 'hidden',
+                      color: theme.colors.neutral_400,
+                      width: '100%',
+                      maxHeight: '40px'
+                    }}
+                  >
+                    {page.content}
+                  </p>
+                </Flex>
+
+                <Flex width="fit-parent" gap="md">
+                  <Flex radius="xs" bgColor="neutral_200" style={{ fontSize: '14px', fontWeight: '500', padding: `${theme.spacing.xxs} ${theme.spacing.xs}` }}>
+                    LOREM
                   </Flex>
 
-                  <Flex width="fit-parent" gap="md">
-                    <Flex radius="xs" bgColor="neutral_200" style={{ fontSize: '14px', fontWeight: '500', padding: `${theme.spacing.xxs} ${theme.spacing.xs}` }}>
-                      LOREM
-                    </Flex>
+                  <Flex radius="xs" bgColor="neutral_200" style={{ fontSize: '14px', fontWeight: '500', padding: `${theme.spacing.xxs} ${theme.spacing.xs}` }}>
+                    TESTE
+                  </Flex>
 
-                    <Flex radius="xs" bgColor="neutral_200" style={{ fontSize: '14px', fontWeight: '500', padding: `${theme.spacing.xxs} ${theme.spacing.xs}` }}>
-                      TESTE
-                    </Flex>
-
-                    <Flex radius="xs" bgColor="neutral_200" style={{ fontSize: '14px', fontWeight: '500', padding: `${theme.spacing.xxs} ${theme.spacing.xs}` }}>
-                      TESTE2
-                    </Flex>
+                  <Flex radius="xs" bgColor="neutral_200" style={{ fontSize: '14px', fontWeight: '500', padding: `${theme.spacing.xxs} ${theme.spacing.xs}` }}>
+                    TESTE2
                   </Flex>
                 </Flex>
-              </PageContainer>
-            </>
+              </Flex>
+            </PageContainer>
           )}
 
           {!initialLoad && !pages.length &&
@@ -225,25 +204,19 @@ const HomePage = ({ initialSearchParam }) => {
 
           {pagesMeta.total > pages.length &&
             <Button
+              fluid
               variant="secondary"
               loading={pagesLoading}
               disabled={pagesLoading}
-              onClick={() => handleListPages(pagesMeta.page + 1)} fluid>Carregar mais páginas...</Button>
+              onClick={() => handleListPages(pagesMeta.page + 1)}
+            >
+              Carregar mais páginas...
+            </Button>
           }
-        </Flex>
+        </MainContainer>
       </MainPageLayout>
     </>
   );
 };
 
 export default HomePage;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { searchPage } = context.query;
-
-  return {
-    props: {
-      initialSearchParam: searchPage || '',
-    },
-  };
-};

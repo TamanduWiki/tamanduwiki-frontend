@@ -24,11 +24,8 @@ interface IPage {
 }
 
 const ImageContainer = styled.div<{ url: string }>`
-  border-radius: ${({ theme }) => theme.borderRadius.xs};
-  box-shadow: inset 0px 0px 8px 0.5px ${({ theme }) => theme.colors.neutral_600};
-
   width: 100%;
-  height: 240px;
+  min-height: 240px;
 
   background-size: cover;
   background-position: 50% 50%;
@@ -80,18 +77,10 @@ const PageCreationPage = () => {
 
   return (
     <>
-      <Head><title>Criar Página @ UFABCwiki</title></Head>
+      <Head><title>Criar Página - UFABCwiki</title></Head>
 
       <MainPageLayout>
-        <Flex
-          gap="lg"
-          direction="column"
-          radius="sm"
-          bgColor="neutral_100"
-          padding="md"
-          width="fit-parent"
-          style={{ minWidth: "100%", height: '100%' }}
-        >
+        <Flex gap="lg" direction="column" padding="xl" width="fit-parent" height={loading ? "fit-parent" : "hug-content"}>
           {loading &&
             <Flex height="fit-parent" width="fit-parent" align="center" justify="center">
               <Image src={loadingImg} alt="loading_img"/>
@@ -120,4 +109,3 @@ const PageCreationPage = () => {
 };
 
 export default PageCreationPage;
-

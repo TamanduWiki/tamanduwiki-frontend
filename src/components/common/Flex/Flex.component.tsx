@@ -3,6 +3,7 @@ import { StyledDiv, StyledDivProps } from "./Flex.styles";
 
 interface Props extends StyledDivProps {
   children: React.ReactNode;
+  onClick?: () => void;
   style?: CSSProperties;
 }
 

@@ -31,7 +31,6 @@ export const MainAreaContent = styled.div`
   gap: ${({ theme }) => theme.spacing.xl};
   width: 560px;
   padding: ${({ theme }) => theme.spacing.xl};
-  border-radius: ${({ theme }) => theme.borderRadius.sm};
 
   background-color: white;
 

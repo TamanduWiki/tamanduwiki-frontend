@@ -7,15 +7,14 @@ import CreatePageForm from "@/components/forms/CreatePageForm";
 const PageCreationPage = () => {
   return (
     <>
-      <Head><title>Criar Página @ UFABCwiki</title></Head>
+      <Head><title>Criar Página - UFABCwiki</title></Head>
 
       <MainPageLayout>
         <Flex
           gap="lg"
           direction="column"
-          radius="sm"
           bgColor="neutral_100"
-          padding="md"
+          padding="xl"
           width="fit-parent"
           style={{ minWidth: "100%", height: '100%' }}
         >

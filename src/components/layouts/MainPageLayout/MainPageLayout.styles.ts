@@ -6,7 +6,8 @@ export const PageContainer = styled.div`
   grid-template-rows: 80px auto;
   grid-template-areas: 'header' 'content';
 
-  gap: ${({ theme }) => theme.spacing.lg};
+  gap: ${({ theme }) => theme.spacing.sm};
+
   min-height: 100vh;
 `;
 
@@ -17,7 +18,6 @@ export const MainHeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 8px 1px ${({ theme }) => theme.colors.neutral_200};
 
   position: fixed;
   z-index: 100;
@@ -25,7 +25,6 @@ export const MainHeaderContainer = styled.div`
   grid-area: header;
 
   @media (max-width: 1140px) {
-    padding: 0 ${({ theme }) => theme.spacing.xs}
   }
 `;
 
@@ -49,11 +48,8 @@ export const ContentContainer = styled.div`
   justify-content: center;
 
   grid-area: content;
-  padding-bottom: ${({ theme }) => theme.spacing.lg};
 
   @media (max-width: 1140px) {
-    padding: 0 ${({ theme }) => theme.spacing.xs};
-    padding-bottom: ${({ theme }) => theme.spacing.sm};
   }
 `;
 
@@ -61,8 +57,10 @@ export const Content = styled.div`
   display: flex;
   justify-content: center;
   height: 100%;
-  gap: ${({ theme }) => theme.spacing.lg};
   width: 1140px;
+  height: calc(100vh - 12px - 80px);
+
+  background-color: ${({ theme }) => theme.colors.neutral_100};
 
   @media (max-width: 1140px) {
     width: 100%;
@@ -70,42 +68,36 @@ export const Content = styled.div`
   }
 `;
 
+const sideSectionWidth = "264px";
+
 export const SideSection = styled.div`
-  min-width: 264px;
+  min-width: ${sideSectionWidth};
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.md};
   height: 100%;
+
+  border-right: 1px solid ${({ theme }) => theme.colors.neutral_200};
 
   @media (max-width: 1140px) {
     display: none;
   }
 `;
 
-export const MainSection = styled.div`
-  width: calc(1140px - 264px - 24px);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+export const ChildrenContainer = styled.div`
+  overflow-y: auto;
 
-  gap: ${({ theme }) => theme.spacing.md};
+  height: 100%;
+`
+
+export const MainSection = styled.div<{ withBottomComponent: boolean }>`
+  width: calc(1140px - ${sideSectionWidth});
+
+  height: ${({ withBottomComponent }) => withBottomComponent ? 'calc(100% - 36px)' : '100%'};
 
   @media (max-width: 1140px) {
     width: 100%;
   }
 `;
-
-export const StickySideContainer = styled.div`
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  top: 96px;
-
-  display: flex;
-  width: 100%;
-  height: fit-content;
-  gap: ${({ theme }) => theme.spacing.md};
-  flex-direction: column;
-`
 
 export const HeaderButtonsContainer = styled.div`
   display: flex;

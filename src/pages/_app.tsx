@@ -13,6 +13,7 @@ import Flex from "@/components/common/Flex";
 import { globalStyles } from "@/styles";
 import { theme } from '@/styles/theme';
 import "@/styles/fonts.css";
+import { AuthProvider } from "@/contexts/auth/AuthProvider";
 
 function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -33,14 +34,14 @@ function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <>
-      <Head><link rel="icon" href="/images/ufabcwiki_icon.ico" /></Head>
-
-      <Global styles={globalStyles} />
-
-      <Toaster position="top-right" toastOptions={{ duration: 8000 }}/>
-
+    <AuthProvider>
       <ThemeProvider theme={theme}>
+        <Head><link rel="icon" href="/images/ufabcwiki_icon.ico" /></Head>
+
+        <Global styles={globalStyles} />
+
+        <Toaster position="top-right" toastOptions={{ duration: 8000 }}/>
+
         {loading
           ? (
             <Flex align="center" justify="center" style={{ height: '100vh', width: '100vw' }}>
@@ -50,7 +51,7 @@ function App({ Component, pageProps }: AppProps) {
           : <Component {...pageProps} />
         }
       </ThemeProvider>
-    </>
+    </AuthProvider>
   );
 };
 
