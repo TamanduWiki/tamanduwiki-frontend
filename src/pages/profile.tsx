@@ -27,7 +27,7 @@ const ProfilePage = () => {
           <h2>Página em construção...</h2>
 
           <BuildingBlocksImg
-            src={undrawnBuildingImages}
+            src={undrawnBuildingImages as string}
             alt="undraw_building_blocks"
           />
         </Flex>

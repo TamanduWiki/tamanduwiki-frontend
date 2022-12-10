@@ -12,7 +12,12 @@ import {
 
 import { PasswordRuleContainer } from "./PasswordStrength.styles";
 
-const PasswordRule = ({ obeyed, label }) => (
+interface PasswordRuleProps {
+  obeyed: boolean;
+  label: string;
+}
+
+const PasswordRule = ({ obeyed, label }: PasswordRuleProps) => (
   <PasswordRuleContainer obeyed={obeyed}>
     {obeyed
       ? <FiCheck style={{ flexShrink: 0 }} />

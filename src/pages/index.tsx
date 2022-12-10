@@ -13,8 +13,6 @@ import MainPageLayout from "@/components/layouts/MainPageLayout";
 
 import api from "@/infra/api";
 
-import { theme } from "@/styles/theme";
-
 import { handleError } from "@/utils";
 
 const PageContainer = styled.div`
@@ -35,7 +33,8 @@ const PageContainer = styled.div`
   }
 `;
 
-const genRandomString = () => (Math.random() + 1).toString(36).substring(Math.random() * 10);
+const genRandomString = () =>
+  (Math.random() + 1).toString(36).substring(Math.random() * 10);
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
@@ -64,12 +63,12 @@ const PageTitle = styled.h1`
   @media (max-width: 1140px) {
     padding: 16px 16px 0 16px;
   }
-`
+`;
 
 const MainContainer = styled.div<{ noContent: boolean }>`
   display: flex;
   width: 100%;
-  height: ${({ noContent }) => noContent ? '100%' : 'auto'};
+  height: ${({ noContent }) => (noContent ? "100%" : "auto")};
   flex-direction: column;
   gap: 16px;
 
@@ -110,13 +109,13 @@ const NoContentContainer = styled.div`
 `;
 
 interface IPage {
-  id: string,
-  title: string,
-  content: string,
-  slug: string,
-  createdAt: string,
-  updatedAt: string,
-  imageUrl?: string,
+  id: string;
+  title: string;
+  content: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+  imageUrl?: string;
 }
 
 interface IMetaProps {
@@ -131,15 +130,22 @@ interface IListPagesResponse {
 }
 
 const HomePage = () => {
-  const router = useRouter()
+  const router = useRouter();
 
-  const [pagesMeta, setPagesMeta] = useState<IMetaProps>({ total: 0, per: 10, page: 1 });
+  const [pagesMeta, setPagesMeta] = useState<IMetaProps>({
+    total: 0,
+    per: 10,
+    page: 1,
+  });
   const [pages, setPages] = useState<IPage[]>([]);
-  const [searchingFor, setSearchingFor] = useState('');
+  const [searchingFor, setSearchingFor] = useState("");
   const [initialLoad, setInitialLoad] = useState(true);
   const [pagesLoading, setPagesLoading] = useState(false);
 
-  const noContent = useMemo(() => !initialLoad && !pages.length, [initialLoad, pages])
+  const noContent = useMemo(
+    () => !initialLoad && !pages.length,
+    [initialLoad, pages]
+  );
 
   const handleSearchPages = useCallback(async (searchParam: string) => {
     setPagesLoading(true);
@@ -148,12 +154,14 @@ const HomePage = () => {
       setSearchingFor(searchParam);
 
       await api
-        .get<IListPagesResponse>('/pages', { params: { page: 1, searchFor: searchParam } })
+        .get<IListPagesResponse>("/pages", {
+          params: { page: 1, searchFor: searchParam },
+        })
         .then(({ data }) => {
-          setPages(data.pages)
+          setPages(data.pages);
           setPagesMeta(data.meta);
         });
-    } catch (error: any) {
+    } catch (error) {
       handleError(error);
     } finally {
       setPagesLoading(false);
@@ -161,77 +169,101 @@ const HomePage = () => {
     }
   }, []);
 
-  const handleListPages = useCallback(async (page?: number) => {
-    setPagesLoading(true);
+  const handleListPages = useCallback(
+    async (page?: number) => {
+      setPagesLoading(true);
 
-    try {
-      await api
-        .get<IListPagesResponse>('/pages', { params: { page: page || 1, searchFor: searchingFor } })
-        .then(({ data }) => {
-          setPages(prevPages => prevPages.concat(data.pages))
-          setPagesMeta(data.meta);
-        });
-    } catch (error: any) {
-      handleError(error);
-    } finally {
-      setPagesLoading(false);
-      setInitialLoad(false);
-    }
-  }, [searchingFor]);
+      try {
+        await api
+          .get<IListPagesResponse>("/pages", {
+            params: { page: page || 1, searchFor: searchingFor },
+          })
+          .then(({ data }) => {
+            setPages((prevPages) => prevPages.concat(data.pages));
+            setPagesMeta(data.meta);
+          });
+      } catch (error) {
+        handleError(error);
+      } finally {
+        setPagesLoading(false);
+        setInitialLoad(false);
+      }
+    },
+    [searchingFor]
+  );
 
   return (
     <>
-      <Head><title>UFABCwiki</title></Head>
+      <Head>
+        <title>UFABCwiki</title>
+      </Head>
 
       <MainPageLayout onSearch={handleSearchPages}>
         <MainContainer noContent={noContent}>
           {initialLoad && (
-            <Flex height="fit-parent" width="fit-parent" align="center" justify="center">
-              <Image src={loadingImg} alt="loading_img"/>
+            <Flex
+              height="fit-parent"
+              width="fit-parent"
+              align="center"
+              justify="center"
+            >
+              <Image src={loadingImg as string} alt="loading_img" />
             </Flex>
           )}
 
           {!initialLoad && <PageTitle>Últimas alterações</PageTitle>}
 
-          {!noContent && pages.map((page) =>
-            <PageContainer onClick={() => router.push(`/pages/${page.slug}`)}>
-              <ImageContainer imageUrl={page.imageUrl} />
+          {!noContent &&
+            pages.map((page) => (
+              <PageContainer onClick={() => router.push(`/pages/${page.slug}`)}>
+                <ImageContainer imageUrl={page.imageUrl} />
 
-              <Flex
-                gap="xs"
-                direction="column"
-                width="fit-parent"
-                height="fit-parent"
-                justify="space-between"
-                padding="md"
-                style={{ overflowY: 'auto' }}
-              >
-                <Flex direction="column" width="fit-parent" gap="xs">
-                  <h3>{page.title}</h3>
+                <Flex
+                  gap="xs"
+                  direction="column"
+                  width="fit-parent"
+                  height="fit-parent"
+                  justify="space-between"
+                  padding="md"
+                  style={{ overflowY: "auto" }}
+                >
+                  <Flex direction="column" width="fit-parent" gap="xs">
+                    <h3>{page.title}</h3>
 
-                  <PageDescription>
-                    {page.content}
-                  </PageDescription>
+                    <PageDescription>{page.content}</PageDescription>
+                  </Flex>
+
+                  <Flex
+                    width="fit-parent"
+                    gap="md"
+                    style={{ flexWrap: "wrap" }}
+                  >
+                    {/* TODO remove this mock */}
+
+                    {Array(getRandomIntInclusive(2, 5))
+                      .fill("")
+                      .map(() => (
+                        <Badge>{genRandomString()}</Badge>
+                      ))}
+                  </Flex>
                 </Flex>
-
-                <Flex width="fit-parent" gap="md" style={{ flexWrap: 'wrap' }}>
-                  {/* TODO remove this mock */}
-
-                  {Array(getRandomIntInclusive(2,5)).fill('').map(() => <Badge>{genRandomString()}</Badge>)}
-                </Flex>
-              </Flex>
-            </PageContainer>
-          )}
+              </PageContainer>
+            ))}
 
           {noContent && (
-            <Flex height="fit-parent" width="fit-parent" align="center" justify="center">
+            <Flex
+              height="fit-parent"
+              width="fit-parent"
+              align="center"
+              justify="center"
+            >
               <NoContentContainer>
                 <strong>Não há resultados para esta busca...</strong>
               </NoContentContainer>
             </Flex>
           )}
 
-          {(!initialLoad && pages.length) && (
+          {!initialLoad && pages.length && (
             <BottomComponentContainer>
               {pagesMeta.total > pages.length && (
                 <Button

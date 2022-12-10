@@ -25,7 +25,7 @@ const LoginPage = () => {
         <p>Página em construção...</p>
 
         <BuildingBlocksImg
-          src={undrawnBuildingImages}
+          src={undrawnBuildingImages as string}
           alt="undraw_building_blocks"
         />
       </SimplePageLayout>

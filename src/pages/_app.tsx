@@ -45,7 +45,7 @@ function App({ Component, pageProps }: AppProps) {
         {loading
           ? (
             <Flex align="center" justify="center" style={{ height: '100vh', width: '100vw' }}>
-              <Image src={loadingImg} alt="loading_img" />
+              <Image src={loadingImg as string} alt="loading_img" />
             </Flex>
           )
           : <Component {...pageProps} />
@@ -53,6 +53,6 @@ function App({ Component, pageProps }: AppProps) {
       </ThemeProvider>
     </AuthProvider>
   );
-};
+}
 
 export default App;

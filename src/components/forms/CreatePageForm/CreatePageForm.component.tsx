@@ -1,4 +1,4 @@
-import { Formik, FormikHelpers, useFormik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 
@@ -33,7 +33,7 @@ const getBase64 = async (file: File) => {
 
   return new Promise(resolve => {
     // Make new FileReader
-    let reader = new FileReader();
+    const reader = new FileReader();
 
     // Convert the file to base64 text
     reader.readAsDataURL(file);

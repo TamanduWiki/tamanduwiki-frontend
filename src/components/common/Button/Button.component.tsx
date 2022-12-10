@@ -12,6 +12,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement>{
   size?: "lg" | "md";
   fluid?: boolean;
   loading?: boolean;
+  onClick?: () => void | Promise<void>;
 }
 
 const Button = ({ children, variant = "primary", fluid, size = "lg", loading, ...rest }: Props) => {
@@ -22,7 +23,7 @@ const Button = ({ children, variant = "primary", fluid, size = "lg", loading, ..
           <Image
             height={48}
             alt="button_loading"
-            src={variant === "primary" || variant === "warning" ? loadingWhiteImg : loadingBlackImg}
+            src={variant === "primary" || variant === "warning" ? loadingWhiteImg as string : loadingBlackImg as string}
             style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto' }}
           />
         )

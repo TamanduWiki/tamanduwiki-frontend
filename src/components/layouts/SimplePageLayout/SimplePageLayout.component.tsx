@@ -16,7 +16,7 @@ const LoginPage = ({ children, bottomLink }: Props) => {
   return (
     <PageContainer>
       <Content>
-        <Link href="/"><Image src={logoImg} alt="logo" /></Link>
+        <Link href="/"><Image src={logoImg as string} alt="logo" /></Link>
 
         <MainAreaContent>
           {children}

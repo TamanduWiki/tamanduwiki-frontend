@@ -49,23 +49,21 @@ const PageCreationPage = () => {
       await push("/");
 
       toast.success("Página deletada com sucesso");
-    } catch (error: any) {
+    } catch (error) {
       handleError(error);
     } finally {
       setLoadingDelete(false);
     }
-  }, [page]);
+  }, [page?.id, push]);
 
   const handleGetPage = useCallback(async (slug: string) => {
     setLoading(true);
 
     try {
       await api
-        .get(`/pages/${slug}`)
-        .then(({ data }) => {
-          setPage(data);
-        });
-    } catch (error: any) {
+        .get<IPage>(`/pages/${slug}`)
+        .then(({ data }) => setPage(data));
+    } catch (error) {
       handleError(error);
     } finally {
       setLoading(false);
@@ -73,8 +71,8 @@ const PageCreationPage = () => {
   }, []);
 
   useEffect(() => {
-    if (!!page_slug) handleGetPage(page_slug as string);
-  }, [page_slug]);
+    if (page_slug) handleGetPage(page_slug as string);
+  }, [handleGetPage, page_slug]);
 
   return (
     <>
@@ -90,7 +88,7 @@ const PageCreationPage = () => {
 
           {loading &&
             <Flex height="fit-parent" width="fit-parent" align="center" justify="center">
-              <Image src={loadingImg} alt="loading_img"/>
+              <Image src={loadingImg as string} alt="loading_img"/>
             </Flex>
           }
 
