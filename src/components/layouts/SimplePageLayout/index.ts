@@ -1,1 +1,1 @@
-export { default } from './SimplePageLayout.component';
+export { default } from "./SimplePageLayout.component";

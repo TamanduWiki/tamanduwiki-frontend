@@ -7,7 +7,9 @@ import CreatePageForm from "@/components/forms/CreatePageForm";
 const PageCreationPage = () => {
   return (
     <>
-      <Head><title>Criar Página - UFABCwiki</title></Head>
+      <Head>
+        <title>Criar Página - UFABCwiki</title>
+      </Head>
 
       <MainPageLayout>
         <Flex
@@ -16,7 +18,7 @@ const PageCreationPage = () => {
           bgColor="neutral_100"
           padding="xl"
           width="fit-parent"
-          style={{ minWidth: "100%", height: '100%' }}
+          style={{ minWidth: "100%", height: "100%" }}
         >
           <CreatePageForm />
         </Flex>
@@ -26,4 +28,3 @@ const PageCreationPage = () => {
 };
 
 export default PageCreationPage;
-

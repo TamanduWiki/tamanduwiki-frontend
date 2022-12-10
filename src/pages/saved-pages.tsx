@@ -15,15 +15,22 @@ const BuildingBlocksImg = styled(Image)`
     width: 240px;
     height: 240px;
   }
-`
+`;
 
 const SavedPagesPage = () => {
   return (
     <>
-      <Head><title>Páginas salvas - UFABCwiki</title></Head>
+      <Head>
+        <title>Páginas salvas - UFABCwiki</title>
+      </Head>
 
       <MainPageLayout>
-        <Flex height="fit-parent" align="center" justify="center" direction="column">
+        <Flex
+          height="fit-parent"
+          align="center"
+          justify="center"
+          direction="column"
+        >
           <h2>Página em construção...</h2>
 
           <BuildingBlocksImg

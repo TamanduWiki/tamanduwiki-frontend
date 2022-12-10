@@ -1,1 +1,1 @@
-export { default } from './CreatePageForm.component';
+export { default } from "./CreatePageForm.component";

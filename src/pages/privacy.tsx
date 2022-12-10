@@ -14,12 +14,14 @@ const BuildingBlocksImg = styled(Image)`
     width: 240px;
     height: 240px;
   }
-`
+`;
 
 const LoginPage = () => {
   return (
     <>
-      <Head><title>Privacidade - UFABCwiki</title></Head>
+      <Head>
+        <title>Privacidade - UFABCwiki</title>
+      </Head>
 
       <SimplePageLayout bottomLink={{ href: "/", label: "Voltar ao início" }}>
         <p>Página em construção...</p>

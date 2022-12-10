@@ -20,25 +20,31 @@ interface Values {
 }
 
 const initialValues = {
-  email: '',
-  password: '',
-}
+  email: "",
+  password: "",
+};
 
 const LoginForm = () => {
   const router = useRouter();
   const { handleLogin } = useContext(AuthContext);
 
-  const onSubmit = async (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
+  const onSubmit = async (
+    values: Values,
+    { setSubmitting }: FormikHelpers<Values>
+  ) => {
     try {
-      const response = await api.post<{ token: string, auth: boolean }>("/login", values)
+      const response = await api.post<{ token: string; auth: boolean }>(
+        "/login",
+        values
+      );
 
       handleLogin({ token: response.data.token });
 
       toast.success("Login realizado com sucesso");
 
       await router.push("/");
-    } catch(error) {
-      handleError(error)
+    } catch (error) {
+      handleError(error);
     } finally {
       setSubmitting(false);
     }
@@ -50,7 +56,7 @@ const LoginForm = () => {
       onSubmit={onSubmit}
       validationSchema={schema}
     >
-      {({ isSubmitting }) =>
+      {({ isSubmitting }) => (
         <StyledForm>
           <Input
             fluid
@@ -77,9 +83,9 @@ const LoginForm = () => {
             Fazer Login
           </Button>
         </StyledForm>
-      }
+      )}
     </Formik>
-  )
+  );
 };
 
 export default LoginForm;

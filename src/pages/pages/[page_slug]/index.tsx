@@ -15,13 +15,13 @@ import styled from "@emotion/styled";
 import { FiArrowLeft } from "react-icons/fi";
 
 interface IPage {
-  id: string,
-  title: string,
-  content: string,
-  slug: string,
-  createdAt: string,
-  updatedAt: string,
-  imageUrl?: string,
+  id: string;
+  title: string;
+  content: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+  imageUrl?: string;
 }
 
 const ImageContainer = styled.div<{ url: string }>`
@@ -31,10 +31,13 @@ const ImageContainer = styled.div<{ url: string }>`
   background-size: cover;
   background-position: 50% 50%;
   background-image: ${({ url }) => `url(${url})`};
-`
+`;
 
 const PageCreationPage = () => {
-  const { push, query: { page_slug } } = useRouter();
+  const {
+    push,
+    query: { page_slug },
+  } = useRouter();
 
   const [loading, setLoading] = useState(true);
   const [loadingDelete, setLoadingDelete] = useState(false);
@@ -60,9 +63,7 @@ const PageCreationPage = () => {
     setLoading(true);
 
     try {
-      await api
-        .get<IPage>(`/pages/${slug}`)
-        .then(({ data }) => setPage(data));
+      await api.get<IPage>(`/pages/${slug}`).then(({ data }) => setPage(data));
     } catch (error) {
       handleError(error);
     } finally {
@@ -76,7 +77,9 @@ const PageCreationPage = () => {
 
   return (
     <>
-      <Head><title>Criar Página - UFABCwiki</title></Head>
+      <Head>
+        <title>Criar Página - UFABCwiki</title>
+      </Head>
 
       <MainPageLayout>
         <Flex direction="column" bgColor="neutral_100" width="fit-parent" height={loading ? "fit-parent" : "hug-content"} style={{ position: 'relative' }}>
@@ -86,13 +89,13 @@ const PageCreationPage = () => {
             </Button>
           </div>
 
-          {loading &&
+          {loading && (
             <Flex height="fit-parent" width="fit-parent" align="center" justify="center">
               <Image src={loadingImg as string} alt="loading_img"/>
             </Flex>
-          }
+          )}
 
-          {!loading && page &&
+          {!loading && page && (
             <>
               <ImageContainer url={page.imageUrl} />
 
@@ -108,7 +111,7 @@ const PageCreationPage = () => {
                 <Button variant="warning" loading={loadingDelete} disabled={loadingDelete} onClick={() => handleDeletePage()}>Deletar página</Button>
               </Flex>
             </>
-          }
+          )}
         </Flex>
       </MainPageLayout>
     </>

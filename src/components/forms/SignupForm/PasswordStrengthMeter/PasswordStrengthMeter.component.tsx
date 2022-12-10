@@ -19,10 +19,11 @@ interface PasswordRuleProps {
 
 const PasswordRule = ({ obeyed, label }: PasswordRuleProps) => (
   <PasswordRuleContainer obeyed={obeyed}>
-    {obeyed
-      ? <FiCheck style={{ flexShrink: 0 }} />
-      : <FiXCircle style={{ flexShrink: 0 }} />
-    }
+    {obeyed ? (
+      <FiCheck style={{ flexShrink: 0 }} />
+    ) : (
+      <FiXCircle style={{ flexShrink: 0 }} />
+    )}
 
     <p>{label}</p>
   </PasswordRuleContainer>
@@ -61,6 +62,6 @@ const PasswordStrengthMeter = ({ password }: Props) => {
       />
     </Flex>
   );
-}
+};
 
 export default PasswordStrengthMeter;

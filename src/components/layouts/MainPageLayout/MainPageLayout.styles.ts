@@ -102,7 +102,7 @@ export const ChildrenContainer = styled.div`
   overflow-y: auto;
 
   height: 100%;
-`
+`;
 
 export const MainSection = styled.div`
   width: calc(1140px - ${SIDE_SECTION_WIDTH});

@@ -8,11 +8,7 @@ interface Props extends StyledDivProps {
 }
 
 const Flex = ({ children, ...rest }: Props) => {
-  return (
-    <StyledDiv {...rest}>
-      {children}
-    </StyledDiv>
-  );
-}
+  return <StyledDiv {...rest}>{children}</StyledDiv>;
+};
 
 export default Flex;

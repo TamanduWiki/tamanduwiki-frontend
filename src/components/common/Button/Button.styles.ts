@@ -1,9 +1,9 @@
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
+import { css } from "@emotion/react";
+import styled from "@emotion/styled";
 
-import { theme } from '@/styles/theme';
+import { theme } from "@/styles/theme";
 
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'warning';
+export type ButtonVariant = "primary" | "secondary" | "tertiary" | "warning";
 
 interface StyledButtonProps {
   variant: ButtonVariant;
@@ -45,12 +45,16 @@ export const StyledButton = styled.button<StyledButtonProps>`
   transition: all 0.05s;
   line-height: 1;
   position: relative;
-  min-height: ${({ size }) => size === "md" ? '40px' : '48px'};
-  max-height: ${({ size }) => size === "md" ? '40px' : '48px'};
+  min-height: ${({ size }) => (size === "md" ? "40px" : "48px")};
+  max-height: ${({ size }) => (size === "md" ? "40px" : "48px")};
 
   white-space: nowrap;
 
-  ${({ fluid }) => fluid && css`width: 100%`};
+  ${({ fluid }) =>
+    fluid &&
+    css`
+      width: 100%;
+    `};
 
   ${({ variant }) => variantStyles[variant]};
 
