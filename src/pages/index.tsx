@@ -191,7 +191,7 @@ const HomePage = () => {
             </Flex>
           )}
 
-          <PageTitle>Últimas alterações</PageTitle>
+          {!initialLoad && <PageTitle>Últimas alterações</PageTitle>}
 
           {!noContent && pages.map((page) =>
             <PageContainer onClick={() => router.push(`/pages/${page.slug}`)}>
@@ -231,7 +231,7 @@ const HomePage = () => {
             </Flex>
           )}
 
-          {!noContent && (
+          {(!initialLoad && pages.length) && (
             <BottomComponentContainer>
               {pagesMeta.total > pages.length && (
                 <Button
