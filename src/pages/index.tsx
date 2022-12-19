@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
 import Head from "next/head";
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useRouter } from "next/router";
+import { useCallback, useMemo, useState } from "react";
 
 import loadingImg from "@/assets/animated/loading_balls_green.svg";
 
+import Badge from "@/components/common/Badge";
 import Flex from "@/components/common/Flex";
 import Button from "@/components/common/Button";
 import MainPageLayout from "@/components/layouts/MainPageLayout";
@@ -14,60 +16,98 @@ import api from "@/infra/api";
 import { theme } from "@/styles/theme";
 
 import { handleError } from "@/utils";
-import { useRouter } from "next/router";
 
 const PageContainer = styled.div`
   display: flex;
-  gap: 24px;
   width: 100%;
   justify-content: center;
   align-items: center;
-  padding: 32px 24px;
+  cursor: pointer;
+  height: 160px;
+  min-height: 160px;
+  border: 1px solid #dedede; // Design System Exception
 
-  & + & {
-    border-top: 1px solid ${({ theme }) => theme.colors.neutral_200};
-  }
+  background-color: ${({ theme }) => theme.colors.neutral_100};
 
   @media (max-width: 540px) {
     flex-direction: column;
-
-    padding: 8px;
+    height: 100%;
   }
+`;
 
-`
+const genRandomString = () => (Math.random() + 1).toString(36).substring(Math.random() * 10);
 
-const ImageContainer = styled.div`
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+}
+
+const ImageContainer = styled.div<{ imageUrl: string }>`
   border-radius: 1px;
 
-  min-width: 112px;
-  height: 112px;
+  height: 100%;
+  min-width: 160px;
+  width: 160px;
 
   background-size: cover;
   background-position: 50% 50%;
+  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
 
   @media (max-width: 540px) {
     width: 100%;
     height: 160px;
-    border-radius: 8px;
+  }
+`;
+
+const PageTitle = styled.h1`
+  @media (max-width: 1140px) {
+    padding: 16px 16px 0 16px;
   }
 `
 
 const MainContainer = styled.div<{ noContent: boolean }>`
   display: flex;
   width: 100%;
-  padding: ${({ theme }) => theme.spacing.xl};
   height: ${({ noContent }) => noContent ? '100%' : 'auto'};
   flex-direction: column;
+  gap: 16px;
 
   @media (max-width: 540px) {
     padding: 0;
     gap: 24px;
-
-    h1 {
-      padding: 24px;
-    }
   }
-`
+`;
+
+const PageDescription = styled.p`
+  overflow: hidden;
+  width: 100%;
+  max-height: 40px;
+`;
+
+const BottomComponentContainer = styled.div`
+  color: ${({ theme }) => theme.colors.neutral_400};
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.colors.neutral_100};
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid #dedede; // Design System Exception
+`;
+
+const NoContentContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: ${({ theme }) => theme.colors.neutral_100};
+  border: 1px solid #dedede; // Design System Exception
+
+  height: 100%;
+  width: 100%;
+`;
 
 interface IPage {
   id: string,
@@ -98,6 +138,8 @@ const HomePage = () => {
   const [searchingFor, setSearchingFor] = useState('');
   const [initialLoad, setInitialLoad] = useState(true);
   const [pagesLoading, setPagesLoading] = useState(false);
+
+  const noContent = useMemo(() => !initialLoad && !pages.length, [initialLoad, pages])
 
   const handleSearchPages = useCallback(async (searchParam: string) => {
     setPagesLoading(true);
@@ -141,78 +183,71 @@ const HomePage = () => {
     <>
       <Head><title>UFABCwiki</title></Head>
 
-      <MainPageLayout
-        onSearch={handleSearchPages}
-        bottomComponent={`Mostrando ${pages.length} de ${pagesMeta.total} itens`}
-      >
-        <MainContainer noContent={!initialLoad && !pages.length}>
-          {initialLoad &&
+      <MainPageLayout onSearch={handleSearchPages}>
+        <MainContainer noContent={noContent}>
+          {initialLoad && (
             <Flex height="fit-parent" width="fit-parent" align="center" justify="center">
               <Image src={loadingImg} alt="loading_img"/>
             </Flex>
-          }
+          )}
 
-          <h1>Últimas alterações</h1>
+          <PageTitle>Últimas alterações</PageTitle>
 
-          {!initialLoad && pages.map((page) =>
-            <PageContainer style={{ cursor: 'pointer' }} onClick={() => router.push(`/pages/${page.slug}`)}>
-              <ImageContainer style={{ backgroundImage: `url(${page.imageUrl})` }} />
+          {!noContent && pages.map((page) =>
+            <PageContainer onClick={() => router.push(`/pages/${page.slug}`)}>
+              <ImageContainer imageUrl={page.imageUrl} />
 
               <Flex
                 gap="xs"
                 direction="column"
                 width="fit-parent"
+                height="fit-parent"
                 justify="space-between"
+                padding="md"
+                style={{ overflowY: 'auto' }}
               >
                 <Flex direction="column" width="fit-parent" gap="xs">
                   <h3>{page.title}</h3>
 
-                  <p
-                    style={{
-                      overflow: 'hidden',
-                      color: theme.colors.neutral_400,
-                      width: '100%',
-                      maxHeight: '40px'
-                    }}
-                  >
+                  <PageDescription>
                     {page.content}
-                  </p>
+                  </PageDescription>
                 </Flex>
 
-                <Flex width="fit-parent" gap="md">
-                  <Flex radius="xs" bgColor="neutral_200" style={{ fontSize: '14px', fontWeight: '500', padding: `${theme.spacing.xxs} ${theme.spacing.xs}` }}>
-                    LOREM
-                  </Flex>
+                <Flex width="fit-parent" gap="md" style={{ flexWrap: 'wrap' }}>
+                  {/* TODO remove this mock */}
 
-                  <Flex radius="xs" bgColor="neutral_200" style={{ fontSize: '14px', fontWeight: '500', padding: `${theme.spacing.xxs} ${theme.spacing.xs}` }}>
-                    TESTE
-                  </Flex>
-
-                  <Flex radius="xs" bgColor="neutral_200" style={{ fontSize: '14px', fontWeight: '500', padding: `${theme.spacing.xxs} ${theme.spacing.xs}` }}>
-                    TESTE2
-                  </Flex>
+                  {Array(getRandomIntInclusive(2,5)).fill('').map(() => <Badge>{genRandomString()}</Badge>)}
                 </Flex>
               </Flex>
             </PageContainer>
           )}
 
-          {!initialLoad && !pages.length &&
+          {noContent && (
             <Flex height="fit-parent" width="fit-parent" align="center" justify="center">
-              <strong>Não há resultados para esta busca...</strong>
+              <NoContentContainer>
+                <strong>Não há resultados para esta busca...</strong>
+              </NoContentContainer>
             </Flex>
-          }
+          )}
 
-          {pagesMeta.total > pages.length &&
-            <Button
-              fluid
-              variant="secondary"
-              loading={pagesLoading}
-              disabled={pagesLoading}
-              onClick={() => handleListPages(pagesMeta.page + 1)}
-            >
-              Carregar mais páginas...
-            </Button>
-          }
+          {!noContent && (
+            <BottomComponentContainer>
+              {pagesMeta.total > pages.length && (
+                <Button
+                  fluid
+                  variant="secondary"
+                  loading={pagesLoading}
+                  disabled={pagesLoading}
+                  onClick={() => handleListPages(pagesMeta.page + 1)}
+                >
+                  Carregar mais páginas...
+                </Button>
+              )}
+
+              {`Mostrando ${pages.length} de ${pagesMeta.total} itens`}
+            </BottomComponentContainer>
+          )}
         </MainContainer>
       </MainPageLayout>
     </>

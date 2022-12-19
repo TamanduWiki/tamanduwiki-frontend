@@ -12,6 +12,7 @@ import api from "@/infra/api";
 import { useRouter } from "next/router";
 import Button from "@/components/common/Button";
 import styled from "@emotion/styled";
+import { FiArrowLeft } from "react-icons/fi";
 
 interface IPage {
   id: string,
@@ -80,7 +81,13 @@ const PageCreationPage = () => {
       <Head><title>Criar Página - UFABCwiki</title></Head>
 
       <MainPageLayout>
-        <Flex gap="lg" direction="column" padding="xl" width="fit-parent" height={loading ? "fit-parent" : "hug-content"}>
+        <Flex direction="column" bgColor="neutral_100" width="fit-parent" height={loading ? "fit-parent" : "hug-content"} style={{ position: 'relative' }}>
+          <div style={{ position: 'absolute', top: '8px', left: '8px' }}>
+            <Button variant="secondary" size="md" onClick={() => push('/')}>
+              <FiArrowLeft />
+            </Button>
+          </div>
+
           {loading &&
             <Flex height="fit-parent" width="fit-parent" align="center" justify="center">
               <Image src={loadingImg} alt="loading_img"/>
@@ -91,15 +98,17 @@ const PageCreationPage = () => {
             <>
               <ImageContainer url={page.imageUrl} />
 
-              <h1 style={{ wordBreak: "break-word" }}>{page.title}</h1>
+              <Flex direction="column" padding="lg" gap="lg">
+                <h1 style={{ wordBreak: "break-word" }}>{page.title}</h1>
 
-              <p>Criada em: {page.createdAt}</p>
+                <p>Criada em: {page.createdAt}</p>
 
-              <p>Editada em: {page.updatedAt}</p>
+                <p>Editada em: {page.updatedAt}</p>
 
-              <p>{page.content}</p>
+                <p>{page.content}</p>
 
-              <Button variant="warning" loading={loadingDelete} disabled={loadingDelete} onClick={() => handleDeletePage()}>Deletar página</Button>
+                <Button variant="warning" loading={loadingDelete} disabled={loadingDelete} onClick={() => handleDeletePage()}>Deletar página</Button>
+              </Flex>
             </>
           }
         </Flex>

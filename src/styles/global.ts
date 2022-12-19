@@ -12,18 +12,18 @@ export const globalStyles = css`
   body {
     height: inherit;
     width: inherit;
-    font: 400 1rem WorkSans, sans-serif;
+    font: 400 1rem Exo2, sans-serif;
     -webkit-font-smoothing: antialiased;
     color: ${theme.colors.neutral_700};
-    background-color: #dedede; // Design System Exception
+    background-color: #eeeeee; // Design System Exception
 
-    background-image: url(${booksBackgroundImg.src});
+    /* background-image: url(${booksBackgroundImg.src}); */
   }
 
   input,
   textarea,
   button {
-    font: normal 1rem WorkSans, sans-serif;
+    font: normal 1rem Exo2, sans-serif;
     -webkit-font-smoothing: antialiased;
     color: ${theme.colors.neutral_700};
   }
@@ -65,22 +65,14 @@ export const globalStyles = css`
     box-sizing: border-box;
   }
 
-  /* ::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: ${theme.colors.neutral_200}; // TODO change
-    width: 8px;
+  ::-webkit-scrollbar {
+    width: 20px;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: ${theme.colors.neutral_300};
-    width: 6px;
+    border: 6px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    border-radius: 9999px;
+    background-color: ${theme.colors.neutral_300};
   }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: gray; // TODO change
-    transition: background 250ms;
-  } */
 `;

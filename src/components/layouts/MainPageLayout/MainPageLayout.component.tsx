@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
-import { IconType } from 'react-icons';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import {
   FiBookmark,
   FiFeather,
@@ -12,16 +11,19 @@ import {
   FiLogIn,
   FiLogOut,
   FiMenu,
+  FiSearch,
   FiUser,
   FiUserPlus,
 } from 'react-icons/fi';
 
 import logoImg from "@/assets/images/logo.svg";
 
-import Input from '@/components/common/Input';
-import Flex from '@/components/common/Flex';
+import { AuthContext } from '@/contexts/auth/authContext';
 
-import useDebounce from '@/hooks/useDebounce';
+import Button from '@/components/common/Button';
+import Input from '@/components/common/Input';
+import SidebarNavBtn from '@/components/common/SidebarNavBtn';
+import SidebarNavLink from '@/components/common/SidebarNavLink';
 
 import {
   ChildrenContainer,
@@ -33,78 +35,39 @@ import {
   MainHeaderContainer,
   MainSection,
   PageContainer,
+  ProfilePic,
+  SideMenuSection,
   SideSection,
 } from "./MainPageLayout.styles";
-import { theme } from '@/styles/theme';
-import { AuthContext } from '@/contexts/auth/authContext';
-import styled from '@emotion/styled';
 
 interface Props {
   children: React.ReactNode;
-  bottomComponent?: React.ReactNode;
   onSearch?: (searchValue: string) => void;
 }
 
-interface SidebarNavLinkProps {
-  href: string;
-  icon: IconType;
-  label: string;
-}
-
-interface SidebarNavBtnProps {
-  onClick: () => void;
-  icon: IconType;
-  label: string;
-}
-
-const StyledLink = styled(Link)<{ selected: boolean }>`
-  display: flex;
-  text-decoration: none;
-  width: 100%;
-  align-items: center;
-  color: ${({ selected, theme }) => theme.colors[selected ? 'primary' : 'neutral_400']};
-  padding: ${({ theme }) => theme.spacing.xs};
-  gap: ${({ theme }) => theme.spacing.xs};
-  font-weight: ${({ selected }) => selected ? 600 : 400};
-`
-
-const SidebarNavLink = ({ href, icon: Icon, label }: SidebarNavLinkProps) => {
-  const { pathname } = useRouter();
-
-  return (
-    <StyledLink href={href} selected={pathname === href}>
-      <Icon size={24} /> {label}
-    </StyledLink>
-  )
-}
-
-const SidebarNavBtn = ({ onClick, icon: Icon, label }: SidebarNavBtnProps) => {
-  return (
-    <Flex
-      color="neutral_400"
-      align="center"
-      padding="xs"
-      gap="xs"
-      width="fit-parent"
-      style={{ cursor: 'pointer' }}
-      onClick={onClick}
-    >
-      <Icon size={24} /> {label}
-    </Flex>
-  )
-}
-
-const MainPageLayout = ({ children, onSearch, bottomComponent }: Props) => {
-  const router = useRouter();
+const MainPageLayout = ({ children, onSearch }: Props) => {
+  const { query, push, pathname } = useRouter();
   const { logged, handleLogout } = useContext(AuthContext);
 
-  const [search, setSearch] = useState(!!router.query.searchPage && typeof router.query.searchPage === 'string' ? router.query.searchPage : '');
-  const debouncedSearch = useDebounce(search);
+  const [search, setSearch] = useState(!!query.searchPage && typeof query.searchPage === 'string'
+    ? query.searchPage
+    : ''
+  );
+
+  const handleSearch = useCallback(async (searchParam: string) => {
+    if (pathname?.length > 1) {
+      await push(`/?searchPage=${searchParam}`)
+      return;
+    }
+
+    onSearch(searchParam);
+  }, []);
 
   useEffect(() => {
-    if (onSearch) onSearch(debouncedSearch)
-    else if (!!debouncedSearch) router.push(`/?searchPage=${debouncedSearch}`)
-  }, [debouncedSearch, onSearch]);
+    // first api call...
+
+    if (onSearch) onSearch(search);
+  }, [])
 
   return (
     <PageContainer>
@@ -114,10 +77,6 @@ const MainPageLayout = ({ children, onSearch, bottomComponent }: Props) => {
             <Image src={logoImg} alt="logo" width={264} height={38} />
           </Link>
 
-          <HeaderSubMenu>
-            <FiMenu size={32} style={{ flexShrink: 0 }} />
-          </HeaderSubMenu>
-
           <HeaderInputContainer>
             <Input
               fluid
@@ -125,61 +84,101 @@ const MainPageLayout = ({ children, onSearch, bottomComponent }: Props) => {
               placeholder="Pesquisar por nome da página ou por categoria..."
               onChange={event => setSearch(event.target.value as string)}
               value={search}
+              style={{ height: '40px' }}
             />
+
+            <Button size="md" variant="secondary" onClick={() => handleSearch(search)}>
+              <FiSearch style={{ marginRight: '8px' }} />
+
+              Pesquisar
+            </Button>
           </HeaderInputContainer>
+
+          <HeaderSubMenu>
+            <Button variant="secondary" size="md">
+              <FiMenu style={{ flexShrink: 0 }} />
+            </Button>
+          </HeaderSubMenu>
         </MainHeader>
       </MainHeaderContainer>
 
       <ContentContainer>
         <Content>
           <SideSection>
-              <Flex bgColor="neutral_100" gap="md" direction="column" style={{ padding: '32px 16px', borderBottom: `1px solid ${theme.colors.neutral_200}` }}>
-                <SidebarNavLink href="/" icon={FiHome} label="Página inicial" />
+            <SideMenuSection>
+              <SidebarNavLink
+                href="/"
+                icon={FiHome}
+                label="Página inicial"
+              />
 
-                {logged && <SidebarNavLink href="/create-page" icon={FiFeather} label="Criar página" />}
+              {logged && (
+                <SidebarNavLink
+                  href="/create-page"
+                  icon={FiFeather}
+                  label="Criar página"
+                />
+              )}
 
-                <SidebarNavLink href="/about" icon={FiHelpCircle} label="Sobre" />
-              </Flex>
+              <SidebarNavLink
+                href="/about"
+                icon={FiHelpCircle}
+                label="Sobre"
+              />
+            </SideMenuSection>
 
-              {logged
-                ? (
-                  <Flex bgColor="neutral_100" gap="md" direction="column" align="center" style={{ padding: '32px 16px' }}>
-                    <Flex radius="circle" bgColor="neutral_300" align="center" justify="center" color="neutral_100" style={{ width: '80px', height: '80px' }}>i</Flex>
+            {logged
+              ? (
+                <SideMenuSection>
+                  <ProfilePic />
 
-                    <SidebarNavLink href="/profile" icon={FiUser} label="Meu perfil" />
+                  <SidebarNavLink
+                    href="/profile"
+                    icon={FiUser}
+                    label="Meu perfil"
+                  />
 
-                    <SidebarNavLink href="/contributions" icon={FiFilePlus} label="Minhas contribuições" />
+                  <SidebarNavLink
+                    href="/contributions"
+                    icon={FiFilePlus}
+                    label="Minhas contribuições"
+                  />
 
-                    <SidebarNavLink href="/saved-pages" icon={FiBookmark} label="Páginas Salvas" />
+                  <SidebarNavLink
+                    href="/saved-pages"
+                    icon={FiBookmark}
+                    label="Páginas Salvas"
+                  />
 
-                    <SidebarNavBtn onClick={handleLogout} icon={FiLogOut} label="Logout" />
-                  </Flex>
-                )
-                : (
-                  <Flex bgColor="neutral_100" gap="md" direction="column" align="center" style={{ padding: '32px 16px' }}>
-                    <SidebarNavLink href="/login" icon={FiLogIn} label="Login" />
+                  <SidebarNavBtn
+                    onClick={handleLogout}
+                    icon={FiLogOut}
+                    label="Logout"
+                  />
+                </SideMenuSection>
+              )
+              : (
+                <SideMenuSection>
+                  <SidebarNavLink
+                    href="/login"
+                    icon={FiLogIn}
+                    label="Login"
+                  />
 
-                    <SidebarNavLink href="/signup" icon={FiUserPlus} label="Cadastro" />
-                  </Flex>
-                )
-              }
+                  <SidebarNavLink
+                    href="/signup"
+                    icon={FiUserPlus}
+                    label="Cadastro"
+                  />
+                </SideMenuSection>
+              )
+            }
           </SideSection>
 
-          <MainSection withBottomComponent={!!bottomComponent}>
+          <MainSection>
             <ChildrenContainer>
               {children}
             </ChildrenContainer>
-
-            {bottomComponent &&
-              <Flex
-                color="neutral_400"
-                align="center"
-                justify="center"
-                style={{ height: '36px', borderTop: `1px solid ${theme.colors.neutral_200}` }}
-              >
-                {bottomComponent}
-              </Flex>
-            }
           </MainSection>
         </Content>
       </ContentContainer>

@@ -31,8 +31,9 @@ export const MainAreaContent = styled.div`
   gap: ${({ theme }) => theme.spacing.xl};
   width: 560px;
   padding: ${({ theme }) => theme.spacing.xl};
+  border: ${({ theme }) => `1px solid #dedede`}; // Design System Exception
 
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.neutral_100};
 
   @media (max-width: 540px) {
     width: 100%;
