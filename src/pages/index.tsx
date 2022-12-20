@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useMemo, useState } from "react";
 
+import { apiListPages } from "@/api";
+
 import loadingImg from "@/assets/animated/loading_balls_green.svg";
 
 import Badge from "@/components/common/Badge";
@@ -11,39 +13,31 @@ import Flex from "@/components/common/Flex";
 import Button from "@/components/common/Button";
 import MainPageLayout from "@/components/layouts/MainPageLayout";
 
-import api from "@/infra/api";
+import { genRandomString, getRandomIntInclusive, handleError } from "@/utils";
 
-import { handleError } from "@/utils";
+import { IMetaProps } from "@/types/common";
 
 const PageContainer = styled.div`
   display: flex;
-  width: 100%;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  width: 100%;
   cursor: pointer;
+
   height: 160px;
   min-height: 160px;
-  border: 1px solid #dedede; // Design System Exception
 
+  border: ${({ theme }) => theme.mainBorderStyle};
   background-color: ${({ theme }) => theme.colors.neutral_100};
 
   @media (max-width: 540px) {
-    flex-direction: column;
     height: 100%;
+    flex-direction: column;
   }
 `;
 
-const genRandomString = () =>
-  (Math.random() + 1).toString(36).substring(Math.random() * 10);
-
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
-}
-
 const ImageContainer = styled.div<{ imageUrl: string }>`
-  border-radius: 1px;
+  border-radius: 1px; // (???) necessary for smoother image
 
   height: 100%;
   min-width: 160px;
@@ -61,20 +55,28 @@ const ImageContainer = styled.div<{ imageUrl: string }>`
 
 const PageTitle = styled.h1`
   @media (max-width: 1140px) {
-    padding: 16px 16px 0 16px;
+    padding: ${({ theme }) => theme.spacing.md}
+      ${({ theme }) => theme.spacing.md} 0 ${({ theme }) => theme.spacing.md};
   }
 `;
 
 const MainContainer = styled.div<{ noContent: boolean }>`
   display: flex;
+  flex-direction: column;
+
   width: 100%;
   height: ${({ noContent }) => (noContent ? "100%" : "auto")};
-  flex-direction: column;
-  gap: 16px;
+
+  gap: ${({ theme }) => theme.spacing.md};
+  padding-bottom: ${({ noContent, theme }) => noContent && theme.spacing.xl};
+
+  @media (max-width: 1140px) {
+    padding-bottom: 0;
+  }
 
   @media (max-width: 540px) {
     padding: 0;
-    gap: 24px;
+    gap: ${({ theme }) => theme.spacing.lg};
   }
 `;
 
@@ -90,10 +92,10 @@ const BottomComponentContainer = styled.div`
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.neutral_100};
   display: flex;
-  padding: 16px;
+  padding: ${({ theme }) => theme.spacing.md};
   flex-direction: column;
-  gap: 16px;
-  border: 1px solid #dedede; // Design System Exception
+  gap: ${({ theme }) => theme.spacing.md};
+  border: ${({ theme }) => theme.mainBorderStyle};
 `;
 
 const NoContentContainer = styled.div`
@@ -102,7 +104,7 @@ const NoContentContainer = styled.div`
   justify-content: center;
 
   background-color: ${({ theme }) => theme.colors.neutral_100};
-  border: 1px solid #dedede; // Design System Exception
+  border: ${({ theme }) => theme.mainBorderStyle};
 
   height: 100%;
   width: 100%;
@@ -116,17 +118,6 @@ interface IPage {
   createdAt: string;
   updatedAt: string;
   imageUrl?: string;
-}
-
-interface IMetaProps {
-  page: number;
-  per: number;
-  total: number;
-}
-
-interface IListPagesResponse {
-  pages: IPage[];
-  meta: IMetaProps;
 }
 
 const HomePage = () => {
@@ -153,14 +144,10 @@ const HomePage = () => {
     try {
       setSearchingFor(searchParam);
 
-      await api
-        .get<IListPagesResponse>("/pages", {
-          params: { page: 1, searchFor: searchParam },
-        })
-        .then(({ data }) => {
-          setPages(data.pages);
-          setPagesMeta(data.meta);
-        });
+      await apiListPages({ page: 1, searchParam }).then(({ pages, meta }) => {
+        setPages(pages);
+        setPagesMeta(meta);
+      });
     } catch (error) {
       handleError(error);
     } finally {
@@ -174,14 +161,12 @@ const HomePage = () => {
       setPagesLoading(true);
 
       try {
-        await api
-          .get<IListPagesResponse>("/pages", {
-            params: { page: page || 1, searchFor: searchingFor },
-          })
-          .then(({ data }) => {
-            setPages((prevPages) => prevPages.concat(data.pages));
-            setPagesMeta(data.meta);
-          });
+        await apiListPages({ page: page || 1, searchParam: searchingFor }).then(
+          ({ pages, meta }) => {
+            setPages((prevPages) => prevPages.concat(pages));
+            setPagesMeta(meta);
+          }
+        );
       } catch (error) {
         handleError(error);
       } finally {
@@ -263,7 +248,7 @@ const HomePage = () => {
             </Flex>
           )}
 
-          {!initialLoad && pages.length && (
+          {!initialLoad && !!pages.length && (
             <BottomComponentContainer>
               {pagesMeta.total > pages.length && (
                 <Button

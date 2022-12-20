@@ -1,18 +1,18 @@
 import { Formik, FormikHelpers } from "formik";
-import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import toast from "react-hot-toast";
+
+import { apiCreatePage } from "@/api";
 
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
-
-import api from "@/infra/api";
+import TextareaInput from "@/components/common/TextareaInput";
 
 import { handleError } from "@/utils";
 
 import { StyledForm } from "./CreatePageForm.styles";
 import { schema } from "./CreatePageForm.validations";
-import { useState } from "react";
-import TextareaInput from "@/components/common/TextareaInput";
 
 interface Values {
   title: string;
@@ -60,13 +60,11 @@ const CreatePageForm = () => {
     try {
       const imageBase64 = await getBase64(image);
 
-      const data = await api
-        .post<{ slug: string }>("/pages", {
-          ...values,
-          imageBase64,
-          imageFileType: "png",
-        })
-        .then(({ data }) => data);
+      const data = await apiCreatePage({
+        ...values,
+        imageBase64,
+        imageFileType: "png",
+      });
 
       toast.success("Página criada com sucesso");
 

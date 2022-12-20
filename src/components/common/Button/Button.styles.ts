@@ -18,7 +18,7 @@ const variantStyles = {
   `,
   secondary: css`
     background: ${theme.colors.neutral_200};
-    border: 1px solid #dedede;
+    border: ${theme.mainBorderStyle};
   `,
   tertiary: css`
     box-shadow: none;
@@ -31,7 +31,7 @@ const variantStyles = {
   warning: css`
     background: ${theme.colors.error};
     color: ${theme.colors.neutral_100};
-  `
+  `,
 };
 
 export const StyledButton = styled.button<StyledButtonProps>`

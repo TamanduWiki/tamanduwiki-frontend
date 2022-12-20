@@ -10,6 +10,7 @@ declare module "@emotion/react" {
     colors: ThemeColors;
     borderRadius: ThemeBorderRadius;
     spacing: ThemeSpacing;
+    mainBorderStyle: string;
   }
 }
 
@@ -17,4 +18,5 @@ export const theme: Partial<Theme> = {
   colors,
   borderRadius,
   spacing,
+  mainBorderStyle: "1px solid #dedede",
 };

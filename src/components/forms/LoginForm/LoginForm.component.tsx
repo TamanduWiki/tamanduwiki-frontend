@@ -1,18 +1,19 @@
 import { Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
+import { useContext } from "react";
+
+import { apiLogin } from "@/api";
 
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 
-import api from "@/infra/api";
+import { AuthContext } from "@/contexts/auth/authContext";
 
 import { handleError } from "@/utils";
 
 import { StyledForm } from "./LoginForm.styles";
 import { schema } from "./LoginForm.validations";
-import { useContext } from "react";
-import { AuthContext } from "@/contexts/auth/authContext";
 
 interface Values {
   email: string;
@@ -33,12 +34,9 @@ const LoginForm = () => {
     { setSubmitting }: FormikHelpers<Values>
   ) => {
     try {
-      const response = await api.post<{ token: string; auth: boolean }>(
-        "/login",
-        values
-      );
+      const { token } = await apiLogin(values);
 
-      handleLogin({ token: response.data.token });
+      handleLogin({ token });
 
       toast.success("Login realizado com sucesso");
 

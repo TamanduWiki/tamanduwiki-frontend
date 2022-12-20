@@ -1,18 +1,20 @@
-import Image from "next/image";
+import styled from "@emotion/styled";
 import Head from "next/head";
-
-import MainPageLayout from "@/components/layouts/MainPageLayout";
-import Flex from "@/components/common/Flex";
+import Image from "next/image";
+import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { FiArrowLeft } from "react-icons/fi";
+
+import { apiDeletePage, apiGetPage } from "@/api";
 
 import loadingImg from "@/assets/animated/loading_balls_green.svg";
-import toast from "react-hot-toast";
-import { handleError } from "@/utils";
-import api from "@/infra/api";
-import { useRouter } from "next/router";
+
 import Button from "@/components/common/Button";
-import styled from "@emotion/styled";
-import { FiArrowLeft } from "react-icons/fi";
+import Flex from "@/components/common/Flex";
+import MainPageLayout from "@/components/layouts/MainPageLayout";
+
+import { handleError } from "@/utils";
 
 interface IPage {
   id: string;
@@ -33,6 +35,16 @@ const ImageContainer = styled.div<{ url: string }>`
   background-image: ${({ url }) => `url(${url})`};
 `;
 
+const MainContainer = styled.div<{ loading: boolean }>`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: ${({ loading }) => (loading ? "100%" : "auto")};
+  position: relative;
+  background-color: ${({ theme }) => theme.colors.neutral_100};
+  border: ${({ theme }) => theme.mainBorderStyle};
+`;
+
 const PageCreationPage = () => {
   const {
     push,
@@ -47,7 +59,7 @@ const PageCreationPage = () => {
     setLoadingDelete(true);
 
     try {
-      await api.delete(`/pages/${page?.id}`);
+      await apiDeletePage(page?.id);
 
       await push("/");
 
@@ -63,7 +75,7 @@ const PageCreationPage = () => {
     setLoading(true);
 
     try {
-      await api.get<IPage>(`/pages/${slug}`).then(({ data }) => setPage(data));
+      await apiGetPage(slug).then((pageData) => setPage(pageData));
     } catch (error) {
       handleError(error);
     } finally {
@@ -82,16 +94,21 @@ const PageCreationPage = () => {
       </Head>
 
       <MainPageLayout>
-        <Flex direction="column" bgColor="neutral_100" width="fit-parent" height={loading ? "fit-parent" : "hug-content"} style={{ position: 'relative' }}>
-          <div style={{ position: 'absolute', top: '8px', left: '8px' }}>
-            <Button variant="secondary" size="md" onClick={() => push('/')}>
+        <MainContainer loading={loading}>
+          <div style={{ position: "absolute", top: "8px", left: "8px" }}>
+            <Button variant="secondary" size="md" onClick={() => push("/")}>
               <FiArrowLeft />
             </Button>
           </div>
 
           {loading && (
-            <Flex height="fit-parent" width="fit-parent" align="center" justify="center">
-              <Image src={loadingImg as string} alt="loading_img"/>
+            <Flex
+              height="fit-parent"
+              width="fit-parent"
+              align="center"
+              justify="center"
+            >
+              <Image src={loadingImg as string} alt="loading_img" />
             </Flex>
           )}
 
@@ -108,11 +125,18 @@ const PageCreationPage = () => {
 
                 <p>{page.content}</p>
 
-                <Button variant="warning" loading={loadingDelete} disabled={loadingDelete} onClick={() => handleDeletePage()}>Deletar página</Button>
+                <Button
+                  variant="warning"
+                  loading={loadingDelete}
+                  disabled={loadingDelete}
+                  onClick={() => handleDeletePage()}
+                >
+                  Deletar página
+                </Button>
               </Flex>
             </>
           )}
-        </Flex>
+        </MainContainer>
       </MainPageLayout>
     </>
   );

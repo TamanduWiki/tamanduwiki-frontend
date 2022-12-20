@@ -1,5 +1,6 @@
-import { ThemeSpacingOption } from "@/styles/theme/spacing";
 import styled from "@emotion/styled";
+
+import { ThemeSpacingOption } from "@/styles/theme/spacing";
 
 import fakeProfilePicture from "@/assets/images/ash.jpg";
 
@@ -11,7 +12,7 @@ export const PageContainer = styled.div`
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: ${HEADER_HEIGHT} auto;
-  grid-template-areas: 'header' 'content';
+  grid-template-areas: "header" "content";
 
   gap: ${({ theme }) => theme.spacing[FULL_HEADER_CONTENT_GAP]};
 
@@ -35,7 +36,7 @@ export const MainHeaderContainer = styled.div`
 
   grid-area: header;
 
-  border: ${({ theme }) => `1px solid #dedede`}; // Design System Exception
+  border: ${({ theme }) => theme.mainBorderStyle};
 `;
 
 export const MainHeader = styled.div`
@@ -46,7 +47,7 @@ export const MainHeader = styled.div`
   gap: ${({ theme }) => theme.spacing.xl};
 
   @media (max-width: 1140px) {
-    padding-right: 16px;
+    padding-right: ${({ theme }) => theme.spacing.md};
   }
 
   @media (max-width: 760px) {
@@ -62,9 +63,6 @@ export const ContentContainer = styled.div`
   justify-content: center;
 
   grid-area: content;
-
-  @media (max-width: 1140px) {
-  }
 `;
 
 export const Content = styled.div`
@@ -73,7 +71,7 @@ export const Content = styled.div`
   height: 100%;
   width: 1140px;
   height: calc(100vh - ${({ theme }) => theme.spacing[FULL_HEADER_CONTENT_GAP]} - ${HEADER_HEIGHT});
-  gap: 32px;
+  gap: ${({ theme }) => theme.spacing.xl};
 
   @media (max-width: 1140px) {
     width: 100%;
@@ -94,7 +92,7 @@ export const SideSection = styled.div`
   }
 
   > div {
-    border: ${({ theme }) => `1px solid #dedede`}; // Design System Exception
+    border: ${({ theme }) => theme.mainBorderStyle};
   }
 `;
 
@@ -146,11 +144,13 @@ export const HeaderSubMenu = styled.div`
 
 export const SideMenuSection = styled.div`
   display: flex;
-  background-color: ${({ theme }) => theme.colors.neutral_100};
   flex-direction: column;
   align-items: center;
-  padding: 16px;
-  gap: 16px;
+
+  padding: ${({ theme }) => theme.spacing.md};
+  gap: ${({ theme }) => theme.spacing.md};
+
+  background-color: ${({ theme }) => theme.colors.neutral_100};
 `;
 
 export const ProfilePic = styled.div`
@@ -160,4 +160,4 @@ export const ProfilePic = styled.div`
   background-image: ${`url(${fakeProfilePicture.src})`};
   background-size: cover;
   background-position: 55% 50%;
-`
+`;

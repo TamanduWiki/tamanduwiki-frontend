@@ -2,15 +2,14 @@ import { Formik, FormikHelpers } from "formik";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 
+import { apiSignup } from "@/api";
+
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
-
-import api from "@/infra/api";
 
 import { handleError } from "@/utils";
 
 import PasswordStrengthMeter from "./PasswordStrengthMeter";
-
 import { StyledForm } from "./SignupForm.styles";
 import { schema } from "./SignupForm.validations";
 
@@ -36,7 +35,7 @@ const SignupForm = () => {
     { setSubmitting }: FormikHelpers<Values>
   ) => {
     try {
-      await api.post("/users", { ...values, universityTie: "student" });
+      await apiSignup({ ...values, universityTie: "student" });
 
       toast.success("Usuário criado com sucesso");
 

@@ -28,15 +28,17 @@ export const MainAreaContent = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.xl};
   width: 560px;
-  padding: ${({ theme }) => theme.spacing.xl};
-  border: ${({ theme }) => `1px solid #dedede`}; // Design System Exception
 
+  gap: ${({ theme }) => theme.spacing.xl};
+  padding: ${({ theme }) => theme.spacing.xl};
+
+  border: ${({ theme }) => theme.mainBorderStyle};
   background-color: ${({ theme }) => theme.colors.neutral_100};
 
   @media (max-width: 540px) {
     width: 100%;
+
     padding: ${({ theme }) => `${theme.spacing.lg} ${theme.spacing.md}`};
     gap: ${({ theme }) => theme.spacing.md};
   }
