@@ -1,4 +1,4 @@
-import { Formik, FormikHelpers, useFormik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 
@@ -22,18 +22,18 @@ interface Values {
 }
 
 const initialValues = {
-  title: '',
-  content: '',
-  slug: '',
+  title: "",
+  content: "",
+  slug: "",
   // image: undefined,
-}
+};
 
 const getBase64 = async (file: File) => {
   if (!file) return undefined;
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     // Make new FileReader
-    let reader = new FileReader();
+    const reader = new FileReader();
 
     // Convert the file to base64 text
     reader.readAsDataURL(file);
@@ -53,19 +53,26 @@ const CreatePageForm = () => {
 
   const [image, setImage] = useState<File | undefined>();
 
-  const onSubmit = async (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
+  const onSubmit = async (
+    values: Values,
+    { setSubmitting }: FormikHelpers<Values>
+  ) => {
     try {
       const imageBase64 = await getBase64(image);
 
       const data = await api
-        .post<{ slug: string }>("/pages", { ...values, imageBase64, imageFileType: 'png' })
+        .post<{ slug: string }>("/pages", {
+          ...values,
+          imageBase64,
+          imageFileType: "png",
+        })
         .then(({ data }) => data);
 
       toast.success("Página criada com sucesso");
 
       await router.push(`/pages/${data.slug}`);
-    } catch(error) {
-      handleError(error)
+    } catch (error) {
+      handleError(error);
     } finally {
       setSubmitting(false);
     }
@@ -77,7 +84,7 @@ const CreatePageForm = () => {
       onSubmit={onSubmit}
       validationSchema={schema}
     >
-      {({ isSubmitting }) =>
+      {({ isSubmitting }) => (
         <StyledForm>
           <Input
             fluid
@@ -103,12 +110,12 @@ const CreatePageForm = () => {
             formikField
           />
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             Imagem da página
             <input
               type="file"
               name="image"
-              onChange={event => setImage(event.currentTarget.files[0])}
+              onChange={(event) => setImage(event.currentTarget.files[0])}
             />
           </div>
 
@@ -121,7 +128,7 @@ const CreatePageForm = () => {
             Criar Página
           </Button>
         </StyledForm>
-      }
+      )}
     </Formik>
   );
 };

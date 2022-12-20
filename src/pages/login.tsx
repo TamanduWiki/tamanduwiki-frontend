@@ -7,12 +7,19 @@ import LoginForm from "@/components/forms/LoginForm";
 const LoginPage = () => {
   return (
     <>
-      <Head><title>Login - UFABCwiki</title></Head>
+      <Head>
+        <title>Login - UFABCwiki</title>
+      </Head>
 
-      <SimplePageLayout bottomLink={{ href: "/privacy", label: "Política de Privacidade" }}>
+      <SimplePageLayout
+        bottomLink={{ href: "/privacy", label: "Política de Privacidade" }}
+      >
         <LoginForm />
 
-        <p>Ainda não tem conta? <LinkButton href="/signup">Fazer o cadastro</LinkButton></p>
+        <p>
+          Ainda não tem conta?{" "}
+          <LinkButton href="/signup">Fazer o cadastro</LinkButton>
+        </p>
       </SimplePageLayout>
     </>
   );

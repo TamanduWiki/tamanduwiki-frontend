@@ -1,6 +1,12 @@
 import { Field, FieldProps } from "formik";
 import { TextareaHTMLAttributes } from "react";
-import { ErrorMsg, InputContainer, LabelContainer, StyledTextarea, StyledLabel } from "./TextareaInput.styles";
+import {
+  ErrorMsg,
+  InputContainer,
+  LabelContainer,
+  StyledTextarea,
+  StyledLabel,
+} from "./TextareaInput.styles";
 
 interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   name: string;
@@ -10,29 +16,31 @@ interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   formikField?: boolean;
 }
 
-const Input = ({ name, label, placeholder, fluid, formikField, ...rest }: Props) => {
-  if (!formikField) return (
-    <InputContainer fluid={fluid}>
-      {label && <StyledLabel htmlFor="name">{label}</StyledLabel>}
+const Input = ({
+  name,
+  label,
+  placeholder,
+  fluid,
+  formikField,
+  ...rest
+}: Props) => {
+  if (!formikField)
+    return (
+      <InputContainer fluid={fluid}>
+        {label && <StyledLabel htmlFor="name">{label}</StyledLabel>}
 
-      <StyledTextarea name={name} placeholder={placeholder} {...rest} />
-    </InputContainer>
-  );
+        <StyledTextarea name={name} placeholder={placeholder} {...rest} />
+      </InputContainer>
+    );
 
   return (
     <Field name={name}>
-      {({ meta, field }: FieldProps) =>
+      {({ meta, field }: FieldProps) => (
         <InputContainer fluid={fluid}>
           <LabelContainer>
-            {label &&
-              <StyledLabel htmlFor="name">
-                {label}
-              </StyledLabel>
-            }
+            {label && <StyledLabel htmlFor="name">{label}</StyledLabel>}
 
-          {meta.touched && !!meta.error &&
-            <ErrorMsg>{meta.error}</ErrorMsg>
-          }
+            {meta.touched && !!meta.error && <ErrorMsg>{meta.error}</ErrorMsg>}
           </LabelContainer>
 
           <StyledTextarea
@@ -44,9 +52,9 @@ const Input = ({ name, label, placeholder, fluid, formikField, ...rest }: Props)
             {...field}
           />
         </InputContainer>
-      }
+      )}
     </Field>
-  )
+  );
 };
 
 export default Input;

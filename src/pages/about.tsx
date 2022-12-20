@@ -15,19 +15,26 @@ const BuildingBlocksImg = styled(Image)`
     width: 240px;
     height: 240px;
   }
-`
+`;
 
 const AboutPage = () => {
   return (
     <>
-      <Head><title>Sobre - UFABCwiki</title></Head>
+      <Head>
+        <title>Sobre - UFABCwiki</title>
+      </Head>
 
       <MainPageLayout>
-        <Flex height="fit-parent" align="center" justify="center" direction="column">
+        <Flex
+          height="fit-parent"
+          align="center"
+          justify="center"
+          direction="column"
+        >
           <h2>Página em construção...</h2>
 
           <BuildingBlocksImg
-            src={undrawnBuildingImages}
+            src={undrawnBuildingImages as string}
             alt="undraw_building_blocks"
           />
         </Flex>

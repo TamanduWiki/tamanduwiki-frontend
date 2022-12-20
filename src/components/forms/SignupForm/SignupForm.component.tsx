@@ -22,24 +22,27 @@ interface Values {
 }
 
 const initialValues = {
-  email: '',
-  password: '',
-  firstName: '',
-  lastName: '',
-}
+  email: "",
+  password: "",
+  firstName: "",
+  lastName: "",
+};
 
 const SignupForm = () => {
   const router = useRouter();
 
-  const onSubmit = async (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
+  const onSubmit = async (
+    values: Values,
+    { setSubmitting }: FormikHelpers<Values>
+  ) => {
     try {
-      await api.post("/users", { ...values, universityTie: 'student' })
+      await api.post("/users", { ...values, universityTie: "student" });
 
       toast.success("Usuário criado com sucesso");
 
       await router.push("/login");
-    } catch(error) {
-      handleError(error)
+    } catch (error) {
+      handleError(error);
     } finally {
       setSubmitting(false);
     }
@@ -51,7 +54,7 @@ const SignupForm = () => {
       onSubmit={onSubmit}
       validationSchema={schema}
     >
-      {({ isSubmitting, values }) =>
+      {({ isSubmitting, values }) => (
         <StyledForm>
           <Input
             fluid
@@ -96,7 +99,7 @@ const SignupForm = () => {
             Criar Conta
           </Button>
         </StyledForm>
-      }
+      )}
     </Formik>
   );
 };

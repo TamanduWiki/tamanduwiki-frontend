@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 
-import booksBackgroundImg from '@/assets/images/books_background.png';
+import booksBackgroundImg from "@/assets/images/books_background.png";
 import { theme } from "./theme";
 
 export const globalStyles = css`

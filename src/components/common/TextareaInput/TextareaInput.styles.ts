@@ -5,7 +5,11 @@ export const InputContainer = styled.div<{ fluid: boolean }>`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.xxs};
-  ${({ fluid }) => fluid && css`width: 100%`};
+  ${({ fluid }) =>
+    fluid &&
+    css`
+      width: 100%;
+    `};
   position: relative;
   height: 100%;
 `;
@@ -30,10 +34,9 @@ export const LabelContainer = styled.div`
 
 export const StyledTextarea = styled.textarea<{ errored?: boolean }>`
   padding: ${({ theme }) => theme.spacing.xs};
-  border: 1px solid ${({ theme, errored }) => errored
-    ? theme.colors.error
-    : theme.colors.neutral_300
-  };
+  border: 1px solid
+    ${({ theme, errored }) =>
+      errored ? theme.colors.error : theme.colors.neutral_300};
 
   resize: none;
   height: 100%;
