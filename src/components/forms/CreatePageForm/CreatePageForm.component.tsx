@@ -114,6 +114,7 @@ const CreatePageForm = () => {
               type="file"
               name="image"
               onChange={(event) => setImage(event.currentTarget.files[0])}
+              style={{ width: '100%' }}
             />
           </div>
 

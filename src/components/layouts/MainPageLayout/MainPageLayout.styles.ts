@@ -130,7 +130,20 @@ export const HeaderInputContainer = styled.div`
   }
 `;
 
-export const HeaderSubMenu = styled.div`
+export const SubmenuInputContainer = styled.div`
+  width: 100%;
+  display: none;
+  padding: ${({ theme }) => theme.spacing.md};
+  border-bottom: ${({ theme }) => theme.mainBorderStyle};
+  border-left: ${({ theme }) => theme.mainBorderStyle};
+  border-right: ${({ theme }) => theme.mainBorderStyle};
+
+  @media (max-width: 760px) {
+    display: flex;
+  }
+`;
+
+export const SubmenuButtonContainer = styled.div`
   display: none;
 
   @media (max-width: 1140px) {
@@ -160,4 +173,47 @@ export const ProfilePic = styled.div`
   background-image: ${`url(${fakeProfilePicture.src})`};
   background-size: cover;
   background-position: 55% 50%;
+`;
+
+export const Backdrop = styled.div`
+  height: calc(100vh - ${HEADER_HEIGHT});
+  width: 100vw;
+  position: absolute;
+  top: ${HEADER_HEIGHT};
+  left: 0;
+  z-index: 99;
+  background-color: ${({ theme }) => theme.colors.neutral_700};
+  opacity: 0.6;
+
+  @media (min-width: 1140px) {
+    display: none;
+  }
+`;
+
+export const SubmenuContainer = styled.div<{ collapsed: boolean }>`
+  height: calc(100vh - ${HEADER_HEIGHT});
+  position: absolute;
+  top: ${HEADER_HEIGHT};
+  right: 0;
+  z-index: 100;
+  background-color: ${({ theme }) => theme.colors.neutral_100};
+  overflow-y: auto;
+  width: ${({ collapsed }) => collapsed ? '0px' : '280px'};
+  transition: width 0.3s ease-in-out;
+  white-space: nowrap;
+
+  @media (min-width: 1140px) {
+    display: none;
+  }
+`
+
+export const SubmenuSubcontainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: ${({ theme }) => theme.spacing.md};
+  gap: ${({ theme }) => theme.spacing.md};
+  align-items: flex-start;
+  border-bottom: ${({ theme }) => theme.mainBorderStyle};
+  border-left: ${({ theme }) => theme.mainBorderStyle};
+  border-right: ${({ theme }) => theme.mainBorderStyle};
 `;

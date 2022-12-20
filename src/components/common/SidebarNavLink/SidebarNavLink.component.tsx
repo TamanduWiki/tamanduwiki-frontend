@@ -14,7 +14,7 @@ const SidebarNavLink = ({ href, icon: Icon, label }: SidebarNavLinkProps) => {
 
   return (
     <StyledLink href={href} selected={pathname === href}>
-      <Icon size={24} /> {label}
+      <Icon size={24} style={{ flexShrink: '0' }} /> {label}
     </StyledLink>
   )
 }
