@@ -1,1 +1,1 @@
-export const delay = (ms = 5000) => new Promise((res) => setTimeout(res, ms));
+export const delay = (ms = 3000) => new Promise((res) => setTimeout(res, ms));

@@ -118,14 +118,27 @@ const CreatePageForm = () => {
             />
           </div>
 
-          <Button
-            fluid
-            type="submit"
-            disabled={isSubmitting}
-            loading={isSubmitting}
-          >
-            Criar Página
-          </Button>
+          <div style={{ display: 'flex', gap: '16px' }}>
+            <Button
+              fluid
+              type="button"
+              variant="secondary"
+              disabled={isSubmitting}
+              loading={isSubmitting}
+              onClick={() => router.back()}
+            >
+              Voltar
+            </Button>
+
+            <Button
+              fluid
+              type="submit"
+              disabled={isSubmitting}
+              loading={isSubmitting}
+            >
+              Salvar
+            </Button>
+          </div>
         </StyledForm>
       )}
     </Formik>

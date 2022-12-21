@@ -6,7 +6,7 @@ import { Router } from "next/router";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 
-import loadingImg from "@/assets/animated/loading_balls_green.svg";
+import loadingImg from "@/assets/animated/loading_balls_black.svg";
 
 import Flex from "@/components/common/Flex";
 
@@ -50,7 +50,9 @@ function App({ Component, pageProps }: AppProps) {
             justify="center"
             style={{ height: "100vh", width: "100vw" }}
           >
-            <Image src={loadingImg as string} alt="loading_img" />
+            <Flex bgColor="neutral_100" style={{ border: `${theme.mainBorderStyle}`, padding: `0 ${theme.spacing.sm}`}}>
+              <Image src={loadingImg as string} alt="loading_img" width={64}/>
+            </Flex>
           </Flex>
         ) : (
           <Component {...pageProps} />

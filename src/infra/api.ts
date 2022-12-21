@@ -1,3 +1,5 @@
+// import { delay } from "@/utils";
+
 import axios from "axios";
 
 const api = axios.create({
@@ -7,7 +9,9 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use(function (config) {
+api.interceptors.request.use(async function (config) {
+  // await delay();
+
   const token = localStorage.getItem("jwtToken");
 
   config.headers.Authorization = token ?? null;

@@ -21,7 +21,6 @@ const variantStyles = {
     border: ${theme.mainBorderStyle};
   `,
   tertiary: css`
-    box-shadow: none;
     background: transparent;
     color: ${theme.colors.primary};
     padding: 0;
@@ -57,8 +56,4 @@ export const StyledButton = styled.button<StyledButtonProps>`
     `};
 
   ${({ variant }) => variantStyles[variant]};
-
-  &:active {
-    box-shadow: none;
-  }
 `;

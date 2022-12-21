@@ -1,29 +1,43 @@
-import Head from "next/head";
+import styled from "@emotion/styled";
 
 import MainPageLayout from "@/components/layouts/MainPageLayout";
-import Flex from "@/components/common/Flex";
 import CreatePageForm from "@/components/forms/CreatePageForm";
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: ${({ theme }) => theme.spacing.lg};
+  padding: ${({ theme }) => theme.spacing.xl};
+
+  min-width: 100%;
+  width: 100%;
+
+  background-color: ${({ theme }) => theme.colors.neutral_100};
+  border: ${({ theme }) => theme.mainBorderStyle};
+
+  @media (max-width: 540px) {
+    padding: ${({ theme }) => theme.spacing.md};
+  }
+`
+
+export const PageTitle = styled.h1`
+  padding-bottom: ${({ theme }) => theme.spacing.md};
+
+  @media (max-width: 1140px) {
+    padding: ${({ theme }) => theme.spacing.md};
+  }
+`;
 
 const PageCreationPage = () => {
   return (
-    <>
-      <Head>
-        <title>Criar Página - UFABCwiki</title>
-      </Head>
+    <MainPageLayout pageHead="Criar Página - UFABCwiki">
+      <PageTitle>Criar página</PageTitle>
 
-      <MainPageLayout>
-        <Flex
-          gap="lg"
-          direction="column"
-          bgColor="neutral_100"
-          padding="xl"
-          width="fit-parent"
-          style={{ minWidth: "100%", height: "100%" }}
-        >
-          <CreatePageForm />
-        </Flex>
-      </MainPageLayout>
-    </>
+      <MainContainer>
+        <CreatePageForm />
+      </MainContainer>
+    </MainPageLayout>
   );
 };
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useContext, useEffect, useState } from "react";
@@ -12,11 +13,9 @@ import {
   FiLogOut,
   FiMenu,
   FiSearch,
-  FiSkipBack,
   FiUser,
   FiUserPlus,
   FiX,
-  FiXSquare,
 } from "react-icons/fi";
 
 import logoImg from "@/assets/images/logo.svg";
@@ -24,9 +23,12 @@ import logoImg from "@/assets/images/logo.svg";
 import { AuthContext } from "@/contexts/auth/authContext";
 
 import Button from "@/components/common/Button";
+import IconButton from "@/components/common/IconButton";
 import Input from "@/components/common/Input";
+import Flex from "@/components/common/Flex";
 import SidebarNavBtn from "@/components/common/SidebarNavBtn";
 import SidebarNavLink from "@/components/common/SidebarNavLink";
+import FullHeightContainer from "@/components/common/FullHeightContainer";
 
 import {
   ChildrenContainer,
@@ -46,10 +48,14 @@ import {
   Backdrop,
   SubmenuInputContainer,
 } from "./MainPageLayout.styles";
-import Flex from "@/components/common/Flex";
 
 interface Props {
   children: React.ReactNode;
+  pageHead: string;
+  loading?: boolean;
+  loadingText?: string;
+  noContent?: boolean;
+  noContentText?: string;
   onSearch?: (searchValue: string) => void;
 }
 
@@ -116,42 +122,48 @@ const MainSubmenu = ({ search, setSearch, handleSearch, onClose, collapsed }) =>
       {!collapsed && <Backdrop />}
 
       <SubmenuContainer collapsed={collapsed}>
-        {!collapsed && (
-          <>
-            <SubmenuInputContainer>
-              <Input
-                fluid
-                name="search"
-                placeholder="Pesquisar..."
-                onChange={(event) => setSearch(event.target.value)}
-                value={search}
-                style={{ height: "40px", width: "100%" }}
-              />
+        <SubmenuInputContainer>
+          <Input
+            fluid
+            name="search"
+            placeholder="Pesquisar..."
+            onChange={(event) => setSearch(event.target.value)}
+            value={search}
+            style={{ height: "40px", width: "100%" }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSearch(search)
+            }}
+          />
 
-              <Button
-                size="md"
-                variant="secondary"
-                onClick={() => { handleSearch(search); onClose() }}
-              >
-                <FiSearch />
-              </Button>
-            </SubmenuInputContainer>
+          <IconButton
+            icon={FiSearch}
+            size="md"
+            variant="secondary"
+            onClick={() => { handleSearch(search); onClose() }}
+          />
+        </SubmenuInputContainer>
 
-            <SubmenuSubcontainer>
-              <PrimaryNavigation />
-            </SubmenuSubcontainer>
+        <SubmenuSubcontainer>
+          <PrimaryNavigation />
+        </SubmenuSubcontainer>
 
-            <SubmenuSubcontainer>
-              <SecondaryNavigation />
-            </SubmenuSubcontainer>
-          </>
-        )}
+        <SubmenuSubcontainer>
+          <SecondaryNavigation />
+        </SubmenuSubcontainer>
       </SubmenuContainer>
     </>
   );
 };
 
-const MainPageLayout = ({ children, onSearch }: Props) => {
+const MainPageLayout = ({
+  children,
+  onSearch,
+  pageHead,
+  loading,
+  loadingText,
+  noContent,
+  noContentText,
+}: Props) => {
   const { query, push, pathname } = useRouter();
 
   const [headerSubmenuOpen, setHeaderSubmenuOpen] = useState(false);
@@ -178,67 +190,92 @@ const MainPageLayout = ({ children, onSearch }: Props) => {
   }, []);
 
   return (
-    <PageContainer>
-      <MainHeaderContainer>
-        <MainHeader>
-          <Link href="/">
-            <Image src={logoImg as string} alt="logo" width={264} height={38} />
-          </Link>
+    <>
+      <Head>
+        <title>{pageHead}</title>
+      </Head>
 
-          <HeaderInputContainer>
-            <Input
-              fluid
-              name="search"
-              placeholder="Pesquisar por nome da página ou por categoria..."
-              onChange={(event) => setSearch(event.target.value)}
-              value={search}
-              style={{ height: "40px" }}
-            />
+      <PageContainer>
+        <MainHeaderContainer>
+          <MainHeader>
+            <Link href="/">
+              <Image src={logoImg as string} alt="logo" width={264} height={38} />
+            </Link>
 
-            <Button
-              size="md"
-              variant="secondary"
-              onClick={() => handleSearch(search)}
-            >
-              <FiSearch style={{ marginRight: "8px" }} />
-              Pesquisar
-            </Button>
-          </HeaderInputContainer>
+            <HeaderInputContainer>
+              <Input
+                fluid
+                name="search"
+                placeholder="Pesquisar por nome da página ou por categoria..."
+                onChange={(event) => setSearch(event.target.value)}
+                value={search}
+                style={{ height: "40px", width: "100%" }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleSearch(search)
+                }}
+              />
 
-          <SubmenuButtonContainer>
-            <Button variant="secondary" size="md" onClick={() => setHeaderSubmenuOpen(prev => !prev)}>
-              {headerSubmenuOpen ? <FiX style={{ flexShrink: 0 }} /> : <FiMenu style={{ flexShrink: 0 }} />}
-            </Button>
-          </SubmenuButtonContainer>
-        </MainHeader>
-      </MainHeaderContainer>
+              <Button
+                size="md"
+                variant="secondary"
+                onClick={() => handleSearch(search)}
+              >
+                <FiSearch style={{ marginRight: "8px" }} />
 
-      <MainSubmenu
-        collapsed={!headerSubmenuOpen}
-        search={search}
-        setSearch={setSearch}
-        handleSearch={handleSearch}
-        onClose={() => setHeaderSubmenuOpen(false)}
-      />
+                Pesquisar
+              </Button>
+            </HeaderInputContainer>
 
-      <ContentContainer>
-        <Content>
-          <SideSection>
-            <SideMenuSection>
-              <PrimaryNavigation />
-            </SideMenuSection>
+            <SubmenuButtonContainer>
+              <IconButton
+                size="md"
+                variant="secondary"
+                onClick={() => setHeaderSubmenuOpen(prev => !prev)}
+                icon={headerSubmenuOpen ? FiX : FiMenu}
+              />
+            </SubmenuButtonContainer>
+          </MainHeader>
+        </MainHeaderContainer>
 
-            <SideMenuSection>
-              <SecondaryNavigation />
-            </SideMenuSection>
-          </SideSection>
+        <MainSubmenu
+          collapsed={!headerSubmenuOpen}
+          search={search}
+          setSearch={setSearch}
+          handleSearch={handleSearch}
+          onClose={() => setHeaderSubmenuOpen(false)}
+        />
 
-          <MainSection>
-            <ChildrenContainer>{children}</ChildrenContainer>
-          </MainSection>
-        </Content>
-      </ContentContainer>
-    </PageContainer>
+        <ContentContainer>
+          <Content>
+            <SideSection>
+              <SideMenuSection>
+                <PrimaryNavigation />
+              </SideMenuSection>
+
+              <SideMenuSection>
+                <SecondaryNavigation />
+              </SideMenuSection>
+            </SideSection>
+
+            <MainSection>
+              <ChildrenContainer>
+                {(loading || noContent)
+                  ? (
+                      <FullHeightContainer
+                        loading={loading}
+                        loadingTitle={loadingText}
+                      >
+                        {noContent && <strong>{noContentText}</strong>}
+                      </FullHeightContainer>
+                  )
+                  : children
+                }
+              </ChildrenContainer>
+            </MainSection>
+          </Content>
+        </ContentContainer>
+      </PageContainer>
+    </>
   );
 };
 

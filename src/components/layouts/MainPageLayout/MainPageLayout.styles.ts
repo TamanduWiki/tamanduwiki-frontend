@@ -201,6 +201,7 @@ export const SubmenuContainer = styled.div<{ collapsed: boolean }>`
   width: ${({ collapsed }) => collapsed ? '0px' : '280px'};
   transition: width 0.3s ease-in-out;
   white-space: nowrap;
+  border-left: ${({ theme }) => theme.mainBorderStyle};
 
   @media (min-width: 1140px) {
     display: none;

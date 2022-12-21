@@ -1,74 +1,24 @@
 import styled from "@emotion/styled";
-import Head from "next/head";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useMemo, useState } from "react";
 
 import { apiListPages } from "@/api";
 
-import loadingImg from "@/assets/animated/loading_balls_green.svg";
-
-import Badge from "@/components/common/Badge";
-import Flex from "@/components/common/Flex";
 import Button from "@/components/common/Button";
+import ListedPage from "@/components/common/ListedPage";
 import MainPageLayout from "@/components/layouts/MainPageLayout";
 
 import { genRandomString, getRandomIntInclusive, handleError } from "@/utils";
 
 import { IMetaProps } from "@/types/common";
 
-const PageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  cursor: pointer;
-
-  height: 160px;
-  min-height: 160px;
-
-  border: ${({ theme }) => theme.mainBorderStyle};
-  background-color: ${({ theme }) => theme.colors.neutral_100};
-
-  @media (max-width: 540px) {
-    height: 100%;
-    flex-direction: column;
-  }
-`;
-
-const ImageContainer = styled.div<{ imageUrl: string }>`
-  border-radius: 1px; // (???) necessary for smoother image
-
-  height: 100%;
-  min-width: 160px;
-  width: 160px;
-
-  background-size: cover;
-  background-position: 50% 50%;
-  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
-
-  @media (max-width: 540px) {
-    width: 100%;
-    height: 160px;
-  }
-`;
-
-const PageTitle = styled.h1`
-  @media (max-width: 1140px) {
-    padding: ${({ theme }) => theme.spacing.md}
-      ${({ theme }) => theme.spacing.md} 0 ${({ theme }) => theme.spacing.md};
-  }
-`;
-
-const MainContainer = styled.div<{ noContent: boolean }>`
+const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
 
   width: 100%;
-  height: ${({ noContent }) => (noContent ? "100%" : "auto")};
 
   gap: ${({ theme }) => theme.spacing.md};
-  padding-bottom: ${({ noContent, theme }) => noContent && theme.spacing.xl};
 
   @media (max-width: 1140px) {
     padding-bottom: 0;
@@ -80,34 +30,26 @@ const MainContainer = styled.div<{ noContent: boolean }>`
   }
 `;
 
-const PageDescription = styled.p`
-  overflow: hidden;
-  width: 100%;
-  max-height: 40px;
-`;
-
 const BottomComponentContainer = styled.div`
-  color: ${({ theme }) => theme.colors.neutral_400};
+  display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.neutral_100};
-  display: flex;
-  padding: ${({ theme }) => theme.spacing.md};
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.md};
+
+  color: ${({ theme }) => theme.colors.neutral_400};
+  background-color: ${({ theme }) => theme.colors.neutral_100};
   border: ${({ theme }) => theme.mainBorderStyle};
+
+  gap: ${({ theme }) => theme.spacing.md};
+  padding: ${({ theme }) => theme.spacing.md};
 `;
 
-const NoContentContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+export const PageTitle = styled.h1`
+  padding-bottom: ${({ theme }) => theme.spacing.md};
 
-  background-color: ${({ theme }) => theme.colors.neutral_100};
-  border: ${({ theme }) => theme.mainBorderStyle};
-
-  height: 100%;
-  width: 100%;
+  @media (max-width: 1140px) {
+    padding: ${({ theme }) => theme.spacing.md};
+  }
 `;
 
 interface IPage {
@@ -120,28 +62,45 @@ interface IPage {
   imageUrl?: string;
 }
 
+const genMockedBadges = () => {
+  return Array(getRandomIntInclusive(2, 5))
+    .fill("")
+    .map(() => genRandomString());
+};
+
 const HomePage = () => {
   const router = useRouter();
 
-  const [pagesMeta, setPagesMeta] = useState<IMetaProps>({
-    total: 0,
-    per: 10,
-    page: 1,
-  });
+  const [pagesMeta, setPagesMeta] = useState<IMetaProps>({ total: 0, per: 10, page: 1 });
   const [pages, setPages] = useState<IPage[]>([]);
   const [searchingFor, setSearchingFor] = useState("");
   const [initialLoad, setInitialLoad] = useState(true);
-  const [pagesLoading, setPagesLoading] = useState(false);
+  const [searchPagesLoading, setSearchPagesLoading] = useState(false);
+  const [loadMorePagesLoading, setLoadMorePagesLoading] = useState(false);
 
-  const noContent = useMemo(
-    () => !initialLoad && !pages.length,
-    [initialLoad, pages]
-  );
+  const somethingIsLoading = useMemo(() =>
+    initialLoad || searchPagesLoading,
+    [initialLoad, searchPagesLoading],
+  )
+
+  const noContent = useMemo(() => !pages.length, [pages]);
+
+  const pageTitle = useMemo(() =>
+    searchingFor !== ""
+      ? `Resultados para "${searchingFor}"`
+      : 'Últimas alterações'
+  , [searchingFor]);
+
+  const loadingTitle = useMemo(() =>
+    initialLoad || searchingFor === ""
+      ? "Carregando todas as páginas"
+      : `Buscando por "${searchingFor}"`
+  , [initialLoad, searchingFor])
 
   const handleSearchPages = useCallback(async (searchParam: string) => {
-    setPagesLoading(true);
-
     try {
+      setPages([]);
+      setSearchPagesLoading(true);
       setSearchingFor(searchParam);
 
       await apiListPages({ page: 1, searchParam }).then(({ pages, meta }) => {
@@ -151,16 +110,16 @@ const HomePage = () => {
     } catch (error) {
       handleError(error);
     } finally {
-      setPagesLoading(false);
+      setSearchPagesLoading(false);
       setInitialLoad(false);
     }
   }, []);
 
-  const handleListPages = useCallback(
+  const handleLoadMorePages = useCallback(
     async (page?: number) => {
-      setPagesLoading(true);
-
       try {
+        setLoadMorePagesLoading(true);
+
         await apiListPages({ page: page || 1, searchParam: searchingFor }).then(
           ({ pages, meta }) => {
             setPages((prevPages) => prevPages.concat(pages));
@@ -170,7 +129,7 @@ const HomePage = () => {
       } catch (error) {
         handleError(error);
       } finally {
-        setPagesLoading(false);
+        setLoadMorePagesLoading(false);
         setInitialLoad(false);
       }
     },
@@ -178,96 +137,45 @@ const HomePage = () => {
   );
 
   return (
-    <>
-      <Head>
-        <title>UFABCwiki</title>
-      </Head>
+    <MainPageLayout
+      pageHead="UFABCwiki"
+      onSearch={handleSearchPages}
+      loading={somethingIsLoading}
+      loadingText={loadingTitle}
+      noContent={noContent}
+      noContentText="Não há resultados para esta busca..."
+    >
+      <PageTitle>{pageTitle}</PageTitle>
 
-      <MainPageLayout onSearch={handleSearchPages}>
-        <MainContainer noContent={noContent}>
-          {initialLoad && (
-            <Flex
-              height="fit-parent"
-              width="fit-parent"
-              align="center"
-              justify="center"
+      <ListContainer>
+        {pages.map((page) => (
+          <ListedPage
+            key={page.id}
+            title={page.title}
+            imageUrl={page.imageUrl}
+            description={page.content}
+            badges={genMockedBadges()}
+            onClick={() => router.push(`/pages/${page.slug}`)}
+          />
+        ))}
+
+        <BottomComponentContainer>
+          {pagesMeta.total > pages.length && (
+            <Button
+              fluid
+              variant="secondary"
+              loading={loadMorePagesLoading}
+              disabled={loadMorePagesLoading}
+              onClick={() => handleLoadMorePages(pagesMeta.page + 1)}
             >
-              <Image src={loadingImg as string} alt="loading_img" />
-            </Flex>
+              Carregar mais páginas...
+            </Button>
           )}
 
-          {!initialLoad && <PageTitle>Últimas alterações</PageTitle>}
-
-          {!noContent &&
-            pages.map((page) => (
-              <PageContainer onClick={() => router.push(`/pages/${page.slug}`)}>
-                <ImageContainer imageUrl={page.imageUrl} />
-
-                <Flex
-                  gap="xs"
-                  direction="column"
-                  width="fit-parent"
-                  height="fit-parent"
-                  justify="space-between"
-                  padding="md"
-                  style={{ overflowY: "auto" }}
-                >
-                  <Flex direction="column" width="fit-parent" gap="xs">
-                    <h3>{page.title}</h3>
-
-                    <PageDescription>{page.content}</PageDescription>
-                  </Flex>
-
-                  <Flex
-                    width="fit-parent"
-                    gap="md"
-                    style={{ flexWrap: "wrap" }}
-                  >
-                    {/* TODO remove this mock */}
-
-                    {Array(getRandomIntInclusive(2, 5))
-                      .fill("")
-                      .map(() => (
-                        <Badge>{genRandomString()}</Badge>
-                      ))}
-                  </Flex>
-                </Flex>
-              </PageContainer>
-            ))}
-
-          {noContent && (
-            <Flex
-              height="fit-parent"
-              width="fit-parent"
-              align="center"
-              justify="center"
-            >
-              <NoContentContainer>
-                <strong>Não há resultados para esta busca...</strong>
-              </NoContentContainer>
-            </Flex>
-          )}
-
-          {!initialLoad && !!pages.length && (
-            <BottomComponentContainer>
-              {pagesMeta.total > pages.length && (
-                <Button
-                  fluid
-                  variant="secondary"
-                  loading={pagesLoading}
-                  disabled={pagesLoading}
-                  onClick={() => handleListPages(pagesMeta.page + 1)}
-                >
-                  Carregar mais páginas...
-                </Button>
-              )}
-
-              {`Mostrando ${pages.length} de ${pagesMeta.total} itens`}
-            </BottomComponentContainer>
-          )}
-        </MainContainer>
-      </MainPageLayout>
-    </>
+          {`Mostrando ${pages.length} de ${pagesMeta.total} itens`}
+        </BottomComponentContainer>
+      </ListContainer>
+    </MainPageLayout>
   );
 };
 

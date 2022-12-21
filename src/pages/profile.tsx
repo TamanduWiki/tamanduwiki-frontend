@@ -19,27 +19,22 @@ const BuildingBlocksImg = styled(Image)`
 
 const ProfilePage = () => {
   return (
-    <>
-      <Head>
-        <title>Meu perfil - UFABCwiki</title>
-      </Head>
+    <MainPageLayout pageHead="Meu perfil - UFABCwiki">
+      <Flex
+        height="fit-parent"
+        align="center"
+        justify="center"
+        direction="column"
+      >
 
-      <MainPageLayout>
-        <Flex
-          height="fit-parent"
-          align="center"
-          justify="center"
-          direction="column"
-        >
-          <h2>Página em construção...</h2>
+        <h2>Página em construção...</h2>
 
-          <BuildingBlocksImg
-            src={undrawnBuildingImages as string}
-            alt="undraw_building_blocks"
-          />
-        </Flex>
-      </MainPageLayout>
-    </>
+        <BuildingBlocksImg
+          src={undrawnBuildingImages as string}
+          alt="undraw_building_blocks"
+        />
+      </Flex>
+    </MainPageLayout>
   );
 };
 

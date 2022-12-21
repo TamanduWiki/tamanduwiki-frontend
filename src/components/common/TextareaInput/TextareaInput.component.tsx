@@ -44,7 +44,7 @@ const Input = ({
           </LabelContainer>
 
           <StyledTextarea
-            rows={10}
+            rows={15}
             name={name}
             placeholder={placeholder}
             errored={meta.touched && !!meta.error}

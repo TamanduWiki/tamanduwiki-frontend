@@ -1,14 +1,10 @@
 import styled from "@emotion/styled";
-import Head from "next/head";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
+
 import toast from "react-hot-toast";
-import { FiArrowLeft } from "react-icons/fi";
 
 import { apiDeletePage, apiGetPage } from "@/api";
-
-import loadingImg from "@/assets/animated/loading_balls_green.svg";
 
 import Button from "@/components/common/Button";
 import Flex from "@/components/common/Flex";
@@ -35,11 +31,10 @@ const ImageContainer = styled.div<{ url: string }>`
   background-image: ${({ url }) => `url(${url})`};
 `;
 
-const MainContainer = styled.div<{ loading: boolean }>`
+const DetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: ${({ loading }) => (loading ? "100%" : "auto")};
   position: relative;
   background-color: ${({ theme }) => theme.colors.neutral_100};
   border: ${({ theme }) => theme.mainBorderStyle};
@@ -88,57 +83,40 @@ const PageCreationPage = () => {
   }, [handleGetPage, page_slug]);
 
   return (
-    <>
-      <Head>
-        <title>Criar Página - UFABCwiki</title>
-      </Head>
+    <MainPageLayout
+      pageHead={`${page?.title || 'Página desconhecida'} | UFABCwiki`}
+      noContent={!page}
+      noContentText="Erro: Conteúdo inexistente"
+      loading={loading}
+      loadingText="Carregando detalhes da página"
+    >
+      <DetailsContainer>
+        {page &&
+          <>
+            <ImageContainer url={page.imageUrl} />
 
-      <MainPageLayout>
-        <MainContainer loading={loading}>
-          <div style={{ position: "absolute", top: "8px", left: "8px" }}>
-            <Button variant="secondary" size="md" onClick={() => push("/")}>
-              <FiArrowLeft />
-            </Button>
-          </div>
+            <Flex direction="column" padding="lg" gap="lg">
+              <h1>{page.title}</h1>
 
-          {loading && (
-            <Flex
-              height="fit-parent"
-              width="fit-parent"
-              align="center"
-              justify="center"
-            >
-              <Image src={loadingImg as string} alt="loading_img" />
+              <p>Criada em: {page.createdAt}</p>
+
+              <p>Editada em: {page.updatedAt}</p>
+
+              <p>{page.content}</p>
+
+              <Button
+                variant="warning"
+                loading={loadingDelete}
+                disabled={loadingDelete}
+                onClick={() => handleDeletePage()}
+              >
+                Deletar página
+              </Button>
             </Flex>
-          )}
-
-          {!loading && page && (
-            <>
-              <ImageContainer url={page.imageUrl} />
-
-              <Flex direction="column" padding="lg" gap="lg">
-                <h1 style={{ wordBreak: "break-word" }}>{page.title}</h1>
-
-                <p>Criada em: {page.createdAt}</p>
-
-                <p>Editada em: {page.updatedAt}</p>
-
-                <p>{page.content}</p>
-
-                <Button
-                  variant="warning"
-                  loading={loadingDelete}
-                  disabled={loadingDelete}
-                  onClick={() => handleDeletePage()}
-                >
-                  Deletar página
-                </Button>
-              </Flex>
-            </>
-          )}
-        </MainContainer>
-      </MainPageLayout>
-    </>
+          </>
+        }
+      </DetailsContainer>
+    </MainPageLayout>
   );
 };
 
