@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
-import Head from "next/head";
 
 import undrawnBuildingImages from "@/assets/images/undraw_building_blocks_re_5ahy.svg";
 
@@ -19,27 +18,21 @@ const BuildingBlocksImg = styled(Image)`
 
 const AboutPage = () => {
   return (
-    <>
-      <Head>
-        <title>Sobre - UFABCwiki</title>
-      </Head>
+    <MainPageLayout pageHead="Sobre - UFABCwiki">
+      <Flex
+        height="fit-parent"
+        align="center"
+        justify="center"
+        direction="column"
+      >
+        <h2>Página em construção...</h2>
 
-      <MainPageLayout>
-        <Flex
-          height="fit-parent"
-          align="center"
-          justify="center"
-          direction="column"
-        >
-          <h2>Página em construção...</h2>
-
-          <BuildingBlocksImg
-            src={undrawnBuildingImages as string}
-            alt="undraw_building_blocks"
-          />
-        </Flex>
-      </MainPageLayout>
-    </>
+        <BuildingBlocksImg
+          src={undrawnBuildingImages as string}
+          alt="undraw_building_blocks"
+        />
+      </Flex>
+    </MainPageLayout>
   );
 };
 

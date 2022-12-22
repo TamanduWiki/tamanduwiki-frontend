@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
-import Head from "next/head";
 
 import undrawnBuildingImages from "@/assets/images/undraw_building_blocks_re_5ahy.svg";
 

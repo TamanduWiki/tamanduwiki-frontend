@@ -19,6 +19,7 @@ import {
 } from "react-icons/fi";
 
 import logoImg from "@/assets/images/logo.svg";
+import loadingImg from "@/assets/animated/loading_balls_black.svg";
 
 import { AuthContext } from "@/contexts/auth/authContext";
 
@@ -28,7 +29,6 @@ import Input from "@/components/common/Input";
 import Flex from "@/components/common/Flex";
 import SidebarNavBtn from "@/components/common/SidebarNavBtn";
 import SidebarNavLink from "@/components/common/SidebarNavLink";
-import FullHeightContainer from "@/components/common/FullHeightContainer";
 
 import {
   ChildrenContainer,
@@ -47,6 +47,8 @@ import {
   SubmenuSubcontainer,
   Backdrop,
   SubmenuInputContainer,
+  FullHeightContainer,
+  LoadingTitle,
 } from "./MainPageLayout.styles";
 
 interface Props {
@@ -261,12 +263,20 @@ const MainPageLayout = ({
               <ChildrenContainer>
                 {(loading || noContent)
                   ? (
-                      <FullHeightContainer
-                        loading={loading}
-                        loadingTitle={loadingText}
-                      >
-                        {noContent && <strong>{noContentText}</strong>}
-                      </FullHeightContainer>
+                    <FullHeightContainer>
+                      {loading
+                        ? (
+                          <>
+                            <Image src={loadingImg as string} alt="loading_img" width={48} />
+
+                            <LoadingTitle>
+                              {loadingText || 'Carregando'}
+                            </LoadingTitle>
+                          </>
+                        )
+                        : <>{noContent && <strong>{noContentText}</strong>}</>
+                      }
+                    </FullHeightContainer>
                   )
                   : children
                 }
