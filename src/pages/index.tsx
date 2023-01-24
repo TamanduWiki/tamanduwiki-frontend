@@ -45,12 +45,21 @@ const BottomComponentContainer = styled.div`
 `;
 
 export const PageTitle = styled.h1`
-  padding-bottom: ${({ theme }) => theme.spacing.md};
+  padding: 0 ${({ theme }) => theme.spacing.sm};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+  border-left: 8px solid ${({ theme }) => theme.colors.primary};
 
   @media (max-width: 1140px) {
-    padding: ${({ theme }) => theme.spacing.md};
+    margin-top: ${({ theme }) => theme.spacing.xs};
   }
 `;
+
+interface ICategory {
+  id: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 interface IPage {
   id: string;
@@ -60,6 +69,7 @@ interface IPage {
   createdAt: string;
   updatedAt: string;
   imageUrl?: string;
+  categories: ICategory[];
 }
 
 const genMockedBadges = () => {
@@ -154,7 +164,7 @@ const HomePage = () => {
             title={page.title}
             imageUrl={page.imageUrl}
             description={page.content}
-            badges={genMockedBadges()}
+            badges={page.categories.map(category => category.title)}
             onClick={() => router.push(`/pages/${page.slug}`)}
           />
         ))}

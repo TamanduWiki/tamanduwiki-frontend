@@ -66,13 +66,10 @@ export const globalStyles = css`
   }
 
   ::-webkit-scrollbar {
-    width: 20px;
+    width: 8px;
   }
 
   ::-webkit-scrollbar-thumb {
-    border: 6px solid rgba(0, 0, 0, 0);
-    background-clip: padding-box;
-    border-radius: 9999px;
-    background-color: ${theme.colors.neutral_300};
+    background-color: ${theme.colors.neutral_400};
   }
 `;

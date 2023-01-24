@@ -6,6 +6,14 @@ export interface IApiPage {
   createdAt: string;
   updatedAt: string;
   imageUrl?: string;
+  categories: IApiCategory[];
+}
+
+export interface IApiCategory {
+  id: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IApiCreateUserData {
@@ -40,15 +48,21 @@ export interface ILoginResponse {
   auth: boolean;
 }
 
+export interface IListCategoriesResponse {
+  categories: IApiCategory[];
+  meta: IMetaProps;
+}
+
 export type ApiGetPage = (pageSlug: string) => Promise<IApiPage>;
+
 export type ApiDeletePage = (pageID: string) => Promise<void>;
+
 export type ApiCreatePage = (pageData: IApiCreatePageData) => Promise<IApiPage>;
-export type ApiListPages = (params: {
-  searchParam?: string;
-  page?: number;
-}) => Promise<IListPagesResponse>;
-export type ApiLogin = (params: {
-  email: string;
-  password: string;
-}) => Promise<ILoginResponse>;
+
+export type ApiListPages = (params: { searchParam?: string; page?: number }) => Promise<IListPagesResponse>;
+
+export type ApiLogin = (params: { email: string; password: string }) => Promise<ILoginResponse>;
+
 export type ApiSignup = (data: IApiCreateUserData) => Promise<void>;
+
+export type ApiListCategories = (params: { searchParam?: string; page?: number }) => Promise<IListCategoriesResponse>;

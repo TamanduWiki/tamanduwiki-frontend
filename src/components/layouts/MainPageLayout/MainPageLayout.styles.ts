@@ -100,6 +100,10 @@ export const ChildrenContainer = styled.div`
   overflow-y: auto;
 
   height: 100%;
+
+  @media (max-width: 1140px) {
+    padding: 8px 8px 0 8px;
+  }
 `;
 
 export const MainSection = styled.div`

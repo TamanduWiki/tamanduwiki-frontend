@@ -10,6 +10,8 @@ import {
   IListPagesResponse,
   ILoginResponse,
   ApiSignup,
+  ApiListCategories,
+  IListCategoriesResponse,
 } from "./api.types";
 
 export const apiGetPage: ApiGetPage = async (pageSlug) =>
@@ -24,9 +26,12 @@ export const apiCreatePage: ApiCreatePage = async (pageData) =>
 
 export const apiListPages: ApiListPages = async ({ searchParam, page }) =>
   await api
-    .get<IListPagesResponse>("/pages", {
-      params: { page, searchFor: searchParam },
-    })
+    .get<IListPagesResponse>("/pages", { params: { page, searchFor: searchParam } })
+    .then(({ data }) => data);
+
+export const apiListCategories: ApiListCategories = async ({ searchParam, page }) =>
+  await api
+    .get<IListCategoriesResponse>("/categories", { params: { page, searchFor: searchParam } })
     .then(({ data }) => data);
 
 export const apiLogin: ApiLogin = async (loginParams) =>

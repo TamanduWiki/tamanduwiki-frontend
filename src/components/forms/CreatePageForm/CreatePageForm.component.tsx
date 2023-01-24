@@ -1,15 +1,18 @@
 import { Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import AsyncSelect from "react-select/async";
 
-import { apiCreatePage } from "@/api";
+import { apiCreatePage, apiListCategories } from "@/api";
 
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import TextareaInput from "@/components/common/TextareaInput";
 
-import { handleError } from "@/utils";
+import { theme } from "@/styles/theme";
+
+import { delay, handleError } from "@/utils";
 
 import { StyledForm } from "./CreatePageForm.styles";
 import { schema } from "./CreatePageForm.validations";
@@ -18,13 +21,15 @@ interface Values {
   title: string;
   content: string;
   slug: string;
+  categoriesTitles?: string[];
   // image: any;
 }
 
-const initialValues = {
+const initialValues: Values = {
   title: "",
   content: "",
   slug: "",
+  categoriesTitles: [],
   // image: undefined,
 };
 
@@ -52,6 +57,7 @@ const CreatePageForm = () => {
   const router = useRouter();
 
   const [image, setImage] = useState<File | undefined>();
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | undefined>();
 
   const onSubmit = async (
     values: Values,
@@ -76,13 +82,40 @@ const CreatePageForm = () => {
     }
   };
 
+  const loadCategoriesOptions = async (
+    searchParam: string
+  ): Promise<{ label: string; value: string }[]> => {
+    const options = await apiListCategories({ searchParam, page: 1 }).then((response) =>
+      response.categories.map((category) => ({
+        label: category.title,
+        value: category.title,
+      }))
+    );
+
+    return options;
+  };
+
+  // create a preview as a side effect, whenever selected file is changed
+  useEffect(() => {
+    if (!image) {
+      setImagePreviewUrl(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(image)
+    setImagePreviewUrl(objectUrl)
+
+    // free memory whenever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl)
+  }, [image])
+
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
       validationSchema={schema}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, setFieldValue }) => (
         <StyledForm>
           <Input
             fluid
@@ -109,16 +142,33 @@ const CreatePageForm = () => {
           />
 
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-            Imagem da página
-            <input
-              type="file"
-              name="image"
-              onChange={(event) => setImage(event.currentTarget.files[0])}
-              style={{ width: '100%' }}
+            Categorias
+
+            <AsyncSelect
+              name="categoriesTitles"
+              isMulti
+              cacheOptions
+              defaultOptions
+              loadOptions={loadCategoriesOptions}
+              onChange={(newValues) => setFieldValue("categoriesTitles", newValues.map(({ value }) => value))}
             />
           </div>
 
-          <div style={{ display: 'flex', gap: '16px' }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            Imagem da página
+            <div style={{ border: `1px solid ${theme.colors.neutral_300}`, padding: "8px", gap: "8px", display: "flex", flexDirection: "column" }}>
+              <input
+                type="file"
+                name="image"
+                onChange={(event) => setImage(event.currentTarget.files[0])}
+                style={{ width: "100%" }}
+              />
+
+              {imagePreviewUrl && <img src={imagePreviewUrl} alt="image-preview" style={{ width: "100%", maxWidth: "640px" }} />}
+            </div>
+          </div>
+
+          <div style={{ display: "flex", gap: "16px" }}>
             <Button
               fluid
               type="button"
