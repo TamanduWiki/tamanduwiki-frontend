@@ -12,10 +12,14 @@ import TextareaInput from "@/components/common/TextareaInput";
 
 import { theme } from "@/styles/theme";
 
-import { delay, handleError } from "@/utils";
+import { handleError } from "@/utils";
 
-import { StyledForm } from "./CreatePageForm.styles";
+import { EditContentContainer, StyledForm } from "./CreatePageForm.styles";
 import { schema } from "./CreatePageForm.validations";
+import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown";
+import MarkdownContainer from "@/components/common/MarkdownContainer";
+import styled from "@emotion/styled";
 
 interface Values {
   title: string;
@@ -32,6 +36,21 @@ const initialValues: Values = {
   categoriesTitles: [],
   // image: undefined,
 };
+
+const ImageContainer = styled.div<{ url: string }>`
+  min-width: 240px;
+  min-height: 240px;
+  width: 240px;
+  height: 240px;
+
+  background-size: cover;
+  background-position: 50% 50%;
+  background-image: ${({ url }) => `url(${url})`};
+
+  @media (max-width: 760px) {
+    width: 100%;
+  }
+`;
 
 const getBase64 = async (file: File) => {
   if (!file) return undefined;
@@ -58,6 +77,7 @@ const CreatePageForm = () => {
 
   const [image, setImage] = useState<File | undefined>();
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | undefined>();
+  const [previewMd, setPreviewMd] = useState(false);
 
   const onSubmit = async (
     values: Values,
@@ -115,7 +135,7 @@ const CreatePageForm = () => {
       onSubmit={onSubmit}
       validationSchema={schema}
     >
-      {({ isSubmitting, setFieldValue }) => (
+      {({ isSubmitting, setFieldValue, values }) => (
         <StyledForm>
           <Input
             fluid
@@ -130,14 +150,6 @@ const CreatePageForm = () => {
             name="slug"
             label="Slug"
             placeholder="Ex.: bases-matematicas"
-            formikField
-          />
-
-          <TextareaInput
-            fluid
-            name="content"
-            label="Conteúdo"
-            placeholder="Ex.: A expressão Lorem ipsum em design gráfico e editoração é um texto padrão em latim utilizado na produção gráfica para preencher os espaços de texto em publicações para testar e ajustar aspectos visuais antes de utilizar conteúdo real..."
             formikField
           />
 
@@ -156,7 +168,7 @@ const CreatePageForm = () => {
 
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             Imagem da página
-            <div style={{ border: `1px solid ${theme.colors.neutral_300}`, padding: "8px", gap: "8px", display: "flex", flexDirection: "column" }}>
+            <div style={{ border: `1px solid ${theme.colors.neutral_300}`, padding: "8px", gap: "8px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
               <input
                 type="file"
                 name="image"
@@ -164,9 +176,39 @@ const CreatePageForm = () => {
                 style={{ width: "100%" }}
               />
 
-              {imagePreviewUrl && <img src={imagePreviewUrl} alt="image-preview" style={{ width: "100%", maxWidth: "640px" }} />}
+              {imagePreviewUrl &&
+                <ImageContainer url={imagePreviewUrl} />
+              }
             </div>
           </div>
+
+          <EditContentContainer previewActive={previewMd}>
+            <TextareaInput
+              fluid
+              name="content"
+              label="Conteúdo"
+              placeholder="Ex.: A expressão Lorem ipsum em design gráfico e editoração é um texto padrão em latim utilizado na produção gráfica para preencher os espaços de texto em publicações para testar e ajustar aspectos visuais antes de utilizar conteúdo real..."
+              formikField
+            />
+
+            {previewMd &&
+              <div style={{ height: "100%", display: "flex", flexDirection: "column", gap: "4px" }}>
+                <p style={{ lineHeight: 1, color: theme.colors.neutral_400 }}>Preview</p>
+
+                <div style={{ maxHeight: "360px", height: "100%", overflowX: "auto", border: `2px solid ${theme.colors.neutral_200}`, borderStyle: "dashed", padding: "8px", display: "flex" }}>
+                  <MarkdownContainer>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {values?.content}
+                    </ReactMarkdown>
+                  </MarkdownContainer>
+                </div>
+              </div>
+            }
+          </EditContentContainer>
+
+          <Button type="button" variant="secondary" size="md" onClick={() => setPreviewMd(prev => !prev)}>
+            {previewMd ? "Fechar preview" : "Preview markdown"}
+          </Button>
 
           <div style={{ display: "flex", gap: "16px" }}>
             <Button
@@ -174,7 +216,6 @@ const CreatePageForm = () => {
               type="button"
               variant="secondary"
               disabled={isSubmitting}
-              loading={isSubmitting}
               onClick={() => router.back()}
             >
               Voltar

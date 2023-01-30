@@ -10,7 +10,6 @@ export const PageContainer = styled.div`
   height: 160px;
   min-height: 160px;
 
-  border: ${({ theme }) => theme.mainBorderStyle};
   background-color: ${({ theme }) => theme.colors.neutral_100};
 
   @media (max-width: 540px) {
@@ -40,4 +39,6 @@ export const PageDescription = styled.p`
   overflow: hidden;
   width: 100%;
   max-height: 40px;
+  display: inline-block;
+  word-break: break-word;
 `;

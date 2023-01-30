@@ -15,7 +15,7 @@ export const globalStyles = css`
     font: 400 1rem Exo2, sans-serif;
     -webkit-font-smoothing: antialiased;
     color: ${theme.colors.neutral_700};
-    background-color: #eeeeee; // Design System Exception
+    background-color: ${theme.colors.neutral_200}; // Design System Exception
 
     /* background-image: url(${booksBackgroundImg.src}); */
   }
@@ -70,6 +70,6 @@ export const globalStyles = css`
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: ${theme.colors.neutral_400};
+    background-color: ${theme.colors.neutral_300};
   }
 `;

@@ -14,7 +14,6 @@ const MainContainer = styled.div`
   width: 100%;
 
   background-color: ${({ theme }) => theme.colors.neutral_100};
-  border: ${({ theme }) => theme.mainBorderStyle};
 
   @media (max-width: 540px) {
     padding: ${({ theme }) => theme.spacing.md};

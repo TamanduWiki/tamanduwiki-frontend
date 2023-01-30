@@ -33,7 +33,6 @@ export const MainAreaContent = styled.div`
   gap: ${({ theme }) => theme.spacing.xl};
   padding: ${({ theme }) => theme.spacing.xl};
 
-  border: ${({ theme }) => theme.mainBorderStyle};
   background-color: ${({ theme }) => theme.colors.neutral_100};
 
   @media (max-width: 540px) {

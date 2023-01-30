@@ -1,16 +1,26 @@
+import moment from "moment";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { FiTrash2 } from "react-icons/fi";
 
 import toast from "react-hot-toast";
 
 import { apiDeletePage, apiGetPage } from "@/api";
 
-import Button from "@/components/common/Button";
+import IconButton from "@/components/common/IconButton";
 import Flex from "@/components/common/Flex";
 import MainPageLayout from "@/components/layouts/MainPageLayout";
 
 import { handleError } from "@/utils";
+
+import { PageTitle } from "@/pages";
+import MarkdownContainer from "@/components/common/MarkdownContainer";
+import Modal from "@/components/common/Modal";
+import Button from "@/components/common/Button";
+import { ModalRef } from "@/components/common/Modal/Modal.component";
 
 interface IPage {
   id: string;
@@ -23,28 +33,50 @@ interface IPage {
 }
 
 const ImageContainer = styled.div<{ url: string }>`
-  width: 100%;
+  min-width: 240px;
   min-height: 240px;
 
   background-size: cover;
   background-position: 50% 50%;
   background-image: ${({ url }) => `url(${url})`};
+
+  @media (max-width: 760px) {
+    width: 100%;
+  }
 `;
 
-const DetailsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  position: relative;
+const ContentContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.neutral_100};
-  border: ${({ theme }) => theme.mainBorderStyle};
-`;
+  border: 1px solid ${({ theme }) => theme.colors.neutral_300};
+  border-style: dashed;
+  padding: ${({ theme }) => theme.spacing.md};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+
+  @media (max-width: 760px) {
+    margin-bottom: ${({ theme }) => theme.spacing.sm};
+  }
+`
+
+const MainInfos = styled.div`
+  display: flex;
+  background-color: ${({ theme }) => theme.colors.neutral_100};
+  padding: ${({ theme }) => theme.spacing.sm};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+  gap: ${({ theme }) => theme.spacing.md};
+
+  @media (max-width: 760px) {
+    flex-direction: column;
+    margin-bottom: ${({ theme }) => theme.spacing.sm};
+  }
+`
 
 const PageCreationPage = () => {
   const {
     push,
     query: { page_slug },
   } = useRouter();
+
+  const deletePageModalRef = useRef<ModalRef>();
 
   const [loading, setLoading] = useState(true);
   const [loadingDelete, setLoadingDelete] = useState(false);
@@ -84,38 +116,63 @@ const PageCreationPage = () => {
 
   return (
     <MainPageLayout
-      pageHead={`${page?.title || 'Página desconhecida'} | UFABCwiki`}
+      pageHead={`${page?.title || "Página desconhecida"} | UFABCwiki`}
       noContent={!page}
       noContentText="Erro: Conteúdo inexistente"
       loading={loading}
       loadingText="Carregando detalhes da página"
     >
-      <DetailsContainer>
-        {page &&
-          <>
-            <ImageContainer url={page.imageUrl} />
+      <MainInfos>
+        <ImageContainer url={page?.imageUrl} />
 
-            <Flex direction="column" padding="lg" gap="lg">
-              <h1>{page.title}</h1>
+        <Flex direction="column" width="fit-parent" gap="md">
+          <Flex width="fit-parent" align="center" justify="space-between">
+            <PageTitle>{page?.title}</PageTitle>
 
-              <p>Criada em: {page.createdAt}</p>
+            <IconButton
+              icon={FiTrash2}
+              variant="warning"
+              onClick={() => deletePageModalRef.current?.open()}
+            />
+          </Flex>
 
-              <p>Editada em: {page.updatedAt}</p>
+          <Flex gap="xs" direction="column">
+            <p>
+              <strong>Criada em:</strong> {moment(page?.createdAt).format("DD/MM/yyyy, h:mm")}
+            </p>
 
-              <p>{page.content}</p>
+            <p>
+              <strong>Última edição:</strong> {moment(page?.updatedAt).format("DD/MM/yyyy, h:mm")}
+            </p>
+          </Flex>
+        </Flex>
+      </MainInfos>
 
-              <Button
-                variant="warning"
-                loading={loadingDelete}
-                disabled={loadingDelete}
-                onClick={() => handleDeletePage()}
-              >
-                Deletar página
-              </Button>
-            </Flex>
-          </>
-        }
-      </DetailsContainer>
+      <ContentContainer>
+        {page && (
+          <MarkdownContainer>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {page.content}
+            </ReactMarkdown>
+          </MarkdownContainer>
+        )}
+      </ContentContainer>
+
+      <Modal ref={deletePageModalRef}>
+        <Flex bgColor="neutral_100" padding="md" direction="column" gap="xl" align="center" style={{ maxWidth: "480px" }}>
+          <h3 style={{ textAlign: "center" }}>Tem certeza que deseja deletar a página?</h3>
+
+          <Flex gap="sm" width="fit-parent">
+            <Button fluid variant="secondary" onClick={() => deletePageModalRef.current?.close()} disabled={loadingDelete}>
+              Cancelar
+            </Button>
+
+            <Button fluid variant="warning" onClick={handleDeletePage} disabled={loadingDelete} loading={loadingDelete}>
+              Deletar
+            </Button>
+          </Flex>
+        </Flex>
+      </Modal>
     </MainPageLayout>
   );
 };

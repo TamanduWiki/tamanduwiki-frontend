@@ -18,7 +18,6 @@ const variantStyles = {
   `,
   secondary: css`
     background: ${theme.colors.neutral_200};
-    border: ${theme.mainBorderStyle};
   `,
   tertiary: css`
     background: transparent;

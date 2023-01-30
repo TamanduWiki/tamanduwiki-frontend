@@ -50,7 +50,7 @@ function App({ Component, pageProps }: AppProps) {
             justify="center"
             style={{ height: "100vh", width: "100vw" }}
           >
-            <Flex bgColor="neutral_100" style={{ border: `${theme.mainBorderStyle}`, padding: `0 ${theme.spacing.sm}`}}>
+            <Flex bgColor="neutral_100" style={{ padding: `0 ${theme.spacing.sm}`}}>
               <Image src={loadingImg as string} alt="loading_img" width={64}/>
             </Flex>
           </Flex>

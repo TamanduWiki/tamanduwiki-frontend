@@ -26,7 +26,6 @@ const ListContainer = styled.div`
 
   @media (max-width: 540px) {
     padding: 0;
-    gap: ${({ theme }) => theme.spacing.lg};
   }
 `;
 
@@ -38,7 +37,6 @@ const BottomComponentContainer = styled.div`
 
   color: ${({ theme }) => theme.colors.neutral_400};
   background-color: ${({ theme }) => theme.colors.neutral_100};
-  border: ${({ theme }) => theme.mainBorderStyle};
 
   gap: ${({ theme }) => theme.spacing.md};
   padding: ${({ theme }) => theme.spacing.md};
@@ -46,12 +44,7 @@ const BottomComponentContainer = styled.div`
 
 export const PageTitle = styled.h1`
   padding: 0 ${({ theme }) => theme.spacing.sm};
-  margin-bottom: ${({ theme }) => theme.spacing.md};
   border-left: 8px solid ${({ theme }) => theme.colors.primary};
-
-  @media (max-width: 1140px) {
-    margin-top: ${({ theme }) => theme.spacing.xs};
-  }
 `;
 
 interface ICategory {
@@ -71,12 +64,6 @@ interface IPage {
   imageUrl?: string;
   categories: ICategory[];
 }
-
-const genMockedBadges = () => {
-  return Array(getRandomIntInclusive(2, 5))
-    .fill("")
-    .map(() => genRandomString());
-};
 
 const HomePage = () => {
   const router = useRouter();
@@ -155,7 +142,7 @@ const HomePage = () => {
       noContent={noContent}
       noContentText="Não há resultados para esta busca..."
     >
-      <PageTitle>{pageTitle}</PageTitle>
+      <div style={{ marginBottom: "24px", marginTop: "8px" }}><PageTitle>{pageTitle}</PageTitle></div>
 
       <ListContainer>
         {pages.map((page) => (

@@ -35,8 +35,6 @@ export const MainHeaderContainer = styled.div`
   z-index: 100;
 
   grid-area: header;
-
-  border: ${({ theme }) => theme.mainBorderStyle};
 `;
 
 export const MainHeader = styled.div`
@@ -90,10 +88,6 @@ export const SideSection = styled.div`
   @media (max-width: 1140px) {
     display: none;
   }
-
-  > div {
-    border: ${({ theme }) => theme.mainBorderStyle};
-  }
 `;
 
 export const ChildrenContainer = styled.div`
@@ -138,9 +132,6 @@ export const SubmenuInputContainer = styled.div`
   width: 100%;
   display: none;
   padding: ${({ theme }) => theme.spacing.md};
-  border-bottom: ${({ theme }) => theme.mainBorderStyle};
-  border-left: ${({ theme }) => theme.mainBorderStyle};
-  border-right: ${({ theme }) => theme.mainBorderStyle};
 
   @media (max-width: 760px) {
     display: flex;
@@ -187,7 +178,9 @@ export const Backdrop = styled.div`
   left: 0;
   z-index: 99;
   background-color: ${({ theme }) => theme.colors.neutral_700};
-  opacity: 0.6;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  backdrop-filter: blur(2px);
 
   @media (min-width: 1140px) {
     display: none;
@@ -205,7 +198,6 @@ export const SubmenuContainer = styled.div<{ collapsed: boolean }>`
   width: ${({ collapsed }) => collapsed ? '0px' : '280px'};
   transition: width 0.3s ease-in-out;
   white-space: nowrap;
-  border-left: ${({ theme }) => theme.mainBorderStyle};
 
   @media (min-width: 1140px) {
     display: none;
@@ -218,9 +210,6 @@ export const SubmenuSubcontainer = styled.div`
   padding: ${({ theme }) => theme.spacing.md};
   gap: ${({ theme }) => theme.spacing.md};
   align-items: flex-start;
-  border-bottom: ${({ theme }) => theme.mainBorderStyle};
-  border-left: ${({ theme }) => theme.mainBorderStyle};
-  border-right: ${({ theme }) => theme.mainBorderStyle};
 `;
 
 export const FullHeightContainer = styled.div`
@@ -229,8 +218,6 @@ export const FullHeightContainer = styled.div`
   justify-content: center;
 
   background-color: ${({ theme }) => theme.colors.neutral_100};
-  border: ${({ theme }) => theme.mainBorderStyle};
-
   height: calc(100% - ${({ theme }) => theme.spacing.xl});
   width: 100%;
   flex-direction: column;
