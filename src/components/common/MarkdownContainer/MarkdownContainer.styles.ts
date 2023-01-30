@@ -4,7 +4,7 @@ const MarkdownContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.xs};
+  gap: ${({ theme }) => theme.spacing.md};
   line-height: 1.5;
 
   th {
@@ -26,8 +26,7 @@ const MarkdownContainer = styled.div`
   h4,
   h5,
   h6 {
-    margin-top: ${({ theme }) => theme.spacing.lg};
-    margin-bottom: ${({ theme }) => theme.spacing.xs};
+    margin-top: ${({ theme }) => theme.spacing.md};
 
     &:first-child {
       margin-top: unset;

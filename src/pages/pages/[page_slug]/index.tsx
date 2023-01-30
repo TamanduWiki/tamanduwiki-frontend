@@ -126,7 +126,7 @@ const PageCreationPage = () => {
         <ImageContainer url={page?.imageUrl} />
 
         <Flex direction="column" width="fit-parent" gap="md">
-          <Flex width="fit-parent" align="center" justify="space-between">
+          <Flex width="fit-parent" align="flex-start" justify="space-between">
             <PageTitle>{page?.title}</PageTitle>
 
             <IconButton
