@@ -10,6 +10,7 @@ import booksBackgroundImg from "@/assets/images/books_background.png";
 import MainPageLayout from "@/components/layouts/MainPageLayout";
 
 import { handleError } from "@/utils";
+import PageTitle from "@/components/common/PageTitle";
 
 interface IUser {
   id: string;
@@ -30,11 +31,6 @@ export const Container = styled.div`
   gap: ${({ theme }) => theme.spacing.md};
   padding: ${({ theme }) => theme.spacing.xxl} ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.sm};
 `
-
-export const PageTitle = styled.h1`
-  padding: 0 ${({ theme }) => theme.spacing.sm};
-  border-left: 8px solid ${({ theme }) => theme.colors.primary};
-`;
 
 export const ProfilePic = styled.div`
   width: 160px;
@@ -89,11 +85,9 @@ const ProfilePage = () => {
       loading={loading}
       loadingText="Carregando detalhes do usuário"
     >
-      <div style={{ marginBottom: "24px", marginTop: "8px" }}>
-        <PageTitle>
-          Meu perfil
-        </PageTitle>
-      </div>
+      <PageTitle>
+        Meu perfil
+      </PageTitle>
 
       <div style={{ height: "128px", backgroundImage: `url(${booksBackgroundImg.src})`, borderTop: `2px solid #dedede`, borderLeft: `2px solid #dedede`, borderRight: `2px solid #dedede` }}></div>
 

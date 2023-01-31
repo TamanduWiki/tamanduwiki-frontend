@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 import MainPageLayout from "@/components/layouts/MainPageLayout";
 import CreatePageForm from "@/components/forms/CreatePageForm";
+import PageTitle from "@/components/common/PageTitle";
 
 const MainContainer = styled.div`
   display: flex;
@@ -20,18 +21,12 @@ const MainContainer = styled.div`
   }
 `
 
-export const PageTitle = styled.h1`
-  padding-bottom: ${({ theme }) => theme.spacing.md};
-
-  @media (max-width: 1140px) {
-    padding: ${({ theme }) => theme.spacing.md};
-  }
-`;
-
 const PageCreationPage = () => {
   return (
     <MainPageLayout pageHead="Criar Página - UFABCwiki">
-      <PageTitle>Criar página</PageTitle>
+      <PageTitle>
+        Criar página
+      </PageTitle>
 
       <MainContainer>
         <CreatePageForm />

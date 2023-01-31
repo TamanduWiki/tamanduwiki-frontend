@@ -15,8 +15,7 @@ import MainPageLayout from "@/components/layouts/MainPageLayout";
 import MarkdownContainer from "@/components/common/MarkdownContainer";
 import Modal, { ModalRef } from "@/components/common/Modal";
 import Button from "@/components/common/Button";
-
-import { PageTitle } from "@/pages";
+import PageTitle from "@/components/common/PageTitle";
 
 import { handleError } from "@/utils";
 
@@ -125,7 +124,7 @@ const PageCreationPage = () => {
 
         <Flex direction="column" width="fit-parent" gap="md">
           <Flex width="fit-parent" align="flex-start" justify="space-between">
-            <PageTitle>{page?.title}</PageTitle>
+            <PageTitle noContainer>{page?.title}</PageTitle>
 
             <IconButton
               icon={FiTrash2}

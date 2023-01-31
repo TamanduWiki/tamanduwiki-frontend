@@ -230,3 +230,11 @@ export const LoadingTitle = styled.strong`
 
   animation: infinite loading-title-animation 1s;
 `;
+
+export const HamburguerMenuContainer = styled.div`
+  display: none;
+
+  @media (max-width: 1140px) {
+    display: block;
+  }
+`;

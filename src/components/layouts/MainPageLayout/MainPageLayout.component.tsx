@@ -48,6 +48,7 @@ import {
   SubmenuInputContainer,
   FullHeightContainer,
   LoadingTitle,
+  HamburguerMenuContainer,
 } from "./MainPageLayout.styles";
 
 interface Props {
@@ -228,12 +229,14 @@ const MainPageLayout = ({
               </Button>
             </HeaderInputContainer>
 
-            <IconButton
-              size="md"
-              variant="secondary"
-              onClick={() => setHeaderSubmenuOpen(prev => !prev)}
-              icon={headerSubmenuOpen ? FiX : FiMenu}
-            />
+            <HamburguerMenuContainer>
+              <IconButton
+                size="md"
+                variant="secondary"
+                onClick={() => setHeaderSubmenuOpen(prev => !prev)}
+                icon={headerSubmenuOpen ? FiX : FiMenu}
+              />
+            </HamburguerMenuContainer>
           </MainHeader>
         </MainHeaderContainer>
 
