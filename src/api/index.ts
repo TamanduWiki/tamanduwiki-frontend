@@ -12,7 +12,11 @@ import {
   ApiSignup,
   ApiListCategories,
   IListCategoriesResponse,
+  ApiGetUserInfo,
+  IApiUser,
 } from "./api.types";
+
+// Pages
 
 export const apiGetPage: ApiGetPage = async (pageSlug) =>
   await api.get<IApiPage>(`/pages/${pageSlug}`).then(({ data }) => data);
@@ -29,10 +33,19 @@ export const apiListPages: ApiListPages = async ({ searchParam, page }) =>
     .get<IListPagesResponse>("/pages", { params: { page, searchFor: searchParam } })
     .then(({ data }) => data);
 
+// Categories
+
 export const apiListCategories: ApiListCategories = async ({ searchParam, page }) =>
   await api
     .get<IListCategoriesResponse>("/categories", { params: { page, searchFor: searchParam } })
     .then(({ data }) => data);
+
+// Users
+
+export const apiGetUserInfo: ApiGetUserInfo = async () =>
+  await api.get<IApiUser>(`/user-info`).then(({ data }) => data);
+
+// Auth
 
 export const apiLogin: ApiLogin = async (loginParams) =>
   await api

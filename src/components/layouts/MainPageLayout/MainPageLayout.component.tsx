@@ -35,7 +35,6 @@ import {
   Content,
   ContentContainer,
   HeaderInputContainer,
-  SubmenuButtonContainer,
   MainHeader,
   MainHeaderContainer,
   MainSection,
@@ -82,13 +81,14 @@ const PrimaryNavigation = () => {
 };
 
 const SecondaryNavigation = () => {
+  const router = useRouter();
   const { logged, handleLogout } = useContext(AuthContext);
 
   if (logged)
     return (
       <>
         <Flex justify="center" align="center" width="fit-parent">
-          <ProfilePic />
+          <ProfilePic onClick={() => router.push("/profile")} />
         </Flex>
 
         <SidebarNavLink href="/profile" icon={FiUser} label="Meu perfil" />
@@ -228,14 +228,12 @@ const MainPageLayout = ({
               </Button>
             </HeaderInputContainer>
 
-            <SubmenuButtonContainer>
-              <IconButton
-                size="md"
-                variant="secondary"
-                onClick={() => setHeaderSubmenuOpen(prev => !prev)}
-                icon={headerSubmenuOpen ? FiX : FiMenu}
-              />
-            </SubmenuButtonContainer>
+            <IconButton
+              size="md"
+              variant="secondary"
+              onClick={() => setHeaderSubmenuOpen(prev => !prev)}
+              icon={headerSubmenuOpen ? FiX : FiMenu}
+            />
           </MainHeader>
         </MainHeaderContainer>
 

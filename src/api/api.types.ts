@@ -1,3 +1,14 @@
+export interface IApiUser {
+  id: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  firstName: string;
+  lastName: string;
+  status: string;
+  universityTie: string;
+}
+
 export interface IApiPage {
   id: string;
   title: string;
@@ -66,3 +77,5 @@ export type ApiLogin = (params: { email: string; password: string }) => Promise<
 export type ApiSignup = (data: IApiCreateUserData) => Promise<void>;
 
 export type ApiListCategories = (params: { searchParam?: string; page?: number }) => Promise<IListCategoriesResponse>;
+
+export type ApiGetUserInfo = () => Promise<IApiUser>;

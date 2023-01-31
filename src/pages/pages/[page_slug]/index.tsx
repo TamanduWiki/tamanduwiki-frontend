@@ -5,7 +5,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { FiTrash2 } from "react-icons/fi";
-
 import toast from "react-hot-toast";
 
 import { apiDeletePage, apiGetPage } from "@/api";
@@ -13,14 +12,13 @@ import { apiDeletePage, apiGetPage } from "@/api";
 import IconButton from "@/components/common/IconButton";
 import Flex from "@/components/common/Flex";
 import MainPageLayout from "@/components/layouts/MainPageLayout";
-
-import { handleError } from "@/utils";
+import MarkdownContainer from "@/components/common/MarkdownContainer";
+import Modal, { ModalRef } from "@/components/common/Modal";
+import Button from "@/components/common/Button";
 
 import { PageTitle } from "@/pages";
-import MarkdownContainer from "@/components/common/MarkdownContainer";
-import Modal from "@/components/common/Modal";
-import Button from "@/components/common/Button";
-import { ModalRef } from "@/components/common/Modal/Modal.component";
+
+import { handleError } from "@/utils";
 
 interface IPage {
   id: string;
@@ -55,7 +53,7 @@ const ContentContainer = styled.div`
   @media (max-width: 760px) {
     margin-bottom: ${({ theme }) => theme.spacing.sm};
   }
-`
+`;
 
 const MainInfos = styled.div`
   display: flex;
@@ -68,7 +66,7 @@ const MainInfos = styled.div`
     flex-direction: column;
     margin-bottom: ${({ theme }) => theme.spacing.sm};
   }
-`
+`;
 
 const PageCreationPage = () => {
   const {
@@ -138,11 +136,13 @@ const PageCreationPage = () => {
 
           <Flex gap="xs" direction="column">
             <p>
-              <strong>Criada em:</strong> {moment(page?.createdAt).format("DD/MM/yyyy, h:mm")}
+              <strong>Criada em:</strong>{" "}
+              {moment(page?.createdAt).format("DD/MM/yyyy, h:mm")}
             </p>
 
             <p>
-              <strong>Última edição:</strong> {moment(page?.updatedAt).format("DD/MM/yyyy, h:mm")}
+              <strong>Última edição:</strong>{" "}
+              {moment(page?.updatedAt).format("DD/MM/yyyy, h:mm")}
             </p>
           </Flex>
         </Flex>
@@ -159,15 +159,35 @@ const PageCreationPage = () => {
       </ContentContainer>
 
       <Modal ref={deletePageModalRef}>
-        <Flex bgColor="neutral_100" padding="md" direction="column" gap="xl" align="center" style={{ maxWidth: "480px" }}>
-          <h3 style={{ textAlign: "center" }}>Tem certeza que deseja deletar a página?</h3>
+        <Flex
+          bgColor="neutral_100"
+          padding="md"
+          direction="column"
+          gap="xl"
+          align="center"
+          style={{ maxWidth: "480px" }}
+        >
+          <h3 style={{ textAlign: "center" }}>
+            Tem certeza que deseja deletar a página?
+          </h3>
 
           <Flex gap="sm" width="fit-parent">
-            <Button fluid variant="secondary" onClick={() => deletePageModalRef.current?.close()} disabled={loadingDelete}>
+            <Button
+              fluid
+              variant="secondary"
+              onClick={() => deletePageModalRef.current?.close()}
+              disabled={loadingDelete}
+            >
               Cancelar
             </Button>
 
-            <Button fluid variant="warning" onClick={handleDeletePage} disabled={loadingDelete} loading={loadingDelete}>
+            <Button
+              fluid
+              variant="warning"
+              onClick={handleDeletePage}
+              disabled={loadingDelete}
+              loading={loadingDelete}
+            >
               Deletar
             </Button>
           </Flex>

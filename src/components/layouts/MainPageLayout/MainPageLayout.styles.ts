@@ -45,7 +45,7 @@ export const MainHeader = styled.div`
   gap: ${({ theme }) => theme.spacing.xl};
 
   @media (max-width: 1140px) {
-    padding-right: ${({ theme }) => theme.spacing.md};
+    padding-right: ${({ theme }) => theme.spacing.xs};
   }
 
   @media (max-width: 760px) {
@@ -138,18 +138,6 @@ export const SubmenuInputContainer = styled.div`
   }
 `;
 
-export const SubmenuButtonContainer = styled.div`
-  display: none;
-
-  @media (max-width: 1140px) {
-    display: flex;
-    height: 48px;
-    width: 48px;
-    align-items: center;
-    justify-content: center;
-  }
-`;
-
 export const SideMenuSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -167,7 +155,8 @@ export const ProfilePic = styled.div`
   border-radius: 50%;
   background-image: ${`url(${fakeProfilePicture.src})`};
   background-size: cover;
-  background-position: 55% 50%;
+  background-position: 50% 50%;
+  cursor: pointer;
 `;
 
 export const Backdrop = styled.div`
