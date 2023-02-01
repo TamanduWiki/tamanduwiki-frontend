@@ -1,6 +1,6 @@
 import { Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/router";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import { useContext } from "react";
 
 import { apiLogin } from "@/api";
@@ -25,7 +25,11 @@ const initialValues = {
   password: "",
 };
 
-const LoginForm = () => {
+interface Props {
+  destinationAfterLogin?: string;
+}
+
+const LoginForm = ({ destinationAfterLogin }: Props) => {
   const router = useRouter();
   const { handleLogin } = useContext(AuthContext);
 
@@ -40,7 +44,7 @@ const LoginForm = () => {
 
       toast.success("Login realizado com sucesso");
 
-      await router.push("/");
+      await router.push(destinationAfterLogin || "/");
     } catch (error) {
       handleError(error);
     } finally {

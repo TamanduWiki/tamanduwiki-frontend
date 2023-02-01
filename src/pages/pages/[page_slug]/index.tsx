@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { FiTrash2 } from "react-icons/fi";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 import { apiDeletePage, apiGetPage } from "@/api";
 

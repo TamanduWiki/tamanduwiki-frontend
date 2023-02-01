@@ -1,5 +1,7 @@
-import { useState } from "react";
-import toast from "react-hot-toast";
+import { useRouter } from "next/router";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import { AuthContext } from "./authContext";
 
@@ -8,21 +10,32 @@ interface Props {
 }
 
 export const AuthProvider = ({ children }: Props) => {
-  const [logged, setLogged] = useState(true);
+  const router = useRouter();
+  const [logged, setLogged] = useState(false);
 
   const handleLogin = ({ token }: { token: string }) => {
-    localStorage.setItem("jwtToken", token);
+    setCookie(null, "jwtToken", token);
 
     setLogged(true);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("jwtToken");
+    destroyCookie(null, "jwtToken");
 
     toast.success("Logout realizado com sucesso!");
 
     setLogged(false);
+
+    router.push("/");
   };
+
+  useEffect(() => {
+    const cookies = parseCookies();
+
+    if (cookies?.jwtToken) {
+      setLogged(true);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={{ handleLogin, handleLogout, logged }}>

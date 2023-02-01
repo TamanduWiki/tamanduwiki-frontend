@@ -1,10 +1,13 @@
 import styled from "@emotion/styled";
+import { GetServerSideProps } from "next/types";
 import Image from "next/image";
 
 import undrawnBuildingImages from "@/assets/images/undraw_building_blocks_re_5ahy.svg";
 
 import MainPageLayout from "@/components/layouts/MainPageLayout";
 import Flex from "@/components/common/Flex";
+
+import { serverSideAuthCheck } from "@/utils";
 
 const BuildingBlocksImg = styled(Image)`
   width: 360px;
@@ -37,3 +40,7 @@ const SavedPagesPage = () => {
 };
 
 export default SavedPagesPage;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return serverSideAuthCheck(context);
+};

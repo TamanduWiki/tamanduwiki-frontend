@@ -1,6 +1,5 @@
-// import { delay } from "@/utils";
-
 import axios from "axios";
+import { parseCookies } from "nookies";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -10,11 +9,15 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(async function (config) {
-  // await delay();
+  try {
+    const cookies = parseCookies(config?.params?.nextCtx || undefined);
 
-  const token = localStorage.getItem("jwtToken");
+    const token = cookies?.jwtToken;
 
-  config.headers.Authorization = token ?? null;
+    config.headers.Authorization = token ?? null;
+  } catch (error) {
+    console.error("axios-interceptor-error");
+  }
 
   return config;
 });

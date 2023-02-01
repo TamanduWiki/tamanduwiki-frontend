@@ -1,5 +1,5 @@
 import { Formik, FormikHelpers } from "formik";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
 import { apiSignup } from "@/api";

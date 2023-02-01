@@ -3,6 +3,7 @@ export type ColorToken =
   | "error"
   | "warning"
   | "success"
+  | "info"
   | "neutral_100"
   | "neutral_200"
   | "neutral_300"
@@ -18,6 +19,7 @@ export const colors: ThemeColors = {
   error: "#E04424",
   warning: "#EBB64C",
   success: "#67CD37",
+  info: "#36c6ff",
 
   neutral_100: "#FFFFFF",
   neutral_200: "#E9E9E9",

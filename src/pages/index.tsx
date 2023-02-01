@@ -7,8 +7,9 @@ import { apiListPages } from "@/api";
 import Button from "@/components/common/Button";
 import ListedPage from "@/components/common/ListedPage";
 import MainPageLayout from "@/components/layouts/MainPageLayout";
+import PageTitle from "@/components/common/PageTitle";
 
-import { genRandomString, getRandomIntInclusive, handleError } from "@/utils";
+import { handleError } from "@/utils";
 
 import { IMetaProps } from "@/types/common";
 
@@ -40,11 +41,6 @@ const BottomComponentContainer = styled.div`
 
   gap: ${({ theme }) => theme.spacing.md};
   padding: ${({ theme }) => theme.spacing.md};
-`;
-
-export const PageTitle = styled.h1`
-  padding: 0 ${({ theme }) => theme.spacing.sm};
-  border-left: 8px solid ${({ theme }) => theme.colors.primary};
 `;
 
 interface ICategory {
@@ -142,7 +138,9 @@ const HomePage = () => {
       noContent={noContent}
       noContentText="Não há resultados para esta busca..."
     >
-      <div style={{ marginBottom: "24px", marginTop: "8px" }}><PageTitle>{pageTitle}</PageTitle></div>
+      <PageTitle>
+        {pageTitle}
+      </PageTitle>
 
       <ListContainer>
         {pages.map((page) => (

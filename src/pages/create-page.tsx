@@ -1,8 +1,11 @@
 import styled from "@emotion/styled";
+import { GetServerSideProps } from "next/types";
 
 import MainPageLayout from "@/components/layouts/MainPageLayout";
 import CreatePageForm from "@/components/forms/CreatePageForm";
 import PageTitle from "@/components/common/PageTitle";
+
+import { serverSideAuthCheck } from "@/utils";
 
 const MainContainer = styled.div`
   display: flex;
@@ -19,14 +22,12 @@ const MainContainer = styled.div`
   @media (max-width: 540px) {
     padding: ${({ theme }) => theme.spacing.md};
   }
-`
+`;
 
 const PageCreationPage = () => {
   return (
     <MainPageLayout pageHead="Criar Página - UFABCwiki">
-      <PageTitle>
-        Criar página
-      </PageTitle>
+      <PageTitle>Criar página</PageTitle>
 
       <MainContainer>
         <CreatePageForm />
@@ -36,3 +37,7 @@ const PageCreationPage = () => {
 };
 
 export default PageCreationPage;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return serverSideAuthCheck(context);
+};

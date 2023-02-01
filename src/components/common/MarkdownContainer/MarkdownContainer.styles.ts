@@ -9,11 +9,15 @@ const MarkdownContainer = styled.div`
 
   th {
     background-color: ${({ theme }) => theme.colors.neutral_300};
-    padding: ${({ theme }) => theme.spacing.xxs} ${({ theme }) => theme.spacing.sm};
+    // prettier-ignore
+    padding: ${({ theme }) => theme.spacing.xxs} ${({ theme }) =>
+      theme.spacing.sm};
   }
   td {
     background-color: ${({ theme }) => theme.colors.neutral_200};
-    padding: ${({ theme }) => theme.spacing.xxs} ${({ theme }) => theme.spacing.sm};
+    // prettier-ignore
+    padding: ${({ theme }) => theme.spacing.xxs} ${({ theme }) =>
+      theme.spacing.sm};
   }
 
   a {
@@ -28,7 +32,7 @@ const MarkdownContainer = styled.div`
   h6 {
     margin-top: ${({ theme }) => theme.spacing.md};
 
-    &:first-child {
+    &:first-of-type {
       margin-top: unset;
     }
   }
@@ -36,6 +40,6 @@ const MarkdownContainer = styled.div`
   li {
     margin-left: 20px; // Design System Exception
   }
-`
+`;
 
 export default MarkdownContainer;

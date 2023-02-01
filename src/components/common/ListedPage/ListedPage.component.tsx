@@ -43,7 +43,7 @@ const ListedPage = ({
 
         <Flex width="fit-parent" gap="md" style={{ flexWrap: "wrap" }}>
           {badges.map((badgeTitle) => (
-            <Badge>{badgeTitle}</Badge>
+            <Badge key={badgeTitle}>{badgeTitle}</Badge>
           ))}
         </Flex>
       </Flex>

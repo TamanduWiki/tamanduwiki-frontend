@@ -1,8 +1,8 @@
 import { AxiosError } from "axios";
 
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
-export const handleError = (error) => {
+export const handleError = (error: any) => {
   if (
     error instanceof AxiosError &&
     error?.response?.data &&

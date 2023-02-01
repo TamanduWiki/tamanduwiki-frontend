@@ -1,7 +1,7 @@
 import { Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import AsyncSelect from "react-select/async";
 
 import { apiCreatePage, apiListCategories } from "@/api";
@@ -105,11 +105,12 @@ const CreatePageForm = () => {
   const loadCategoriesOptions = async (
     searchParam: string
   ): Promise<{ label: string; value: string }[]> => {
-    const options = await apiListCategories({ searchParam, page: 1 }).then((response) =>
-      response.categories.map((category) => ({
-        label: category.title,
-        value: category.title,
-      }))
+    const options = await apiListCategories({ searchParam, page: 1 }).then(
+      (response) =>
+        response.categories.map((category) => ({
+          label: category.title,
+          value: category.title,
+        }))
     );
 
     return options;
@@ -122,12 +123,12 @@ const CreatePageForm = () => {
       return;
     }
 
-    const objectUrl = URL.createObjectURL(image)
-    setImagePreviewUrl(objectUrl)
+    const objectUrl = URL.createObjectURL(image);
+    setImagePreviewUrl(objectUrl);
 
     // free memory whenever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl)
-  }, [image])
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [image]);
 
   return (
     <Formik
@@ -155,20 +156,33 @@ const CreatePageForm = () => {
 
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             Categorias
-
             <AsyncSelect
               name="categoriesTitles"
               isMulti
               cacheOptions
               defaultOptions
               loadOptions={loadCategoriesOptions}
-              onChange={(newValues) => setFieldValue("categoriesTitles", newValues.map(({ value }) => value))}
+              onChange={(newValues) =>
+                setFieldValue(
+                  "categoriesTitles",
+                  newValues.map(({ value }) => value)
+                )
+              }
             />
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             Imagem da página
-            <div style={{ border: `1px solid ${theme.colors.neutral_300}`, padding: "8px", gap: "8px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div
+              style={{
+                border: `1px solid ${theme.colors.neutral_300}`,
+                padding: "8px",
+                gap: "8px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
               <input
                 type="file"
                 name="image"
@@ -176,9 +190,7 @@ const CreatePageForm = () => {
                 style={{ width: "100%" }}
               />
 
-              {imagePreviewUrl &&
-                <ImageContainer url={imagePreviewUrl} />
-              }
+              {imagePreviewUrl && <ImageContainer url={imagePreviewUrl} />}
             </div>
           </div>
 
@@ -191,11 +203,30 @@ const CreatePageForm = () => {
               formikField
             />
 
-            {previewMd &&
-              <div style={{ height: "100%", display: "flex", flexDirection: "column", gap: "4px" }}>
-                <p style={{ lineHeight: 1, color: theme.colors.neutral_400 }}>Preview</p>
+            {previewMd && (
+              <div
+                style={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "4px",
+                }}
+              >
+                <p style={{ lineHeight: 1, color: theme.colors.neutral_400 }}>
+                  Preview
+                </p>
 
-                <div style={{ maxHeight: "360px", height: "100%", overflowX: "auto", border: `2px solid ${theme.colors.neutral_200}`, borderStyle: "dashed", padding: "8px", display: "flex" }}>
+                <div
+                  style={{
+                    maxHeight: "360px",
+                    height: "100%",
+                    overflowX: "auto",
+                    border: `2px solid ${theme.colors.neutral_200}`,
+                    borderStyle: "dashed",
+                    padding: "8px",
+                    display: "flex",
+                  }}
+                >
                   <MarkdownContainer>
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                       {values?.content}
@@ -203,10 +234,15 @@ const CreatePageForm = () => {
                   </MarkdownContainer>
                 </div>
               </div>
-            }
+            )}
           </EditContentContainer>
 
-          <Button type="button" variant="secondary" size="md" onClick={() => setPreviewMd(prev => !prev)}>
+          <Button
+            type="button"
+            variant="secondary"
+            size="md"
+            onClick={() => setPreviewMd((prev) => !prev)}
+          >
             {previewMd ? "Fechar preview" : "Preview markdown"}
           </Button>
 

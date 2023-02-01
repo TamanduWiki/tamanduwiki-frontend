@@ -1,3 +1,4 @@
+import { GetServerSideProps } from "next";
 import styled from "@emotion/styled";
 import moment from "moment";
 import { useCallback, useEffect, useState } from "react";
@@ -8,9 +9,9 @@ import fakeProfilePicture from "@/assets/images/ash.jpg";
 import booksBackgroundImg from "@/assets/images/books_background.png";
 
 import MainPageLayout from "@/components/layouts/MainPageLayout";
-
-import { handleError } from "@/utils";
 import PageTitle from "@/components/common/PageTitle";
+
+import { handleError, serverSideAuthCheck } from "@/utils";
 
 interface IUser {
   id: string;
@@ -29,8 +30,11 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.neutral_100};
   position: relative;
   gap: ${({ theme }) => theme.spacing.md};
-  padding: ${({ theme }) => theme.spacing.xxl} ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.sm};
-`
+  // prettier-ignore
+  padding: ${({ theme }) => theme.spacing.xxl} ${({ theme }) =>
+    theme.spacing.sm} ${({ theme }) => theme.spacing.lg} ${({ theme }) =>
+    theme.spacing.sm};
+`;
 
 export const ProfilePic = styled.div`
   width: 160px;
@@ -55,11 +59,11 @@ export const PicContainer = styled.div`
   margin-right: auto;
   left: 0;
   right: 0;
-`
+`;
 
 const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<IUser>()
+  const [user, setUser] = useState<IUser>();
 
   const handleGetUserInfo = useCallback(async () => {
     setLoading(true);
@@ -79,33 +83,57 @@ const ProfilePage = () => {
 
   return (
     <MainPageLayout
-      pageHead={`${(user?.firstName && user?.lastName) ? `${user.firstName} ${user.lastName}` : "Página desconhecida"} | UFABCwiki`}
+      pageHead={`${
+        user?.firstName && user?.lastName
+          ? `${user.firstName} ${user.lastName}`
+          : "Página desconhecida"
+      } | UFABCwiki`}
       noContent={!user}
       noContentText="Erro: Conteúdo inexistente"
       loading={loading}
       loadingText="Carregando detalhes do usuário"
     >
-      <PageTitle>
-        Meu perfil
-      </PageTitle>
+      <PageTitle>Meu perfil</PageTitle>
 
-      <div style={{ height: "128px", backgroundImage: `url(${booksBackgroundImg.src})`, borderTop: `2px solid #dedede`, borderLeft: `2px solid #dedede`, borderRight: `2px solid #dedede` }}></div>
+      <div
+        style={{
+          height: "128px",
+          backgroundImage: `url(${booksBackgroundImg.src})`,
+          borderTop: `2px solid #dedede`,
+          borderLeft: `2px solid #dedede`,
+          borderRight: `2px solid #dedede`,
+        }}
+      />
 
       <Container>
         <PicContainer>
-          <ProfilePic/>
+          <ProfilePic />
         </PicContainer>
 
-        <p><strong>Membro desde:</strong> {moment(user?.createdAt).format("DD/MM/yyyy, h:mm")}</p>
+        <p>
+          <strong>Membro desde:</strong>{" "}
+          {moment(user?.createdAt).format("DD/MM/yyyy, h:mm")}
+        </p>
 
-        <p><strong>Última atualização:</strong> {moment(user?.updatedAt).format("DD/MM/yyyy, h:mm")}</p>
+        <p>
+          <strong>Última atualização:</strong>{" "}
+          {moment(user?.updatedAt).format("DD/MM/yyyy, h:mm")}
+        </p>
 
-        <p><strong>Nome:</strong> {`${user?.firstName} ${user?.lastName}`}</p>
+        <p>
+          <strong>Nome:</strong> {`${user?.firstName} ${user?.lastName}`}
+        </p>
 
-        <p><strong>E-mail:</strong> {user?.email}</p>
+        <p>
+          <strong>E-mail:</strong> {user?.email}
+        </p>
       </Container>
     </MainPageLayout>
   );
 };
 
 export default ProfilePage;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return serverSideAuthCheck(context);
+};

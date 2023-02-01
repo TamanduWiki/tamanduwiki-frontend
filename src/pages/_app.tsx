@@ -4,16 +4,18 @@ import Head from "next/head";
 import Image from "next/image";
 import { Router } from "next/router";
 import { useEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import loadingImg from "@/assets/animated/loading_balls_black.svg";
 
 import Flex from "@/components/common/Flex";
 
+import { AuthProvider } from "@/contexts/auth/AuthProvider";
+
 import { globalStyles } from "@/styles";
 import { theme } from "@/styles/theme";
 import "@/styles/fonts.css";
-import { AuthProvider } from "@/contexts/auth/AuthProvider";
 
 function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -42,7 +44,7 @@ function App({ Component, pageProps }: AppProps) {
 
         <Global styles={globalStyles} />
 
-        <Toaster position="top-right" toastOptions={{ duration: 8000 }} />
+        <ToastContainer />
 
         {loading ? (
           <Flex
@@ -50,8 +52,11 @@ function App({ Component, pageProps }: AppProps) {
             justify="center"
             style={{ height: "100vh", width: "100vw" }}
           >
-            <Flex bgColor="neutral_100" style={{ padding: `0 ${theme.spacing.sm}`}}>
-              <Image src={loadingImg as string} alt="loading_img" width={64}/>
+            <Flex
+              bgColor="neutral_100"
+              style={{ padding: `0 ${theme.spacing.sm}` }}
+            >
+              <Image src={loadingImg as string} alt="loading_img" width={64} />
             </Flex>
           </Flex>
         ) : (
