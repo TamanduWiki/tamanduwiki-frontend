@@ -60,8 +60,3 @@
   --toastify-color-progress-warning: var(--toastify-color-warning);
   --toastify-color-progress-error: var(--toastify-color-error);
 }
-
-.Toastify__toast {
-  line-height: 1.25;
-  border-radius: 0;
-}

@@ -28,6 +28,12 @@ export const globalStyles = css`
     color: ${theme.colors.neutral_700};
   }
 
+  .Toastify__toast {
+    line-height: 1.25;
+    font: 400 1rem Exo2, sans-serif;
+    border-radius: 0;
+  }
+
   button {
     font-weight: 500;
   }
