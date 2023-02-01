@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { IconType } from "react-icons";
-import { Tooltip } from "react-tooltip";
+// import { Tooltip } from "react-tooltip";
 
 import IconButton from "@/components/common/IconButton";
 
@@ -26,8 +26,8 @@ const SidebarNavLink = ({
       <StyledLink
         href={href}
         selected={pathname === href}
-        id={`iconbutton-${label}-${href}`}
-        data-tooltip-content={label}
+        // id={`iconbutton-${label}-${href}`}
+        // data-tooltip-content={label}
       >
         <Container smaller={smaller}>
           <IconButton
@@ -38,11 +38,11 @@ const SidebarNavLink = ({
           />
         </Container>
 
-        <Tooltip
+        {/* <Tooltip
           anchorId={`iconbutton-${label}-${href}`}
           place="left"
           style={{ fontWeight: 600, borderRadius: "0px" }}
-        />
+        /> */}
       </StyledLink>
     );
   }
