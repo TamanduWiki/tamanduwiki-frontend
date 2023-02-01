@@ -19,7 +19,7 @@ export const colors: ThemeColors = {
   error: "#E04424",
   warning: "#EBB64C",
   success: "#67CD37",
-  info: "#36c6ff",
+  info: "#295AC2",
 
   neutral_100: "#FFFFFF",
   neutral_200: "#E9E9E9",

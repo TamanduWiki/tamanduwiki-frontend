@@ -5,7 +5,6 @@ import Image from "next/image";
 import { Router } from "next/router";
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import loadingImg from "@/assets/animated/loading_balls_black.svg";
 
@@ -16,6 +15,9 @@ import { AuthProvider } from "@/contexts/auth/AuthProvider";
 import { globalStyles } from "@/styles";
 import { theme } from "@/styles/theme";
 import "@/styles/fonts.css";
+import "@/styles/root-css.css";
+import "react-tooltip/dist/react-tooltip.css";
+import "react-toastify/dist/ReactToastify.css";
 
 function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);

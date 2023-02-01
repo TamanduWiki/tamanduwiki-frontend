@@ -5,6 +5,7 @@ import { ThemeSpacingOption } from "@/styles/theme/spacing";
 import fakeProfilePicture from "@/assets/images/ash.jpg";
 
 const SIDE_SECTION_WIDTH = "264px";
+const SIDE_SECTION_COLLAPSED_WIDTH = "48px";
 const HEADER_HEIGHT = "80px";
 const FULL_HEADER_CONTENT_GAP: ThemeSpacingOption = "xl";
 
@@ -63,13 +64,17 @@ export const ContentContainer = styled.div`
   grid-area: content;
 `;
 
-export const Content = styled.div`
+export const Content = styled.div<{ sidebarCollapsed: boolean }>`
   display: flex;
   justify-content: center;
   height: 100%;
   width: 1140px;
-  height: calc(100vh - ${({ theme }) => theme.spacing[FULL_HEADER_CONTENT_GAP]} - ${HEADER_HEIGHT});
-  gap: ${({ theme }) => theme.spacing.xl};
+  // prettier-ignore
+  height: calc(100vh - ${({ theme }) =>
+    theme.spacing[FULL_HEADER_CONTENT_GAP]} - ${HEADER_HEIGHT}
+  );
+  gap: ${({ theme, sidebarCollapsed }) =>
+    theme.spacing[sidebarCollapsed ? "lg" : "xl"]};
 
   @media (max-width: 1140px) {
     width: 100%;
@@ -78,13 +83,20 @@ export const Content = styled.div`
   }
 `;
 
-export const SideSection = styled.div`
-  min-width: ${SIDE_SECTION_WIDTH};
+export const SideSection = styled.div<{ collapsed: boolean }>`
+  min-width: ${({ collapsed }) =>
+    collapsed ? SIDE_SECTION_COLLAPSED_WIDTH : SIDE_SECTION_WIDTH};
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: ${({ theme }) => theme.spacing.lg};
   height: 100%;
-  gap: ${({ theme }) => theme.spacing.md};
 
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: ${({ theme }) => theme.spacing.md};
+  }
   @media (max-width: 1140px) {
     display: none;
   }
@@ -100,8 +112,10 @@ export const ChildrenContainer = styled.div`
   }
 `;
 
-export const MainSection = styled.div`
-  width: calc(1140px - ${SIDE_SECTION_WIDTH});
+export const MainSection = styled.div<{ sidebarCollapsed: boolean }>`
+  // prettier-ignore
+  width: calc(1140px - ${({ sidebarCollapsed }) =>
+    sidebarCollapsed ? SIDE_SECTION_COLLAPSED_WIDTH : SIDE_SECTION_WIDTH});
 
   height: 100%;
 
@@ -138,15 +152,22 @@ export const SubmenuInputContainer = styled.div`
   }
 `;
 
-export const SideMenuSection = styled.div`
+export const SideMenuSection = styled.div<{ collapsed: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: ${({ collapsed }) => (collapsed ? "min-content" : "100%")};
 
-  padding: ${({ theme }) => theme.spacing.md};
-  gap: ${({ theme }) => theme.spacing.md};
+  padding: ${({ theme, collapsed }) => theme.spacing[collapsed ? "xs" : "md"]};
+  gap: ${({ theme, collapsed }) => theme.spacing[collapsed ? "xs" : "md"]};
 
   background-color: ${({ theme }) => theme.colors.neutral_100};
+`;
+
+export const CollapseSidebarButtonContainer = styled.div`
+  svg {
+    color: ${({ theme }) => theme.colors.neutral_400};
+  }
 `;
 
 export const ProfilePic = styled.div`
@@ -184,14 +205,14 @@ export const SubmenuContainer = styled.div<{ collapsed: boolean }>`
   z-index: 100;
   background-color: ${({ theme }) => theme.colors.neutral_100};
   overflow-y: auto;
-  width: ${({ collapsed }) => collapsed ? '0px' : '280px'};
+  width: ${({ collapsed }) => (collapsed ? "0px" : "280px")};
   transition: width 0.3s ease-in-out;
   white-space: nowrap;
 
   @media (min-width: 1140px) {
     display: none;
   }
-`
+`;
 
 export const SubmenuSubcontainer = styled.div`
   display: flex;

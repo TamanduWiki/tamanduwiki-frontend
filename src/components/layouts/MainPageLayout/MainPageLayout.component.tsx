@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useContext, useEffect, useState } from "react";
 import {
+  FiArrowLeft,
+  FiArrowRight,
   FiBookmark,
   FiFeather,
   FiFilePlus,
@@ -49,7 +51,9 @@ import {
   FullHeightContainer,
   LoadingTitle,
   HamburguerMenuContainer,
+  CollapseSidebarButtonContainer,
 } from "./MainPageLayout.styles";
+import { parseCookies, setCookie } from "nookies";
 
 interface Props {
   children: React.ReactNode;
@@ -61,65 +65,112 @@ interface Props {
   onSearch?: (searchValue: string) => void;
 }
 
-const PrimaryNavigation = () => {
+const PrimaryNavigation = ({ collapsed }: { collapsed?: boolean }) => {
   const { logged } = useContext(AuthContext);
 
   return (
     <>
-      <SidebarNavLink href="/" icon={FiHome} label="Página inicial" />
+      <SidebarNavLink
+        href="/"
+        icon={FiHome}
+        label="Página inicial"
+        smaller={collapsed}
+      />
 
       {logged && (
         <SidebarNavLink
           href="/create-page"
           icon={FiFeather}
           label="Criar página"
+          smaller={collapsed}
         />
       )}
 
-      <SidebarNavLink href="/about" icon={FiHelpCircle} label="Sobre" />
+      <SidebarNavLink
+        href="/about"
+        icon={FiHelpCircle}
+        label="Sobre"
+        smaller={collapsed}
+      />
     </>
   );
 };
 
-const SecondaryNavigation = () => {
+const SecondaryNavigation = ({
+  collapsed,
+  mobile,
+}: {
+  collapsed?: boolean;
+  mobile?: boolean;
+}) => {
   const router = useRouter();
   const { logged, handleLogout } = useContext(AuthContext);
 
   if (logged)
     return (
       <>
-        <Flex justify="center" align="center" width="fit-parent">
-          <ProfilePic onClick={() => router.push("/profile")} />
-        </Flex>
+        {!collapsed && !mobile && (
+          <Flex justify="center" align="center" width="fit-parent">
+            <ProfilePic onClick={() => router.push("/profile")} />
+          </Flex>
+        )}
 
-        <SidebarNavLink href="/profile" icon={FiUser} label="Meu perfil" />
+        <SidebarNavLink
+          href="/profile"
+          icon={FiUser}
+          label="Meu perfil"
+          smaller={collapsed}
+        />
 
         <SidebarNavLink
           href="/contributions"
           icon={FiFilePlus}
           label="Minhas contribuições"
+          smaller={collapsed}
         />
 
         <SidebarNavLink
           href="/saved-pages"
           icon={FiBookmark}
           label="Páginas Salvas"
+          smaller={collapsed}
         />
 
-        <SidebarNavBtn onClick={handleLogout} icon={FiLogOut} label="Logout" />
+        <SidebarNavBtn
+          onClick={handleLogout}
+          icon={FiLogOut}
+          label="Logout"
+          smaller={collapsed}
+        />
       </>
     );
 
   return (
     <>
-      <SidebarNavLink href="/login" icon={FiLogIn} label="Login" />
+      <SidebarNavLink
+        href="/login"
+        icon={FiLogIn}
+        label="Login"
+        smaller={collapsed}
+      />
 
-      <SidebarNavLink href="/signup" icon={FiUserPlus} label="Cadastro" />
+      <SidebarNavLink
+        href="/signup"
+        icon={FiUserPlus}
+        label="Cadastro"
+        smaller={collapsed}
+      />
     </>
   );
 };
 
-const MainSubmenu = ({ search, setSearch, handleSearch, onClose, collapsed }) => {
+const MainSubmenu = ({
+  search,
+  setSearch,
+  handleSearch,
+  onClose,
+  collapsed,
+}) => {
   return (
     <>
       {!collapsed && <Backdrop />}
@@ -134,7 +185,7 @@ const MainSubmenu = ({ search, setSearch, handleSearch, onClose, collapsed }) =>
             value={search}
             style={{ height: "40px", width: "100%" }}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') handleSearch(search)
+              if (e.key === "Enter") handleSearch(search);
             }}
           />
 
@@ -142,7 +193,10 @@ const MainSubmenu = ({ search, setSearch, handleSearch, onClose, collapsed }) =>
             icon={FiSearch}
             size="md"
             variant="secondary"
-            onClick={() => { handleSearch(search); onClose() }}
+            onClick={() => {
+              handleSearch(search);
+              onClose();
+            }}
           />
         </SubmenuInputContainer>
 
@@ -150,8 +204,8 @@ const MainSubmenu = ({ search, setSearch, handleSearch, onClose, collapsed }) =>
           <PrimaryNavigation />
         </SubmenuSubcontainer>
 
-        <SubmenuSubcontainer>
-          <SecondaryNavigation />
+        <SubmenuSubcontainer style={{ paddingTop: 0 }}>
+          <SecondaryNavigation mobile />
         </SubmenuSubcontainer>
       </SubmenuContainer>
     </>
@@ -170,6 +224,7 @@ const MainPageLayout = ({
   const { query, push, pathname } = useRouter();
 
   const [headerSubmenuOpen, setHeaderSubmenuOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const [search, setSearch] = useState(
     !!query.searchPage && typeof query.searchPage === "string"
@@ -192,6 +247,10 @@ const MainPageLayout = ({
     if (onSearch) onSearch(search);
   }, []);
 
+  useEffect(() => {
+    setSidebarCollapsed(parseCookies()?.sidebarCollapsed === "true");
+  }, []);
+
   return (
     <>
       <Head>
@@ -202,7 +261,12 @@ const MainPageLayout = ({
         <MainHeaderContainer>
           <MainHeader>
             <Link href="/">
-              <Image src={logoImg as string} alt="logo" width={264} height={38} />
+              <Image
+                src={logoImg as string}
+                alt="logo"
+                width={264}
+                height={38}
+              />
             </Link>
 
             <HeaderInputContainer>
@@ -214,7 +278,7 @@ const MainPageLayout = ({
                 value={search}
                 style={{ height: "40px", width: "100%" }}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter') handleSearch(search)
+                  if (e.key === "Enter") handleSearch(search);
                 }}
               />
 
@@ -224,7 +288,6 @@ const MainPageLayout = ({
                 onClick={() => handleSearch(search)}
               >
                 <FiSearch style={{ marginRight: "8px" }} />
-
                 Pesquisar
               </Button>
             </HeaderInputContainer>
@@ -233,7 +296,7 @@ const MainPageLayout = ({
               <IconButton
                 size="md"
                 variant="secondary"
-                onClick={() => setHeaderSubmenuOpen(prev => !prev)}
+                onClick={() => setHeaderSubmenuOpen((prev) => !prev)}
                 icon={headerSubmenuOpen ? FiX : FiMenu}
               />
             </HamburguerMenuContainer>
@@ -249,38 +312,63 @@ const MainPageLayout = ({
         />
 
         <ContentContainer>
-          <Content>
-            <SideSection>
-              <SideMenuSection>
-                <PrimaryNavigation />
-              </SideMenuSection>
+          <Content sidebarCollapsed={sidebarCollapsed}>
+            <SideSection collapsed={sidebarCollapsed}>
+              <div>
+                <SideMenuSection collapsed={sidebarCollapsed}>
+                  <PrimaryNavigation collapsed={sidebarCollapsed} />
+                </SideMenuSection>
 
-              <SideMenuSection>
-                <SecondaryNavigation />
+                <SideMenuSection collapsed={sidebarCollapsed}>
+                  <SecondaryNavigation collapsed={sidebarCollapsed} />
+                </SideMenuSection>
+              </div>
+
+              <SideMenuSection collapsed>
+                <CollapseSidebarButtonContainer>
+                  <SidebarNavBtn
+                    smaller
+                    icon={sidebarCollapsed ? FiArrowRight : FiArrowLeft}
+                    label={
+                      sidebarCollapsed
+                        ? "Descolapsar barra lateral"
+                        : "Colapsar barra lateral"
+                    }
+                    onClick={() =>
+                      setSidebarCollapsed((prev) => {
+                        setCookie(null, "sidebarCollapsed", (!prev).toString());
+
+                        return !prev;
+                      })
+                    }
+                  />
+                </CollapseSidebarButtonContainer>
               </SideMenuSection>
             </SideSection>
 
-            <MainSection>
+            <MainSection sidebarCollapsed={sidebarCollapsed}>
               <ChildrenContainer>
-                {(loading || noContent)
-                  ? (
-                    <FullHeightContainer>
-                      {loading
-                        ? (
-                          <>
-                            <Image src={loadingImg as string} alt="loading_img" width={48} />
+                {loading || noContent ? (
+                  <FullHeightContainer>
+                    {loading ? (
+                      <>
+                        <Image
+                          src={loadingImg as string}
+                          alt="loading_img"
+                          width={48}
+                        />
 
-                            <LoadingTitle>
-                              {loadingText || 'Carregando'}
-                            </LoadingTitle>
-                          </>
-                        )
-                        : <>{noContent && <strong>{noContentText}</strong>}</>
-                      }
-                    </FullHeightContainer>
-                  )
-                  : children
-                }
+                        <LoadingTitle>
+                          {loadingText || "Carregando"}
+                        </LoadingTitle>
+                      </>
+                    ) : (
+                      <>{noContent && <strong>{noContentText}</strong>}</>
+                    )}
+                  </FullHeightContainer>
+                ) : (
+                  children
+                )}
               </ChildrenContainer>
             </MainSection>
           </Content>

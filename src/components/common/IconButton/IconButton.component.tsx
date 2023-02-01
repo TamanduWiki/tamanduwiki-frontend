@@ -8,12 +8,22 @@ interface Props {
   onClick?: () => void | Promise<any>;
 }
 
-const IconButton = ({ icon: Icon, variant = "primary", size = "md", onClick }: Props) => {
+const IconButton = ({
+  icon: Icon,
+  variant = "primary",
+  size = "md",
+  onClick,
+}: Props) => {
   return (
-    <StyledButton style={{ flexShrink: 0 }} variant={variant} size={size} onClick={onClick}>
-      <Icon />
+    <StyledButton
+      style={{ flexShrink: 0 }}
+      variant={variant}
+      size={size}
+      onClick={onClick}
+    >
+      <Icon size={20} />
     </StyledButton>
-  )
-}
+  );
+};
 
 export default IconButton;
