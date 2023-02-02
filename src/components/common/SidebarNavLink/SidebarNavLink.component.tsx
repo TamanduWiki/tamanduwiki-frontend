@@ -5,6 +5,7 @@ import { IconType } from "react-icons";
 import IconButton from "@/components/common/IconButton";
 
 import { Container, StyledLink } from "./SidebarNavLink.styles";
+import Tooltip from "../Tooltip";
 
 interface SidebarNavLinkProps {
   href: string;
@@ -23,26 +24,17 @@ const SidebarNavLink = ({
 
   if (smaller) {
     return (
-      <StyledLink
-        href={href}
-        selected={pathname === href}
-        // id={`iconbutton-${label}-${href}`}
-        // data-tooltip-content={label}
-      >
+      <StyledLink href={href} selected={pathname === href}>
         <Container smaller={smaller}>
-          <IconButton
-            size="sm"
-            icon={Icon}
-            variant="secondary"
-            onClick={() => {}}
-          />
+          <Tooltip content={label} placement="right">
+            <IconButton
+              size="sm"
+              icon={Icon}
+              variant="secondary"
+              onClick={() => {}}
+            />
+          </Tooltip>
         </Container>
-
-        {/* <Tooltip
-          anchorId={`iconbutton-${label}-${href}`}
-          place="left"
-          style={{ fontWeight: 600, borderRadius: "0px" }}
-        /> */}
       </StyledLink>
     );
   }

@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { IconType } from "react-icons";
-// import { Tooltip } from "react-tooltip";
 
 import Flex from "@/components/common/Flex";
 import IconButton from "@/components/common/IconButton";
+import Tooltip from "@/components/common/Tooltip";
 
 import { IconButtonContainer } from "./SidebarNavBtn.styles";
 
@@ -15,33 +14,20 @@ interface Props {
 }
 
 const SidebarNavBtn = ({ onClick, icon: Icon, label, smaller }: Props) => {
-  // const [tooltipOpen, setTooltipOpen] = useState(false);
-
   if (smaller) {
     return (
-      <IconButtonContainer
-      // onMouseEnter={() => setTooltipOpen(true)}
-      // onMouseLeave={() => setTooltipOpen(false)}
-      // id={`sidebarnavbtn-${label}`}
-      // data-tooltip-content={label}
-      >
-        <IconButton
-          size="sm"
-          icon={Icon}
-          variant="secondary"
-          onClick={() => {
-            onClick();
-            // setTooltipOpen(false);
-          }}
-        />
-
-        {/* <Tooltip
-          anchorId={`sidebarnavbtn-${label}`}
-          place="left"
-          style={{ fontWeight: 600, borderRadius: "0px" }}
-          isOpen={tooltipOpen}
-        /> */}
-      </IconButtonContainer>
+      <Tooltip content={label} placement="right">
+        <IconButtonContainer>
+          <IconButton
+            size="sm"
+            icon={Icon}
+            variant="secondary"
+            onClick={() => {
+              onClick();
+            }}
+          />
+        </IconButtonContainer>
+      </Tooltip>
     );
   }
 
@@ -53,10 +39,7 @@ const SidebarNavBtn = ({ onClick, icon: Icon, label, smaller }: Props) => {
       gap="xs"
       width="fit-parent"
       style={{ cursor: "pointer" }}
-      onClick={() => {
-        onClick();
-        // setTooltipOpen(false);
-      }}
+      onClick={onClick}
     >
       <Icon size={24} /> {label}
     </Flex>

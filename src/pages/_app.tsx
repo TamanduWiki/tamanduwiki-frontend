@@ -16,7 +16,6 @@ import { globalStyles } from "@/styles";
 import { theme } from "@/styles/theme";
 import "@/styles/fonts.css";
 import "@/styles/root-css.css";
-// import "react-tooltip/dist/react-tooltip.css";
 import "react-toastify/dist/ReactToastify.css";
 
 function App({ Component, pageProps }: AppProps) {
