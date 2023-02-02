@@ -12,7 +12,7 @@ export const globalStyles = css`
   body {
     height: inherit;
     width: inherit;
-    font: 400 1rem Exo2, sans-serif;
+    font: 400 1rem WorkSans, sans-serif;
     -webkit-font-smoothing: antialiased;
     color: ${theme.colors.neutral_700};
     background-color: ${theme.colors.neutral_200}; // Design System Exception
@@ -23,14 +23,14 @@ export const globalStyles = css`
   input,
   textarea,
   button {
-    font: normal 1rem Exo2, sans-serif;
+    font: normal 1rem WorkSans, sans-serif;
     -webkit-font-smoothing: antialiased;
     color: ${theme.colors.neutral_700};
   }
 
   .Toastify__toast {
     line-height: 1.25;
-    font: 400 1rem Exo2, sans-serif;
+    font: 400 1rem WorkSans, sans-serif;
     border-radius: 0;
   }
 
