@@ -39,5 +39,5 @@ const PageCreationPage = () => {
 export default PageCreationPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return serverSideAuthCheck(context);
+  return await serverSideAuthCheck(context);
 };

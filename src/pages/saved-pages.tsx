@@ -42,5 +42,5 @@ const SavedPagesPage = () => {
 export default SavedPagesPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return serverSideAuthCheck(context);
+  return await serverSideAuthCheck(context);
 };

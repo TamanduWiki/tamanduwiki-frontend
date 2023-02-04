@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import { apiGetUserInfo } from "@/api";
 
-import fakeProfilePicture from "@/assets/images/ash.jpg";
+import fakeProfilePicture from "@/assets/images/blankProfile.jpg";
 import booksBackgroundImg from "@/assets/images/books_background.png";
 
 import MainPageLayout from "@/components/layouts/MainPageLayout";
@@ -135,5 +135,5 @@ const ProfilePage = () => {
 export default ProfilePage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return serverSideAuthCheck(context);
+  return await serverSideAuthCheck(context);
 };

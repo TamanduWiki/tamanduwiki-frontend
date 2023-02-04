@@ -42,5 +42,5 @@ const ContributionsPage = () => {
 export default ContributionsPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return serverSideAuthCheck(context);
+  return await serverSideAuthCheck(context);
 };

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 import { ThemeSpacingOption } from "@/styles/theme/spacing";
 
-import fakeProfilePicture from "@/assets/images/ash.jpg";
+import fakeProfilePicture from "@/assets/images/blankProfile.jpg";
 
 const SIDE_SECTION_WIDTH = "264px";
 const SIDE_SECTION_COLLAPSED_WIDTH = "48px";
