@@ -11,7 +11,7 @@ export const serverSideAuthCheck = async (
 
   try {
     const responseAuth = await api
-      .get("/ensure-authenticated", { params: { nextCtx: context } })
+      .get("/ensure-authenticated")
       .then(({ data }) => data?.auth || false);
 
     authenticated = responseAuth;
