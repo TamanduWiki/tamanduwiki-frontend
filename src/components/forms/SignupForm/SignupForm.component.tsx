@@ -37,7 +37,7 @@ const SignupForm = () => {
     try {
       await apiSignup({ ...values, universityTie: "student" });
 
-      toast.success("Usuário criado com sucesso");
+      toast.success("Usuário criado com sucesso, por favor verifique seu e-mail para confirmar a conta.");
 
       await router.push("/login");
     } catch (error) {

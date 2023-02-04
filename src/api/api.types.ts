@@ -79,3 +79,5 @@ export type ApiSignup = (data: IApiCreateUserData) => Promise<void>;
 export type ApiListCategories = (params: { searchParam?: string; page?: number }) => Promise<IListCategoriesResponse>;
 
 export type ApiGetUserInfo = () => Promise<IApiUser>;
+
+export type ApiConfirmAccount = (token: string) => Promise<any>;

@@ -14,6 +14,7 @@ import {
   IListCategoriesResponse,
   ApiGetUserInfo,
   IApiUser,
+  ApiConfirmAccount,
 } from "./api.types";
 
 // Pages
@@ -30,14 +31,21 @@ export const apiCreatePage: ApiCreatePage = async (pageData) =>
 
 export const apiListPages: ApiListPages = async ({ searchParam, page }) =>
   await api
-    .get<IListPagesResponse>("/pages", { params: { page, searchFor: searchParam } })
+    .get<IListPagesResponse>("/pages", {
+      params: { page, searchFor: searchParam },
+    })
     .then(({ data }) => data);
 
 // Categories
 
-export const apiListCategories: ApiListCategories = async ({ searchParam, page }) =>
+export const apiListCategories: ApiListCategories = async ({
+  searchParam,
+  page,
+}) =>
   await api
-    .get<IListCategoriesResponse>("/categories", { params: { page, searchFor: searchParam } })
+    .get<IListCategoriesResponse>("/categories", {
+      params: { page, searchFor: searchParam },
+    })
     .then(({ data }) => data);
 
 // Users
@@ -46,6 +54,11 @@ export const apiGetUserInfo: ApiGetUserInfo = async () =>
   await api.get<IApiUser>(`/user-info`).then(({ data }) => data);
 
 // Auth
+
+export const apiConfirmAccount: ApiConfirmAccount = async (token) =>
+  await api
+    .post("/verify-account", {}, { params: { token } })
+    .then(({ data }) => data);
 
 export const apiLogin: ApiLogin = async (loginParams) =>
   await api
