@@ -126,11 +126,11 @@ const PageCreationPage = () => {
           <Flex width="fit-parent" align="flex-start" justify="space-between">
             <PageTitle noContainer>{page?.title}</PageTitle>
 
-            <IconButton
+            {/* <IconButton
               icon={FiTrash2}
               variant="warning"
               onClick={() => deletePageModalRef.current?.open()}
-            />
+            /> */}
           </Flex>
 
           <Flex gap="xs" direction="column">
