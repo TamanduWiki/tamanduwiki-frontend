@@ -174,7 +174,7 @@ export const ProfilePic = styled.div`
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-image: ${`url(${fakeProfilePicture.src})`};
+  background-image: url(${fakeProfilePicture.src});
   background-size: cover;
   background-position: 50% 50%;
   cursor: pointer;

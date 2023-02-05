@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { useCallback, useMemo, useState } from "react";
 
@@ -8,40 +7,14 @@ import Button from "@/components/common/Button";
 import ListedPage from "@/components/common/ListedPage";
 import MainPageLayout from "@/components/layouts/MainPageLayout";
 import PageTitle from "@/components/common/PageTitle";
-
-import { handleError } from "@/utils";
+import {
+  BottomComponentContainer,
+  ListContainer,
+} from "@/components/pages/index";
 
 import { IMetaProps } from "@/types/common";
 
-const ListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  width: 100%;
-
-  gap: ${({ theme }) => theme.spacing.md};
-
-  @media (max-width: 1140px) {
-    padding-bottom: 0;
-  }
-
-  @media (max-width: 540px) {
-    padding: 0;
-  }
-`;
-
-const BottomComponentContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  color: ${({ theme }) => theme.colors.neutral_400};
-  background-color: ${({ theme }) => theme.colors.neutral_100};
-
-  gap: ${({ theme }) => theme.spacing.md};
-  padding: ${({ theme }) => theme.spacing.md};
-`;
+import { handleError } from "@/utils";
 
 interface ICategory {
   id: string;
@@ -64,31 +37,39 @@ interface IPage {
 const HomePage = () => {
   const router = useRouter();
 
-  const [pagesMeta, setPagesMeta] = useState<IMetaProps>({ total: 0, per: 10, page: 1 });
+  const [pagesMeta, setPagesMeta] = useState<IMetaProps>({
+    total: 0,
+    per: 10,
+    page: 1,
+  });
   const [pages, setPages] = useState<IPage[]>([]);
   const [searchingFor, setSearchingFor] = useState("");
   const [initialLoad, setInitialLoad] = useState(true);
   const [searchPagesLoading, setSearchPagesLoading] = useState(false);
   const [loadMorePagesLoading, setLoadMorePagesLoading] = useState(false);
 
-  const somethingIsLoading = useMemo(() =>
-    initialLoad || searchPagesLoading,
-    [initialLoad, searchPagesLoading],
-  )
+  const somethingIsLoading = useMemo(
+    () => initialLoad || searchPagesLoading,
+    [initialLoad, searchPagesLoading]
+  );
 
   const noContent = useMemo(() => !pages.length, [pages]);
 
-  const pageTitle = useMemo(() =>
-    searchingFor !== ""
-      ? `Resultados para "${searchingFor}"`
-      : 'Últimas alterações'
-  , [searchingFor]);
+  const pageTitle = useMemo(
+    () =>
+      searchingFor !== ""
+        ? `Resultados para "${searchingFor}"`
+        : "Últimas alterações",
+    [searchingFor]
+  );
 
-  const loadingTitle = useMemo(() =>
-    initialLoad || searchingFor === ""
-      ? "Carregando todas as páginas"
-      : `Buscando por "${searchingFor}"`
-  , [initialLoad, searchingFor])
+  const loadingTitle = useMemo(
+    () =>
+      initialLoad || searchingFor === ""
+        ? "Carregando todas as páginas"
+        : `Buscando por "${searchingFor}"`,
+    [initialLoad, searchingFor]
+  );
 
   const handleSearchPages = useCallback(async (searchParam: string) => {
     try {
@@ -138,9 +119,7 @@ const HomePage = () => {
       noContent={noContent}
       noContentText="Não há resultados para esta busca..."
     >
-      <PageTitle>
-        {pageTitle}
-      </PageTitle>
+      <PageTitle>{pageTitle}</PageTitle>
 
       <ListContainer>
         {pages.map((page) => (
@@ -149,7 +128,7 @@ const HomePage = () => {
             title={page.title}
             imageUrl={page.imageUrl}
             description={page.content}
-            badges={page.categories.map(category => category.title)}
+            badges={page.categories.map((category) => category.title)}
             onClick={() => router.push(`/pages/${page.slug}`)}
           />
         ))}

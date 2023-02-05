@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
@@ -17,13 +16,15 @@ const VerifyAccountPage = () => {
     try {
       await apiConfirmAccount(token);
 
-      toast.success("Conta confirmada com successo! Você pode fazer login agora :)")
+      toast.success(
+        "Conta confirmada com successo! Você pode fazer login agora :)"
+      );
     } catch {
-      toast.error("Houve um erro ao confirmar sua conta...")
+      toast.error("Houve um erro ao confirmar sua conta...");
     } finally {
       push("/login");
     }
-  }
+  };
 
   useEffect(() => {
     if (token) {
@@ -32,19 +33,12 @@ const VerifyAccountPage = () => {
   }, [token]);
 
   return (
-    <>
-      <Head>
-        <title>Verificando Conta - UFABCwiki</title>
-      </Head>
-
-      <SimplePageLayout
-        bottomLink={{ href: "/login", label: "Voltar para página de login" }}
-      >
-        <p>
-          Verificando conta, aguarde alguns segundos...
-        </p>
-      </SimplePageLayout>
-    </>
+    <SimplePageLayout
+      pageHead="Verificando Conta - UFABCwiki"
+      bottomLink={{ href: "/login", label: "Voltar para página de login" }}
+    >
+      <p>Verificando conta, aguarde alguns segundos...</p>
+    </SimplePageLayout>
   );
 };
 

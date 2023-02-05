@@ -1,5 +1,4 @@
 import { GetServerSideProps } from "next";
-import Head from "next/head";
 import { destroyCookie, parseCookies } from "nookies";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
@@ -22,22 +21,17 @@ const LoginPage = ({ destinationAfterLogin }: Props) => {
   }, []);
 
   return (
-    <>
-      <Head>
-        <title>Login - UFABCwiki</title>
-      </Head>
+    <SimplePageLayout
+      pageHead="Login - UFABCwiki"
+      bottomLink={{ href: "/privacy", label: "Política de Privacidade" }}
+    >
+      <LoginForm destinationAfterLogin={destinationAfterLogin} />
 
-      <SimplePageLayout
-        bottomLink={{ href: "/privacy", label: "Política de Privacidade" }}
-      >
-        <LoginForm destinationAfterLogin={destinationAfterLogin} />
-
-        <p>
-          Ainda não tem conta?{" "}
-          <LinkButton href="/signup">Fazer o cadastro</LinkButton>
-        </p>
-      </SimplePageLayout>
-    </>
+      <p>
+        Ainda não tem conta?{" "}
+        <LinkButton href="/signup">Fazer o cadastro</LinkButton>
+      </p>
+    </SimplePageLayout>
   );
 };
 

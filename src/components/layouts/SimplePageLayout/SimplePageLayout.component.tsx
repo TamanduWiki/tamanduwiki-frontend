@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Head from "next/head";
 
 import logoImg from "@/assets/images/logo.svg";
 
@@ -14,24 +15,31 @@ import {
 interface Props {
   children: React.ReactNode;
   bottomLink: { label: string; href: string };
+  pageHead: string;
 }
 
-const LoginPage = ({ children, bottomLink }: Props) => {
+const SimplePageLayout = ({ children, bottomLink, pageHead }: Props) => {
   return (
-    <PageContainer>
-      <Content>
-        <Link href="/">
-          <Image src={logoImg as string} alt="logo" />
-        </Link>
+    <>
+      <Head>
+        <title>{pageHead}</title>
+      </Head>
 
-        <MainAreaContent>{children}</MainAreaContent>
+      <PageContainer>
+        <Content>
+          <Link href="/">
+            <Image src={logoImg as string} alt="logo" />
+          </Link>
 
-        <LinkButton variant="secondary" href={bottomLink.href}>
-          {bottomLink.label}
-        </LinkButton>
-      </Content>
-    </PageContainer>
+          <MainAreaContent>{children}</MainAreaContent>
+
+          <LinkButton variant="secondary" href={bottomLink.href}>
+            {bottomLink.label}
+          </LinkButton>
+        </Content>
+      </PageContainer>
+    </>
   );
 };
 
-export default LoginPage;
+export default SimplePageLayout;
