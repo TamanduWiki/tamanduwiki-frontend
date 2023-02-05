@@ -3,23 +3,29 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AsyncSelect from "react-select/async";
+import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown";
 
 import { apiCreatePage, apiListCategories } from "@/api";
 
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import TextareaInput from "@/components/common/TextareaInput";
-
-import { theme } from "@/styles/theme";
+import MarkdownContainer from "@/components/common/MarkdownContainer";
 
 import { handleError } from "@/utils";
 
-import { EditContentContainer, StyledForm } from "./CreatePageForm.styles";
+import {
+  ButtonsContainer,
+  Container,
+  EditContentContainer,
+  ImageContainer,
+  ImageInputContainer,
+  PreviewSection,
+  PreviewSectionContainer,
+  StyledForm,
+} from "./CreatePageForm.styles";
 import { schema } from "./CreatePageForm.validations";
-import remarkGfm from "remark-gfm";
-import ReactMarkdown from "react-markdown";
-import MarkdownContainer from "@/components/common/MarkdownContainer";
-import styled from "@emotion/styled";
 
 interface Values {
   title: string;
@@ -36,21 +42,6 @@ const initialValues: Values = {
   categoriesTitles: [],
   // image: undefined,
 };
-
-const ImageContainer = styled.div<{ url: string }>`
-  min-width: 240px;
-  min-height: 240px;
-  width: 240px;
-  height: 240px;
-
-  background-size: cover;
-  background-position: 50% 50%;
-  background-image: ${({ url }) => `url(${url})`};
-
-  @media (max-width: 760px) {
-    width: 100%;
-  }
-`;
 
 const getBase64 = async (file: File) => {
   if (!file) return undefined;
@@ -72,7 +63,7 @@ const getBase64 = async (file: File) => {
   });
 };
 
-const CreatePageForm = () => {
+const CreatePageForm = (currentPage: any) => {
   const router = useRouter();
 
   const [image, setImage] = useState<File | undefined>();
@@ -154,7 +145,7 @@ const CreatePageForm = () => {
             formikField
           />
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+          <Container>
             Categorias
             <AsyncSelect
               name="categoriesTitles"
@@ -169,20 +160,11 @@ const CreatePageForm = () => {
                 )
               }
             />
-          </div>
+          </Container>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+          <Container>
             Imagem da página
-            <div
-              style={{
-                border: `1px solid ${theme.colors.neutral_300}`,
-                padding: "8px",
-                gap: "8px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
+            <ImageInputContainer>
               <input
                 type="file"
                 name="image"
@@ -191,8 +173,8 @@ const CreatePageForm = () => {
               />
 
               {imagePreviewUrl && <ImageContainer url={imagePreviewUrl} />}
-            </div>
-          </div>
+            </ImageInputContainer>
+          </Container>
 
           <EditContentContainer previewActive={previewMd}>
             <TextareaInput
@@ -204,36 +186,17 @@ const CreatePageForm = () => {
             />
 
             {previewMd && (
-              <div
-                style={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "4px",
-                }}
-              >
-                <p style={{ lineHeight: 1, color: theme.colors.neutral_400 }}>
-                  Preview
-                </p>
+              <PreviewSectionContainer>
+                <p>Preview</p>
 
-                <div
-                  style={{
-                    maxHeight: "360px",
-                    height: "100%",
-                    overflowX: "auto",
-                    border: `2px solid ${theme.colors.neutral_200}`,
-                    borderStyle: "dashed",
-                    padding: "8px",
-                    display: "flex",
-                  }}
-                >
+                <PreviewSection>
                   <MarkdownContainer>
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                       {values?.content}
                     </ReactMarkdown>
                   </MarkdownContainer>
-                </div>
-              </div>
+                </PreviewSection>
+              </PreviewSectionContainer>
             )}
           </EditContentContainer>
 
@@ -246,7 +209,7 @@ const CreatePageForm = () => {
             {previewMd ? "Fechar preview" : "Preview markdown"}
           </Button>
 
-          <div style={{ display: "flex", gap: "16px" }}>
+          <ButtonsContainer>
             <Button
               fluid
               type="button"
@@ -265,7 +228,7 @@ const CreatePageForm = () => {
             >
               Salvar
             </Button>
-          </div>
+          </ButtonsContainer>
         </StyledForm>
       )}
     </Formik>
