@@ -6,7 +6,7 @@ import AsyncSelect from "react-select/async";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 
-import { apiCreatePage, apiListCategories } from "@/api";
+import { apiCreatePage, apiListCategories, apiUpdatePage } from "@/api";
 
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
@@ -35,14 +35,6 @@ interface Values {
   // image: any;
 }
 
-const initialValues: Values = {
-  title: "",
-  content: "",
-  slug: "",
-  categoriesTitles: [],
-  // image: undefined,
-};
-
 const getBase64 = async (file: File) => {
   if (!file) return undefined;
 
@@ -63,7 +55,18 @@ const getBase64 = async (file: File) => {
   });
 };
 
-const CreatePageForm = (currentPage: any) => {
+interface IPage {
+  id: string;
+  title: string;
+  content: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+  imageUrl?: string;
+  categories: { title: string }[];
+}
+
+const CreatePageForm = ({ currentPage }: { currentPage?: IPage }) => {
   const router = useRouter();
 
   const [image, setImage] = useState<File | undefined>();
@@ -77,15 +80,27 @@ const CreatePageForm = (currentPage: any) => {
     try {
       const imageBase64 = await getBase64(image);
 
-      const data = await apiCreatePage({
-        ...values,
-        imageBase64,
-        imageFileType: "png",
-      });
+      if (!!currentPage) {
+        await apiUpdatePage(currentPage?.id, {
+          ...values,
+          imageBase64,
+          imageFileType: "png", // TODO rever isso
+        });
 
-      toast.success("Página criada com sucesso");
+        toast.success("Página editada com sucesso");
 
-      await router.push(`/pages/${data.slug}`);
+        await router.push(`/pages/${currentPage?.slug}`);
+      } else {
+        const data = await apiCreatePage({
+          ...values,
+          imageBase64,
+          imageFileType: "png", // TODO rever isso
+        });
+
+        toast.success("Página criada com sucesso");
+
+        await router.push(`/pages/${data.slug}`);
+      }
     } catch (error) {
       handleError(error);
     } finally {
@@ -121,9 +136,21 @@ const CreatePageForm = (currentPage: any) => {
     return () => URL.revokeObjectURL(objectUrl);
   }, [image]);
 
+  useEffect(() => {
+    if (!!currentPage?.imageUrl) {
+      setImagePreviewUrl(currentPage?.imageUrl);
+    }
+  }, [currentPage]);
+
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{
+        title: currentPage?.title || "",
+        content: currentPage?.content || "",
+        slug: currentPage?.slug || "",
+        categoriesTitles:
+          currentPage?.categories.map((category) => category.title) || [],
+      }}
       onSubmit={onSubmit}
       validationSchema={schema}
     >
@@ -143,6 +170,7 @@ const CreatePageForm = (currentPage: any) => {
             label="Slug"
             placeholder="Ex.: bases-matematicas"
             formikField
+            disabled={!!currentPage}
           />
 
           <Container>
@@ -159,6 +187,10 @@ const CreatePageForm = (currentPage: any) => {
                   newValues.map(({ value }) => value)
                 )
               }
+              defaultValue={currentPage?.categories.map((category) => ({
+                label: category.title,
+                value: category.title,
+              }))}
             />
           </Container>
 

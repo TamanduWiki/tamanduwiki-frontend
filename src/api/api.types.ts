@@ -43,6 +43,14 @@ export interface IApiCreatePageData {
   imageFileType: string;
 }
 
+export interface IApiUpdatePageData {
+  title: string;
+  content: string;
+  categoriesTitles: string[];
+  imageBase64: unknown;
+  imageFileType: string;
+}
+
 export interface IMetaProps {
   page: number;
   per: number;
@@ -69,6 +77,8 @@ export type ApiGetPage = (pageSlug: string) => Promise<IApiPage>;
 export type ApiDeletePage = (pageID: string) => Promise<void>;
 
 export type ApiCreatePage = (pageData: IApiCreatePageData) => Promise<IApiPage>;
+
+export type ApiUpdatePage = (pageID: string, pageData: IApiUpdatePageData) => Promise<IApiPage>;
 
 export type ApiListPages = (params: { searchParam?: string; page?: number }) => Promise<IListPagesResponse>;
 

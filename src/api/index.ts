@@ -15,6 +15,7 @@ import {
   ApiGetUserInfo,
   IApiUser,
   ApiConfirmAccount,
+  ApiUpdatePage,
 } from "./api.types";
 
 // Pages
@@ -28,6 +29,11 @@ export const apiDeletePage: ApiDeletePage = async (pageID) => {
 
 export const apiCreatePage: ApiCreatePage = async (pageData) =>
   await api.post<IApiPage>("/pages", pageData).then(({ data }) => data);
+
+export const apiUpdatePage: ApiUpdatePage = async (pageID, pageData) =>
+  await api
+    .put<IApiPage>(`/pages/${pageID}`, pageData)
+    .then(({ data }) => data);
 
 export const apiListPages: ApiListPages = async ({ searchParam, page }) =>
   await api

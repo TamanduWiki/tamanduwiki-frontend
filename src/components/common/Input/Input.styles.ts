@@ -41,4 +41,8 @@ export const StyledInput = styled.input<{ errored?: boolean }>`
     color: ${({ theme }) => theme.colors.neutral_400};
     font-weight: 400;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
