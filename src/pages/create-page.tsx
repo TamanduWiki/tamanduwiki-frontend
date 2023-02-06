@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next/types";
 
 import MainPageLayout from "@/components/layouts/MainPageLayout";
-import CreatePageForm from "@/components/forms/CreatePageForm";
+import PageForm from "@/components/forms/PageForm";
 import PageTitle from "@/components/common/PageTitle";
 import { MainContainer } from "@/components/pages/create-page";
 
@@ -13,7 +13,7 @@ const PageCreationPage = () => {
       <PageTitle>Criar página</PageTitle>
 
       <MainContainer>
-        <CreatePageForm />
+        <PageForm />
       </MainContainer>
     </MainPageLayout>
   );

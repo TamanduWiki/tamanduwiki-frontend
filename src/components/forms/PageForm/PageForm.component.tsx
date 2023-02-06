@@ -24,8 +24,8 @@ import {
   PreviewSection,
   PreviewSectionContainer,
   StyledForm,
-} from "./CreatePageForm.styles";
-import { schema } from "./CreatePageForm.validations";
+} from "./PageForm.styles";
+import { schema } from "./PageForm.validations";
 
 interface Values {
   title: string;
@@ -66,7 +66,11 @@ interface IPage {
   categories: { title: string }[];
 }
 
-const PageForm = ({ currentPage }: { currentPage?: IPage }) => {
+interface Props {
+  currentPage?: IPage;
+}
+
+const PageForm = ({ currentPage }: Props) => {
   const router = useRouter();
 
   const [image, setImage] = useState<File | undefined>();

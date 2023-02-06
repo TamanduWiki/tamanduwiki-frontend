@@ -6,7 +6,7 @@ import { apiGetPage } from "@/api";
 
 import MainPageLayout from "@/components/layouts/MainPageLayout";
 import PageTitle from "@/components/common/PageTitle";
-import CreatePageForm from "@/components/forms/CreatePageForm";
+import PageForm from "@/components/forms/PageForm";
 import { MainContainer } from "@/components/pages/create-page"; // TODO trocar
 
 import { handleError, serverSideAuthCheck } from "@/utils";
@@ -51,7 +51,7 @@ const PageEditionPage = () => {
       <PageTitle>Editar página</PageTitle>
 
       <MainContainer>
-        <CreatePageForm currentPage={page} />
+        <PageForm currentPage={page} />
       </MainContainer>
     </MainPageLayout>
   );
