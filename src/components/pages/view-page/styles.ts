@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 export const ImageContainer = styled.div`
   min-width: 240px;
+  max-width: 240px;
 
   @media (max-width: 760px) {
     width: 100%;
