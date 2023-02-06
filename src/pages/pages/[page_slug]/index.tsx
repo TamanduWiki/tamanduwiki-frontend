@@ -1,17 +1,25 @@
 import moment from "moment";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  // useRef,
+  useState,
+} from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
-import { apiDeletePage, apiGetPage } from "@/api";
+import {
+  // apiDeletePage,
+  apiGetPage,
+} from "@/api";
 
 import Flex from "@/components/common/Flex";
 import MainPageLayout from "@/components/layouts/MainPageLayout";
 import MarkdownContainer from "@/components/common/MarkdownContainer";
-import Modal, { ModalRef } from "@/components/common/Modal";
-import Button from "@/components/common/Button";
+// import Modal, { ModalRef } from "@/components/common/Modal";
+// import Button from "@/components/common/Button";
 import PageTitle from "@/components/common/PageTitle";
 import {
   ContentContainer,
@@ -20,6 +28,7 @@ import {
 } from "@/components/pages/view-page";
 
 import { handleError } from "@/utils";
+import Badge from "@/components/common/Badge";
 
 interface IPage {
   id: string;
@@ -29,35 +38,36 @@ interface IPage {
   createdAt: string;
   updatedAt: string;
   imageUrl?: string;
+  categories: { title: string }[];
 }
 
 const PageCreationPage = () => {
   const {
-    push,
+    // push,
     query: { page_slug },
   } = useRouter();
 
-  const deletePageModalRef = useRef<ModalRef>();
+  // const deletePageModalRef = useRef<ModalRef>();
 
   const [loading, setLoading] = useState(true);
-  const [loadingDelete, setLoadingDelete] = useState(false);
+  // const [loadingDelete, setLoadingDelete] = useState(false);
   const [page, setPage] = useState<IPage>();
 
-  const handleDeletePage = useCallback(async () => {
-    setLoadingDelete(true);
+  // const handleDeletePage = useCallback(async () => {
+  //   setLoadingDelete(true);
 
-    try {
-      await apiDeletePage(page?.id);
+  //   try {
+  //     await apiDeletePage(page?.id);
 
-      await push("/");
+  //     await push("/");
 
-      toast.success("Página deletada com sucesso");
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setLoadingDelete(false);
-    }
-  }, [page?.id, push]);
+  //     toast.success("Página deletada com sucesso");
+  //   } catch (error) {
+  //     handleError(error);
+  //   } finally {
+  //     setLoadingDelete(false);
+  //   }
+  // }, [page?.id, push]);
 
   const handleGetPage = useCallback(async (slug: string) => {
     setLoading(true);
@@ -95,18 +105,32 @@ const PageCreationPage = () => {
               variant="warning"
               onClick={() => deletePageModalRef.current?.open()}
             /> */}
+
+            {/* <IconButton
+              icon={FiTrash2}
+              variant="warning"
+              onClick={() => deletePageModalRef.current?.open()}
+            /> */}
           </Flex>
 
-          <Flex gap="xs" direction="column">
-            <p>
-              <strong>Criada em:</strong>{" "}
-              {moment(page?.createdAt).format("DD/MM/yyyy, h:mm")}
-            </p>
+          <Flex gap="lg" direction="column">
+            <Flex gap="xs" direction="column">
+              <p>
+                <strong>Criada em:</strong>{" "}
+                {moment(page?.createdAt).format("DD/MM/yyyy, h:mm")}
+              </p>
 
-            <p>
-              <strong>Última edição:</strong>{" "}
-              {moment(page?.updatedAt).format("DD/MM/yyyy, h:mm")}
-            </p>
+              <p>
+                <strong>Última edição:</strong>{" "}
+                {moment(page?.updatedAt).format("DD/MM/yyyy, h:mm")}
+              </p>
+            </Flex>
+
+            <Flex gap="sm">
+              {page?.categories.map((category) => (
+                <Badge>{category.title}</Badge>
+              ))}
+            </Flex>
           </Flex>
         </Flex>
       </MainInfos>
@@ -121,7 +145,7 @@ const PageCreationPage = () => {
         )}
       </ContentContainer>
 
-      <Modal ref={deletePageModalRef}>
+      {/* <Modal ref={deletePageModalRef}>
         <Flex
           bgColor="neutral_100"
           padding="md"
@@ -155,7 +179,7 @@ const PageCreationPage = () => {
             </Button>
           </Flex>
         </Flex>
-      </Modal>
+      </Modal> */}
     </MainPageLayout>
   );
 };
