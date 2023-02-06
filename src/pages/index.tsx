@@ -130,6 +130,7 @@ const HomePage = () => {
             description={page.content}
             badges={page.categories.map((category) => category.title)}
             onClick={() => router.push(`/pages/${page.slug}`)}
+            pageLastUpdatedAt={page.updatedAt}
           />
         ))}
 

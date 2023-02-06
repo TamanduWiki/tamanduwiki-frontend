@@ -66,7 +66,7 @@ interface IPage {
   categories: { title: string }[];
 }
 
-const CreatePageForm = ({ currentPage }: { currentPage?: IPage }) => {
+const PageForm = ({ currentPage }: { currentPage?: IPage }) => {
   const router = useRouter();
 
   const [image, setImage] = useState<File | undefined>();
@@ -83,8 +83,9 @@ const CreatePageForm = ({ currentPage }: { currentPage?: IPage }) => {
       if (!!currentPage) {
         await apiUpdatePage(currentPage?.id, {
           ...values,
+          categoriesTitles: values?.categoriesTitles || [],
           imageBase64,
-          imageFileType: "png", // TODO rever isso
+          imageFileType: imageBase64 ? "png" : undefined, // TODO rever isso (só png)
         });
 
         toast.success("Página editada com sucesso");
@@ -138,7 +139,7 @@ const CreatePageForm = ({ currentPage }: { currentPage?: IPage }) => {
 
   useEffect(() => {
     if (!!currentPage?.imageUrl) {
-      setImagePreviewUrl(currentPage?.imageUrl);
+      setImagePreviewUrl(`${currentPage?.imageUrl}?lastmod=${currentPage?.updatedAt}`);
     }
   }, [currentPage]);
 
@@ -267,4 +268,4 @@ const CreatePageForm = ({ currentPage }: { currentPage?: IPage }) => {
   );
 };
 
-export default CreatePageForm;
+export default PageForm;

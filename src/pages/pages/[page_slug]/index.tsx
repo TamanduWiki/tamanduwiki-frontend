@@ -70,7 +70,15 @@ const PageViewPage = () => {
       loadingText="Carregando detalhes da página"
     >
       <MainInfos>
-        <ImageContainer url={page?.imageUrl} />
+        <ImageContainer>
+          <img
+            src={`${page?.imageUrl}?lastmod=${page?.updatedAt}`}
+            width="100%"
+            height={240}
+            alt="page-img"
+            style={{ objectFit: "cover" }}
+          />
+        </ImageContainer>
 
         <Flex direction="column" width="fit-parent" gap="md">
           <Flex width="fit-parent" align="flex-start" justify="space-between">

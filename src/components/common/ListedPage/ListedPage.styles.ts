@@ -18,7 +18,7 @@ export const PageContainer = styled.div`
   }
 `;
 
-export const ImageContainer = styled.div<{ imageUrl: string }>`
+export const ImageContainer = styled.div<{ imageUrl: string, pageUpdatedAt: string }>`
   border-radius: 1px; // (???) necessary for smoother image
 
   height: 100%;
@@ -27,7 +27,7 @@ export const ImageContainer = styled.div<{ imageUrl: string }>`
 
   background-size: cover;
   background-position: 50% 50%;
-  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
+  background-image: ${({ imageUrl, pageUpdatedAt }) => `url(${imageUrl}?lastmod=${pageUpdatedAt})`};
 
   @media (max-width: 540px) {
     width: 100%;

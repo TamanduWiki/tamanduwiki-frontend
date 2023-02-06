@@ -1,14 +1,15 @@
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
+
+import { apiGetPage } from "@/api";
 
 import MainPageLayout from "@/components/layouts/MainPageLayout";
 import PageTitle from "@/components/common/PageTitle";
 import CreatePageForm from "@/components/forms/CreatePageForm";
+import { MainContainer } from "@/components/pages/create-page"; // TODO trocar
 
 import { handleError, serverSideAuthCheck } from "@/utils";
-import { MainContainer } from "@/components/pages/create-page"; // TODO trocar
-import { useCallback, useEffect, useState } from "react";
-import { apiGetPage } from "@/api";
-import { useRouter } from "next/router";
 
 interface IPage {
   id: string;

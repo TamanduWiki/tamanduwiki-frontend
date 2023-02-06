@@ -1,12 +1,7 @@
 import styled from "@emotion/styled";
 
-export const ImageContainer = styled.div<{ url: string }>`
+export const ImageContainer = styled.div`
   min-width: 240px;
-  min-height: 240px;
-
-  background-size: cover;
-  background-position: 50% 50%;
-  background-image: ${({ url }) => `url(${url})`};
 
   @media (max-width: 760px) {
     width: 100%;

@@ -13,6 +13,7 @@ interface Props {
   title: string;
   description: string;
   badges: string[];
+  pageLastUpdatedAt: string;
 }
 
 const ListedPage = ({
@@ -21,10 +22,11 @@ const ListedPage = ({
   imageUrl,
   onClick,
   title,
+  pageLastUpdatedAt,
 }: Props) => {
   return (
     <PageContainer onClick={onClick}>
-      <ImageContainer imageUrl={imageUrl} />
+      <ImageContainer imageUrl={imageUrl} pageUpdatedAt={pageLastUpdatedAt} />
 
       <Flex
         gap="xs"
