@@ -4,10 +4,11 @@ import { ThemeSpacingOption } from "@/styles/theme/spacing";
 
 import fakeProfilePicture from "@/assets/images/blankProfile.jpg";
 
-const SIDE_SECTION_WIDTH = "264px";
-const SIDE_SECTION_COLLAPSED_WIDTH = "48px";
+const SIDE_SECTION_WIDTH = "248px";
+const SIDE_SECTION_COLLAPSED_WIDTH = "56px";
 const HEADER_HEIGHT = "80px";
 const FULL_HEADER_CONTENT_GAP: ThemeSpacingOption = "xl";
+const MOBILE_HEADER_CONTENT_GAP: ThemeSpacingOption = "xs";
 
 export const PageContainer = styled.div`
   display: grid;
@@ -19,15 +20,15 @@ export const PageContainer = styled.div`
 
   min-height: 100vh;
 
-  @media (max-width: 1140px) {
-    gap: 0;
+  @media (max-width: 538px) {
+    gap: ${({ theme }) => theme.spacing[MOBILE_HEADER_CONTENT_GAP]};
   }
 `;
 
 export const MainHeaderContainer = styled.div`
   width: 100%;
   height: ${HEADER_HEIGHT};
-  background-color: ${({ theme }) => theme.colors.neutral_100};
+  background-color: ${({ theme }) => theme.colors.neutral_400};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,11 +46,11 @@ export const MainHeader = styled.div`
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing.xl};
 
-  @media (max-width: 1140px) {
+  @media (max-width: 1198px) {
     padding-right: ${({ theme }) => theme.spacing.xs};
   }
 
-  @media (max-width: 760px) {
+  @media (max-width: 538px) {
     gap: 0;
   }
 `;
@@ -73,13 +74,17 @@ export const Content = styled.div<{ sidebarCollapsed: boolean }>`
   height: calc(100vh - ${({ theme }) =>
     theme.spacing[FULL_HEADER_CONTENT_GAP]} - ${HEADER_HEIGHT}
   );
-  gap: ${({ theme, sidebarCollapsed }) =>
-    theme.spacing[sidebarCollapsed ? "lg" : "xl"]};
 
-  @media (max-width: 1140px) {
+  @media (max-width: 1198px) {
     width: 100%;
     max-width: 1140px;
-    height: calc(100vh - ${HEADER_HEIGHT});
+  }
+
+  @media (max-width: 538px) {
+    // prettier-ignore
+    height: calc(100vh - ${({ theme }) =>
+      theme.spacing[MOBILE_HEADER_CONTENT_GAP]} - ${HEADER_HEIGHT}
+  );
   }
 `;
 
@@ -89,27 +94,27 @@ export const SideSection = styled.div<{ collapsed: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-bottom: ${({ theme }) => theme.spacing.lg};
   height: 100%;
+
+  background-color: ${({ theme }) => theme.colors.neutral_400};
 
   > div {
     display: flex;
     flex-direction: column;
     gap: ${({ theme }) => theme.spacing.md};
   }
-  @media (max-width: 1140px) {
+  @media (max-width: 1198px) {
     display: none;
   }
 `;
 
 export const ChildrenContainer = styled.div`
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xl};
 
   height: 100%;
-
-  @media (max-width: 1140px) {
-    padding: 8px 8px 0 8px;
-  }
 `;
 
 export const MainSection = styled.div<{ sidebarCollapsed: boolean }>`
@@ -119,7 +124,12 @@ export const MainSection = styled.div<{ sidebarCollapsed: boolean }>`
 
   height: 100%;
 
-  @media (max-width: 1140px) {
+  background-color: ${({ theme }) => theme.colors.neutral_500};
+
+  padding: ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.lg}
+    0 ${({ theme }) => theme.spacing.lg};
+
+  @media (max-width: 1198px) {
     width: 100%;
   }
 `;
@@ -128,7 +138,7 @@ export const HeaderButtonsContainer = styled.div`
   display: flex;
   gap: ${({ theme }) => theme.spacing.md};
 
-  @media (max-width: 760px) {
+  @media (max-width: 538px) {
     display: none;
   }
 `;
@@ -137,7 +147,7 @@ export const HeaderInputContainer = styled.div`
   width: 100%;
   display: flex;
 
-  @media (max-width: 760px) {
+  @media (max-width: 538px) {
     display: none;
   }
 `;
@@ -147,7 +157,7 @@ export const SubmenuInputContainer = styled.div`
   display: none;
   padding: ${({ theme }) => theme.spacing.md};
 
-  @media (max-width: 760px) {
+  @media (max-width: 538px) {
     display: flex;
   }
 `;
@@ -161,13 +171,7 @@ export const SideMenuSection = styled.div<{ collapsed: boolean }>`
   padding: ${({ theme, collapsed }) => theme.spacing[collapsed ? "xs" : "md"]};
   gap: ${({ theme, collapsed }) => theme.spacing[collapsed ? "xs" : "md"]};
 
-  background-color: ${({ theme }) => theme.colors.neutral_100};
-`;
-
-export const CollapseSidebarButtonContainer = styled.div`
-  svg {
-    color: ${({ theme }) => theme.colors.neutral_400};
-  }
+  background-color: ${({ theme }) => theme.colors.neutral_400};
 `;
 
 export const ProfilePic = styled.div`
@@ -187,12 +191,11 @@ export const Backdrop = styled.div`
   top: ${HEADER_HEIGHT};
   left: 0;
   z-index: 99;
-  background-color: ${({ theme }) => theme.colors.neutral_700};
   background-color: rgba(0, 0, 0, 0.5);
 
   backdrop-filter: blur(2px);
 
-  @media (min-width: 1140px) {
+  @media (min-width: 1200px) {
     display: none;
   }
 `;
@@ -203,13 +206,13 @@ export const SubmenuContainer = styled.div<{ collapsed: boolean }>`
   top: ${HEADER_HEIGHT};
   right: 0;
   z-index: 100;
-  background-color: ${({ theme }) => theme.colors.neutral_100};
+  background-color: ${({ theme }) => theme.colors.neutral_400};
   overflow-y: auto;
   width: ${({ collapsed }) => (collapsed ? "0px" : "280px")};
   transition: width 0.3s ease-in-out;
   white-space: nowrap;
 
-  @media (min-width: 1140px) {
+  @media (min-width: 1200px) {
     display: none;
   }
 `;
@@ -227,35 +230,27 @@ export const FullHeightContainer = styled.div`
   align-items: center;
   justify-content: center;
 
-  background-color: ${({ theme }) => theme.colors.neutral_100};
+  background-color: ${({ theme }) => theme.colors.neutral_400};
   height: calc(100% - ${({ theme }) => theme.spacing.xl});
   width: 100%;
   flex-direction: column;
 
-  @media (max-width: 1140px) {
+  @media (max-width: 1198px) {
     height: 100%;
     margin-bottom: 0;
   }
 `;
 
 export const LoadingTitle = styled.strong`
-  @keyframes loading-title-animation {
-    0%,
-    100% {
-      color: ${({ theme }) => theme.colors.neutral_400};
-    }
-    50% {
-      color: ${({ theme }) => theme.colors.neutral_600};
-    }
-  }
-
-  animation: infinite loading-title-animation 1s;
+  max-width: 160px;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.neutral_600};
 `;
 
 export const HamburguerMenuContainer = styled.div`
   display: none;
 
-  @media (max-width: 1140px) {
+  @media (max-width: 1198px) {
     display: block;
   }
 `;

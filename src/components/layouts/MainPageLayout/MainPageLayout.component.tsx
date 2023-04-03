@@ -20,9 +20,6 @@ import {
   FiX,
 } from "react-icons/fi";
 
-import logoImg from "@/assets/images/logo.svg";
-import loadingImg from "@/assets/animated/loading_balls_black.svg";
-
 import { AuthContext } from "@/contexts/auth/authContext";
 
 import Button from "@/components/common/Button";
@@ -51,7 +48,6 @@ import {
   FullHeightContainer,
   LoadingTitle,
   HamburguerMenuContainer,
-  CollapseSidebarButtonContainer,
 } from "./MainPageLayout.styles";
 import { parseCookies, setCookie } from "nookies";
 
@@ -125,7 +121,7 @@ const SecondaryNavigation = ({
         <SidebarNavLink
           href="/contributions"
           icon={FiFilePlus}
-          label="Minhas contribuições"
+          label="Contribuições"
           smaller={collapsed}
         />
 
@@ -262,10 +258,10 @@ const MainPageLayout = ({
           <MainHeader>
             <Link href="/">
               <Image
-                src={logoImg as string}
+                src="/images/ufabcwiki_logotipo_white.svg"
                 alt="logo"
-                width={264}
-                height={38}
+                width={140}
+                height={24}
               />
             </Link>
 
@@ -282,11 +278,7 @@ const MainPageLayout = ({
                 }}
               />
 
-              <Button
-                size="md"
-                variant="secondary"
-                onClick={() => handleSearch(search)}
-              >
+              <Button variant="secondary" onClick={() => handleSearch(search)}>
                 <FiSearch style={{ marginRight: "8px" }} />
                 Pesquisar
               </Button>
@@ -325,24 +317,22 @@ const MainPageLayout = ({
               </div>
 
               <SideMenuSection collapsed>
-                <CollapseSidebarButtonContainer>
-                  <SidebarNavBtn
-                    smaller
-                    icon={sidebarCollapsed ? FiArrowRight : FiArrowLeft}
-                    label={
-                      sidebarCollapsed
-                        ? "Descolapsar barra lateral"
-                        : "Colapsar barra lateral"
-                    }
-                    onClick={() =>
-                      setSidebarCollapsed((prev) => {
-                        setCookie(null, "sidebarCollapsed", (!prev).toString());
+                <SidebarNavBtn
+                  smaller
+                  icon={sidebarCollapsed ? FiArrowRight : FiArrowLeft}
+                  label={
+                    sidebarCollapsed
+                      ? "Descolapsar barra lateral"
+                      : "Colapsar barra lateral"
+                  }
+                  onClick={() =>
+                    setSidebarCollapsed((prev) => {
+                      setCookie(null, "sidebarCollapsed", (!prev).toString());
 
-                        return !prev;
-                      })
-                    }
-                  />
-                </CollapseSidebarButtonContainer>
+                      return !prev;
+                    })
+                  }
+                />
               </SideMenuSection>
             </SideSection>
 
@@ -351,17 +341,18 @@ const MainPageLayout = ({
                 {loading || noContent ? (
                   <FullHeightContainer>
                     {loading ? (
-                      <>
+                      <Flex direction="column" gap="sm" align="center">
                         <Image
-                          src={loadingImg as string}
+                          src="/images/loading_gears_n_500.svg"
                           alt="loading_img"
                           width={48}
+                          height={48}
                         />
 
                         <LoadingTitle>
                           {loadingText || "Carregando"}
                         </LoadingTitle>
-                      </>
+                      </Flex>
                     ) : (
                       <>{noContent && <strong>{noContentText}</strong>}</>
                     )}

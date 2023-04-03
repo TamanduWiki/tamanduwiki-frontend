@@ -6,8 +6,6 @@ import { Router } from "next/router";
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 
-import loadingImg from "@/assets/animated/loading_balls_black.svg";
-
 import Flex from "@/components/common/Flex";
 
 import { AuthProvider } from "@/contexts/auth/AuthProvider";
@@ -53,12 +51,12 @@ function App({ Component, pageProps }: AppProps) {
             justify="center"
             style={{ height: "100vh", width: "100vw" }}
           >
-            <Flex
-              bgColor="neutral_100"
-              style={{ padding: `0 ${theme.spacing.sm}` }}
-            >
-              <Image src={loadingImg as string} alt="loading_img" width={64} />
-            </Flex>
+            <Image
+              src="/images/loading_gears.svg"
+              alt="loading_img"
+              width={48}
+              height={48}
+            />
           </Flex>
         ) : (
           <Component {...pageProps} />

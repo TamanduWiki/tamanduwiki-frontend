@@ -5,7 +5,7 @@ export const PasswordRuleContainer = styled.div<{ obeyed: boolean }>`
   align-items: center;
   gap: ${({ theme }) => theme.spacing.xs};
   color: ${({ theme, obeyed }) =>
-    obeyed ? theme.colors.success : theme.colors.neutral_500};
+    obeyed ? theme.colors.success : theme.colors.neutral_100};
 
   p {
     line-height: 1.5;

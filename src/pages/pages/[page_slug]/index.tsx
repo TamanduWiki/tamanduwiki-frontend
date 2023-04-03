@@ -22,7 +22,6 @@ import {
 import { AuthContext } from "@/contexts/auth/authContext";
 
 import { handleError } from "@/utils";
-import Tooltip from "@/components/common/Tooltip";
 
 interface IPage {
   id: string;
@@ -82,16 +81,14 @@ const PageViewPage = () => {
 
         <Flex direction="column" width="fit-parent" gap="md">
           <Flex width="fit-parent" align="flex-start" justify="space-between">
-            <PageTitle noContainer>{page?.title}</PageTitle>
+            <PageTitle>{page?.title}</PageTitle>
 
             {logged && (
-              <Tooltip content="Editar página" placement="left">
-                <IconButton
-                  icon={FiEdit3}
-                  variant="secondary"
-                  onClick={() => push(`/pages/${page?.slug}/edit`)}
-                />
-              </Tooltip>
+              <IconButton
+                icon={FiEdit3}
+                variant="secondary"
+                onClick={() => push(`/pages/${page?.slug}/edit`)}
+              />
             )}
           </Flex>
 

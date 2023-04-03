@@ -11,8 +11,9 @@ const PageUnderDevelopment = () => {
       align="center"
       justify="center"
       direction="column"
+      gap="md"
     >
-      <h2>Página em construção...</h2>
+      <h2 style={{ textAlign: "center" }}>Página em construção...</h2>
 
       <BuildingBlocksImg
         src={undrawnBuildingImages as string}

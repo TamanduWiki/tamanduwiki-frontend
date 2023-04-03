@@ -14,6 +14,7 @@ import { handleError } from "@/utils";
 
 import { StyledForm } from "./LoginForm.styles";
 import { schema } from "./LoginForm.validations";
+import Flex from "@/components/common/Flex";
 
 interface Values {
   email: string;
@@ -53,37 +54,41 @@ const LoginForm = ({ destinationAfterLogin }: Props) => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={onSubmit}
-      validationSchema={schema}
-    >
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({ isSubmitting }) => (
         <StyledForm>
-          <Input
-            fluid
-            name="email"
-            label="E-mail"
-            placeholder="Ex.: exemplo@aluno.ufabc.edu.br"
-            formikField
-          />
+          <Flex direction="column" gap="md">
+            <Input
+              fluid
+              name="email"
+              label="E-mail"
+              placeholder="Ex.: exemplo@aluno.ufabc..."
+              formikField
+            />
 
-          <Input
-            fluid
-            name="password"
-            label="Senha"
-            placeholder="Ex.: bvsdug0234$%"
-            formikField
-          />
+            <Input
+              fluid
+              name="password"
+              label="Senha"
+              placeholder="Ex.: bvsdug0234$%"
+              formikField
+            />
+          </Flex>
 
-          <Button
-            fluid
-            type="submit"
-            disabled={isSubmitting}
-            loading={isSubmitting}
-          >
-            Fazer Login
-          </Button>
+          <Flex direction="column" gap="md">
+            <Button
+              fluid
+              type="submit"
+              disabled={isSubmitting}
+              loading={isSubmitting}
+            >
+              Entrar
+            </Button>
+
+            <Button variant="secondary" fluid type="button" href="/signup">
+              Cadastro
+            </Button>
+          </Flex>
         </StyledForm>
       )}
     </Formik>

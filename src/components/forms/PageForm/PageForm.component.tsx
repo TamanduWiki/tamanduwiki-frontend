@@ -143,7 +143,9 @@ const PageForm = ({ currentPage }: Props) => {
 
   useEffect(() => {
     if (!!currentPage?.imageUrl) {
-      setImagePreviewUrl(`${currentPage?.imageUrl}?lastmod=${currentPage?.updatedAt}`);
+      setImagePreviewUrl(
+        `${currentPage?.imageUrl}?lastmod=${currentPage?.updatedAt}`
+      );
     }
   }, [currentPage]);
 
@@ -240,7 +242,6 @@ const PageForm = ({ currentPage }: Props) => {
           <Button
             type="button"
             variant="secondary"
-            size="md"
             onClick={() => setPreviewMd((prev) => !prev)}
           >
             {previewMd ? "Fechar preview" : "Preview markdown"}

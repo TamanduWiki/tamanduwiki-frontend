@@ -2,8 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
 
-import logoImg from "@/assets/images/logo.svg";
-
 import LinkButton from "@/components/common/LinkButton";
 
 import {
@@ -16,9 +14,15 @@ interface Props {
   children: React.ReactNode;
   bottomLink: { label: string; href: string };
   pageHead: string;
+  contentSize?: "sm" | "md";
 }
 
-const SimplePageLayout = ({ children, bottomLink, pageHead }: Props) => {
+const SimplePageLayout = ({
+  children,
+  bottomLink,
+  pageHead,
+  contentSize = "sm",
+}: Props) => {
   return (
     <>
       <Head>
@@ -28,10 +32,17 @@ const SimplePageLayout = ({ children, bottomLink, pageHead }: Props) => {
       <PageContainer>
         <Content>
           <Link href="/">
-            <Image src={logoImg as string} alt="logo" />
+            <Image
+              src="/images/ufabcwiki_logotipo_fullwhite.svg"
+              alt="logo"
+              width={180}
+              height={32}
+            />
           </Link>
 
-          <MainAreaContent>{children}</MainAreaContent>
+          <MainAreaContent contentSize={contentSize}>
+            {children}
+          </MainAreaContent>
 
           <LinkButton variant="secondary" href={bottomLink.href}>
             {bottomLink.label}

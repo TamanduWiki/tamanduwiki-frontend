@@ -8,11 +8,11 @@ export const ListContainer = styled.div`
 
   gap: ${({ theme }) => theme.spacing.md};
 
-  @media (max-width: 1140px) {
+  @media (max-width: 1198px) {
     padding-bottom: 0;
   }
 
-  @media (max-width: 540px) {
+  @media (max-width: 538px) {
     padding: 0;
   }
 `;
@@ -23,8 +23,8 @@ export const BottomComponentContainer = styled.div`
   justify-content: center;
   flex-direction: column;
 
-  color: ${({ theme }) => theme.colors.neutral_400};
-  background-color: ${({ theme }) => theme.colors.neutral_100};
+  color: ${({ theme }) => theme.colors.neutral_300};
+  background-color: ${({ theme }) => theme.colors.neutral_500};
 
   gap: ${({ theme }) => theme.spacing.md};
   padding: ${({ theme }) => theme.spacing.md};

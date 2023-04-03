@@ -8,7 +8,7 @@ export const StyledForm = styled(Form)`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.lg};
 
-  @media (max-width: 540px) {
+  @media (max-width: 538px) {
     gap: ${({ theme }) => theme.spacing.md};
   }
 `;
@@ -22,7 +22,7 @@ export const EditContentContainer = styled.div<{ previewActive: boolean }>`
     previewActive ? "textarea preview" : "textarea"};
   gap: ${({ theme }) => theme.spacing.md};
 
-  @media (max-width: 760px) {
+  @media (max-width: 538px) {
     grid-template-columns: 1fr;
     grid-template-rows: ${({ previewActive }) =>
       previewActive ? "1fr 1fr" : "1fr"};
@@ -84,7 +84,7 @@ export const ImageContainer = styled.div<{ url: string }>`
   background-position: 50% 50%;
   background-image: ${({ url }) => `url(${url})`};
 
-  @media (max-width: 760px) {
+  @media (max-width: 538px) {
     width: 100%;
   }
 `;

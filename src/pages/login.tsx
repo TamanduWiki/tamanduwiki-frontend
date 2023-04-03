@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import LinkButton from "@/components/common/LinkButton";
 import SimplePageLayout from "@/components/layouts/SimplePageLayout";
 import LoginForm from "@/components/forms/LoginForm";
+import Button from "@/components/common/Button";
 
 interface Props {
   destinationAfterLogin?: string;
@@ -25,12 +26,11 @@ const LoginPage = ({ destinationAfterLogin }: Props) => {
       pageHead="Login - UFABCwiki"
       bottomLink={{ href: "/privacy", label: "Política de Privacidade" }}
     >
+      <h3>Realizar login</h3>
+
       <LoginForm destinationAfterLogin={destinationAfterLogin} />
 
-      <p>
-        Ainda não tem conta?{" "}
-        <LinkButton href="/signup">Fazer o cadastro</LinkButton>
-      </p>
+      <LinkButton href="/forgot-password">Esqueci minha senha</LinkButton>
     </SimplePageLayout>
   );
 };

@@ -1,6 +1,5 @@
 import { css } from "@emotion/react";
 
-import booksBackgroundImg from "@/assets/images/books_background.png";
 import { theme } from "./theme";
 
 export const globalStyles = css`
@@ -14,10 +13,8 @@ export const globalStyles = css`
     width: inherit;
     font: 400 1rem WorkSans, sans-serif;
     -webkit-font-smoothing: antialiased;
-    color: ${theme.colors.neutral_700};
-    background-color: ${theme.colors.neutral_200}; // Design System Exception
-
-    /* background-image: url(${booksBackgroundImg.src}); */
+    color: ${theme.colors.neutral_50};
+    background-color: ${theme.colors.neutral_700};
   }
 
   input,

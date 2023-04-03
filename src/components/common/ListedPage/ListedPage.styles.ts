@@ -10,15 +10,18 @@ export const PageContainer = styled.div`
   height: 160px;
   min-height: 160px;
 
-  background-color: ${({ theme }) => theme.colors.neutral_100};
+  background-color: ${({ theme }) => theme.colors.neutral_400};
 
-  @media (max-width: 540px) {
+  @media (max-width: 538px) {
     height: 100%;
     flex-direction: column;
   }
 `;
 
-export const ImageContainer = styled.div<{ imageUrl: string, pageUpdatedAt: string }>`
+export const ImageContainer = styled.div<{
+  imageUrl: string;
+  pageUpdatedAt: string;
+}>`
   border-radius: 1px; // (???) necessary for smoother image
 
   height: 100%;
@@ -27,12 +30,15 @@ export const ImageContainer = styled.div<{ imageUrl: string, pageUpdatedAt: stri
 
   background-size: cover;
   background-position: 50% 50%;
-  background-image: ${({ imageUrl, pageUpdatedAt }) => `url(${imageUrl}?lastmod=${pageUpdatedAt})`};
+  background-image: ${({ imageUrl, pageUpdatedAt }) =>
+    `url(${imageUrl}?lastmod=${pageUpdatedAt})`};
 
-  @media (max-width: 540px) {
+  @media (max-width: 538px) {
     width: 100%;
     height: 160px;
   }
+
+  box-shadow: inset 0 0 10px 1px ${({ theme }) => theme.colors.neutral_600};
 `;
 
 export const PageDescription = styled.p`

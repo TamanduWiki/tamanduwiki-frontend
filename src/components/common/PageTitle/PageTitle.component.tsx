@@ -1,26 +1,11 @@
-import { PageTitleContainer, PageTitleHeader } from "./PageTitle.styles";
+import { PageTitleHeader } from "./PageTitle.styles";
 
 interface Props {
-  noContainer?: boolean;
   children: React.ReactNode;
 }
 
-const PageTitle = ({ noContainer, children }: Props) => {
-  if (noContainer) {
-    return (
-      <PageTitleHeader>
-        {children}
-      </PageTitleHeader>
-    )
-  }
-
-  return (
-    <PageTitleContainer>
-      <PageTitleHeader>
-        {children}
-      </PageTitleHeader>
-    </PageTitleContainer>
-  )
-}
+const PageTitle = ({ children }: Props) => {
+  return <PageTitleHeader>{children}</PageTitleHeader>;
+};
 
 export default PageTitle;

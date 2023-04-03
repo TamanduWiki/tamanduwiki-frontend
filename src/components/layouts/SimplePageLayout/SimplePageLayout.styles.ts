@@ -14,28 +14,23 @@ export const Content = styled.div`
   justify-content: center;
   height: 100%;
   width: 1140px;
-  padding: ${({ theme }) => theme.spacing["3xl"]};
-  gap: ${({ theme }) => theme.spacing["3xl"]};
-
-  @media (max-width: 540px) {
-    padding: ${({ theme }) => `${theme.spacing["3xl"]} ${theme.spacing.xs}`};
-    justify-content: space-around;
-  }
+  padding: ${({ theme }) => `${theme.spacing["xl"]} ${theme.spacing["xs"]}`};
+  gap: ${({ theme }) => theme.spacing["5xl"]};
 `;
 
-export const MainAreaContent = styled.div`
+export const MainAreaContent = styled.div<{ contentSize: "sm" | "md" }>`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 560px;
+  width: ${({ contentSize }) => (contentSize === "md" ? "520px" : "304px")};
 
-  gap: ${({ theme }) => theme.spacing.xl};
+  gap: ${({ theme }) => theme.spacing["3xl"]};
   padding: ${({ theme }) => theme.spacing.xl};
 
-  background-color: ${({ theme }) => theme.colors.neutral_100};
+  background-color: ${({ theme }) => theme.colors.neutral_400};
 
-  @media (max-width: 540px) {
+  @media (max-width: 538px) {
     width: 100%;
 
     padding: ${({ theme }) => `${theme.spacing.lg} ${theme.spacing.md}`};

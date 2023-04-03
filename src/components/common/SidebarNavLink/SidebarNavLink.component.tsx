@@ -1,11 +1,9 @@
 import { useRouter } from "next/router";
 import { IconType } from "react-icons";
-// import { Tooltip } from "react-tooltip";
 
 import IconButton from "@/components/common/IconButton";
 
 import { Container, StyledLink } from "./SidebarNavLink.styles";
-import Tooltip from "../Tooltip";
 
 interface SidebarNavLinkProps {
   href: string;
@@ -26,14 +24,12 @@ const SidebarNavLink = ({
     return (
       <StyledLink href={href} selected={pathname === href}>
         <Container smaller={smaller}>
-          <Tooltip content={label} placement="right">
-            <IconButton
-              size="sm"
-              icon={Icon}
-              variant="secondary"
-              onClick={() => {}}
-            />
-          </Tooltip>
+          <IconButton
+            size="sm"
+            icon={Icon}
+            variant="secondary"
+            onClick={() => {}}
+          />
         </Container>
       </StyledLink>
     );

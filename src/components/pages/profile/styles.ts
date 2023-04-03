@@ -1,16 +1,15 @@
 import styled from "@emotion/styled";
 
 import fakeProfilePicture from "@/assets/images/blankProfile.jpg";
-import booksBackgroundImg from "@/assets/images/books_background.png";
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.colors.neutral_100};
+  background-color: ${({ theme }) => theme.colors.neutral_500};
   position: relative;
   gap: ${({ theme }) => theme.spacing.md};
   // prettier-ignore
-  padding: ${({ theme }) => theme.spacing.xxl} ${({ theme }) =>
+  padding: ${({ theme }) => theme.spacing["2xl"]} ${({ theme }) =>
     theme.spacing.sm} ${({ theme }) => theme.spacing.lg} ${({ theme }) =>
     theme.spacing.sm};
 `;
@@ -28,7 +27,7 @@ export const PicContainer = styled.div`
   width: 172px;
   height: 172px;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.neutral_100};
+  background-color: ${({ theme }) => theme.colors.neutral_500};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,7 +42,6 @@ export const PicContainer = styled.div`
 
 export const Banner = styled.div`
   height: 128px;
-  background-image: url(${booksBackgroundImg.src});
   border-top: 2px solid #dedede;
   border-left: 2px solid #dedede;
   border-right: 2px solid #dedede;

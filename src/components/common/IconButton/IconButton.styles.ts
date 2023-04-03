@@ -16,7 +16,9 @@ const variantStyles = {
     color: ${theme.colors.neutral_100};
   `,
   secondary: css`
-    background: ${theme.colors.neutral_200};
+    background: transparent;
+    border: 1px solid ${theme.colors.neutral_300};
+    color: ${theme.colors.neutral_200};
   `,
   warning: css`
     background: ${theme.colors.error};
