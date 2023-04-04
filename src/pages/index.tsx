@@ -59,7 +59,7 @@ const HomePage = () => {
     () =>
       searchingFor !== ""
         ? `Resultados para "${searchingFor}"`
-        : "Últimas alterações",
+        : "Todas as páginas",
     [searchingFor]
   );
 
