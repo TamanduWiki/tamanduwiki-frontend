@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 import LinkButton from "@/components/common/LinkButton";
 import SimplePageLayout from "@/components/layouts/SimplePageLayout";
 import LoginForm from "@/components/forms/LoginForm";
-import Button from "@/components/common/Button";
+import { FiInfo } from "react-icons/fi";
+import { theme } from "@/styles/theme";
 
 interface Props {
   destinationAfterLogin?: string;
@@ -16,7 +17,8 @@ const LoginPage = ({ destinationAfterLogin }: Props) => {
   useEffect(() => {
     if (destinationAfterLogin) {
       toast.info(
-        "Parece que seu login expirou ou você ainda não fez login. Por favor, realize o login (novamente se for o caso) para acessar a página anterior."
+        "Parece que seu login expirou ou você ainda não fez login. Por favor, realize o login (novamente se for o caso) para acessar a página anterior.",
+        { icon: <FiInfo size={24} color={theme.colors.info} /> }
       );
     }
   }, []);
@@ -24,7 +26,10 @@ const LoginPage = ({ destinationAfterLogin }: Props) => {
   return (
     <SimplePageLayout
       pageHead="Login - UFABCwiki"
-      bottomLink={{ href: "/privacy", label: "Política de Privacidade" }}
+      bottomLinks={[
+        { href: "/privacy", label: "Política de Privacidade" },
+        { href: "/terms", label: "Termos de uso" },
+      ]}
     >
       <h3>Realizar login</h3>
 

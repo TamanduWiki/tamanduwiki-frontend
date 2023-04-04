@@ -26,6 +26,8 @@ import {
   StyledForm,
 } from "./PageForm.styles";
 import { schema } from "./PageForm.validations";
+import { FiCheckCircle } from "react-icons/fi";
+import { theme } from "@/styles/theme";
 
 interface Values {
   title: string;
@@ -92,7 +94,9 @@ const PageForm = ({ currentPage }: Props) => {
           imageFileType: imageBase64 ? "png" : undefined, // TODO rever isso (só png)
         });
 
-        toast.success("Página editada com sucesso");
+        toast.success("Página editada com sucesso", {
+          icon: <FiCheckCircle size={24} color={theme.colors.green_400} />,
+        });
 
         await router.push(`/pages/${currentPage?.slug}`);
       } else {
@@ -102,7 +106,9 @@ const PageForm = ({ currentPage }: Props) => {
           imageFileType: "png", // TODO rever isso
         });
 
-        toast.success("Página criada com sucesso");
+        toast.success("Página criada com sucesso", {
+          icon: <FiCheckCircle size={24} color={theme.colors.green_400} />,
+        });
 
         await router.push(`/pages/${data.slug}`);
       }

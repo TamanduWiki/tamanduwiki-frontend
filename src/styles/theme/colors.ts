@@ -31,7 +31,7 @@ export const colors: ThemeColors = {
   error: "#EB0A68",
   warning: "#BE9400",
   success: "#5AC229", // todo ??
-  info: "#295AC2",
+  info: "#3581cc",
   primary15p: "#5AC22915",
 
   neutral_50: "#FFFFFF",

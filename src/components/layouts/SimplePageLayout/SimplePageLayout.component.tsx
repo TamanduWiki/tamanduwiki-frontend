@@ -3,6 +3,7 @@ import Link from "next/link";
 import Head from "next/head";
 
 import LinkButton from "@/components/common/LinkButton";
+import Flex from "@/components/common/Flex";
 
 import {
   Content,
@@ -12,14 +13,14 @@ import {
 
 interface Props {
   children: React.ReactNode;
-  bottomLink: { label: string; href: string };
+  bottomLinks: { label: string; href: string }[];
   pageHead: string;
   contentSize?: "sm" | "md";
 }
 
 const SimplePageLayout = ({
   children,
-  bottomLink,
+  bottomLinks,
   pageHead,
   contentSize = "sm",
 }: Props) => {
@@ -44,9 +45,13 @@ const SimplePageLayout = ({
             {children}
           </MainAreaContent>
 
-          <LinkButton variant="secondary" href={bottomLink.href}>
-            {bottomLink.label}
-          </LinkButton>
+          <Flex direction="column" gap="xs" align="center">
+            {bottomLinks.map((link) => (
+              <LinkButton variant="secondary" href={link.href}>
+                {link.label}
+              </LinkButton>
+            ))}
+          </Flex>
         </Content>
       </PageContainer>
     </>

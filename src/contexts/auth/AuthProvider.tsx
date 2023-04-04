@@ -1,6 +1,8 @@
+import { theme } from "@/styles/theme";
 import { useRouter } from "next/router";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { useEffect, useState } from "react";
+import { FiCheckCircle } from "react-icons/fi";
 import { toast } from "react-toastify";
 
 import { AuthContext } from "./authContext";
@@ -22,7 +24,9 @@ export const AuthProvider = ({ children }: Props) => {
   const handleLogout = () => {
     destroyCookie(null, "jwtToken");
 
-    toast.success("Logout realizado com sucesso!");
+    toast.success("Logout realizado com sucesso!", {
+      icon: <FiCheckCircle size={24} color={theme.colors.green_400} />,
+    });
 
     setLogged(false);
 

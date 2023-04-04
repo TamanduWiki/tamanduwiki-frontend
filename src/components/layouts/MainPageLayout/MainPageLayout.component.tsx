@@ -190,9 +190,11 @@ const MainSubmenu = ({
             />
           </SubmenuInputContainer>
 
-          <Button variant="secondary" fluid>
+          {/* Not implemented yet */}
+
+          {/* <Button variant="secondary" fluid>
             Selecionar filtros
-          </Button>
+          </Button> */}
         </Flex>
 
         <Flex direction="column" gap="md" padding="md">
@@ -283,11 +285,13 @@ const MainPageLayout = ({
               />
             </HeaderInputContainer>
 
-            <HeaderFiltersContainer>
+            {/* Not implemented yet */}
+
+            {/* <HeaderFiltersContainer>
               <Button variant="secondary" fluid>
                 Selecionar filtros
               </Button>
-            </HeaderFiltersContainer>
+            </HeaderFiltersContainer> */}
 
             <HamburguerMenuContainer style={{ gridArea: "menu" }}>
               <IconButton

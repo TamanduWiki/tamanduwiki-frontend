@@ -1,5 +1,4 @@
 import Flex from "@/components/common/Flex";
-import LinkButton from "@/components/common/LinkButton";
 import SimplePageLayout from "@/components/layouts/SimplePageLayout";
 import SignupForm from "@/components/forms/SignupForm";
 import { theme } from "@/styles/theme";
@@ -9,7 +8,10 @@ const SignupPage = () => {
     <SimplePageLayout
       contentSize="md"
       pageHead="Cadastro - UFABCwiki"
-      bottomLink={{ href: "/privacy", label: "Política de Privacidade" }}
+      bottomLinks={[
+        { href: "/privacy", label: "Política de Privacidade" },
+        { href: "/terms", label: "Termos de uso" },
+      ]}
     >
       <Flex
         align="center"

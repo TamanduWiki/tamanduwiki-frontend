@@ -15,6 +15,8 @@ import { handleError } from "@/utils";
 import { StyledForm } from "./LoginForm.styles";
 import { schema } from "./LoginForm.validations";
 import Flex from "@/components/common/Flex";
+import { FiCheckCircle } from "react-icons/fi";
+import { theme } from "@/styles/theme";
 
 interface Values {
   email: string;
@@ -43,7 +45,9 @@ const LoginForm = ({ destinationAfterLogin }: Props) => {
 
       handleLogin({ token });
 
-      toast.success("Login realizado com sucesso");
+      toast.success("Login realizado com sucesso", {
+        icon: <FiCheckCircle size={24} color={theme.colors.green_400} />,
+      });
 
       await router.push(destinationAfterLogin || "/");
     } catch (error) {

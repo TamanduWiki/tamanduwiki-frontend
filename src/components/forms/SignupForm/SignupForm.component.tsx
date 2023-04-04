@@ -17,6 +17,8 @@ import {
 } from "./SignupForm.styles";
 import { schema } from "./SignupForm.validations";
 import Flex from "@/components/common/Flex";
+import { FiCheckCircle } from "react-icons/fi";
+import { theme } from "@/styles/theme";
 
 interface Values {
   email: string;
@@ -43,7 +45,8 @@ const SignupForm = () => {
       await apiSignup({ ...values, universityTie: "student" });
 
       toast.success(
-        "Usuário criado com sucesso, por favor verifique seu e-mail para confirmar a conta."
+        "Usuário criado com sucesso, por favor verifique seu e-mail para confirmar a conta.",
+        { icon: <FiCheckCircle size={24} color={theme.colors.green_400} /> }
       );
 
       await router.push("/login");

@@ -13,8 +13,8 @@ import { AuthProvider } from "@/contexts/auth/AuthProvider";
 import { globalStyles } from "@/styles";
 import { theme } from "@/styles/theme";
 import "@/styles/fonts.css";
-import "@/styles/root-css.css";
 import "react-toastify/dist/ReactToastify.css";
+import "@/styles/override_toastify_styles.css";
 
 function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -43,7 +43,7 @@ function App({ Component, pageProps }: AppProps) {
 
         <Global styles={globalStyles} />
 
-        <ToastContainer />
+        <ToastContainer theme="dark" />
 
         {loading ? (
           <Flex
