@@ -6,35 +6,29 @@ import IconButton from "@/components/common/IconButton";
 interface Props {
   onClick: () => void;
   icon: IconType;
-  label: string;
+  label?: string;
   smaller: boolean;
 }
 
 const SidebarNavBtn = ({ onClick, icon: Icon, label, smaller }: Props) => {
-  if (smaller) {
-    return (
-      <IconButton
-        size="sm"
-        icon={Icon}
-        variant="secondary"
-        onClick={() => {
-          onClick();
-        }}
-      />
-    );
-  }
-
   return (
     <Flex
       color="neutral_200"
       align="center"
-      padding="xs"
-      gap="xs"
       width="fit-parent"
       style={{ cursor: "pointer" }}
       onClick={onClick}
     >
-      <Icon size={24} /> {label}
+      <IconButton size="md" icon={Icon} variant="tertiary" />
+
+      <div
+        style={{
+          visibility: smaller ? "hidden" : "visible",
+          width: "100%",
+        }}
+      >
+        {label}
+      </div>
     </Flex>
   );
 };

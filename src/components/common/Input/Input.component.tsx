@@ -3,7 +3,6 @@ import { InputHTMLAttributes } from "react";
 import {
   ErrorMsg,
   InputContainer,
-  LabelContainer,
   StyledInput,
   StyledLabel,
 } from "./Input.styles";
@@ -37,11 +36,7 @@ const Input = ({
     <Field name={name}>
       {({ meta, field }: FieldProps) => (
         <InputContainer fluid={fluid}>
-          <LabelContainer>
-            {label && <StyledLabel htmlFor="name">{label}</StyledLabel>}
-
-            {meta.touched && !!meta.error && <ErrorMsg>{meta.error}</ErrorMsg>}
-          </LabelContainer>
+          {label && <StyledLabel htmlFor="name">{label}</StyledLabel>}
 
           <StyledInput
             name={name}
@@ -50,6 +45,8 @@ const Input = ({
             {...rest}
             {...field}
           />
+
+          {meta.touched && !!meta.error && <ErrorMsg>{meta.error}</ErrorMsg>}
         </InputContainer>
       )}
     </Field>

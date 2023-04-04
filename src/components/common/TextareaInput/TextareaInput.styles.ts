@@ -26,15 +26,6 @@ export const ErrorMsg = styled.span`
   white-space: nowrap;
 `;
 
-export const LabelContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing.xxs};
-  width: 100%;
-  flex-wrap: wrap;
-`;
-
 export const StyledTextarea = styled.textarea<{ errored?: boolean }>`
   padding: ${({ theme }) => theme.spacing.xs};
 

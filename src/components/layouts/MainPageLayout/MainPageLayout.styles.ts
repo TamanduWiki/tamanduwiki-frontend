@@ -41,13 +41,16 @@ export const MainHeaderContainer = styled.div`
 
 export const MainHeader = styled.div`
   width: 1140px;
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing.xl};
+
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 248px 602px 16px 274px;
+  grid-template-areas: "logo input gap filter";
 
   @media (max-width: 1198px) {
-    padding-right: ${({ theme }) => theme.spacing.xs};
+    grid-template-columns: calc(100% - 56px) 56px;
+    grid-template-areas: "logo menu";
   }
 
   @media (max-width: 538px) {
@@ -89,7 +92,7 @@ export const Content = styled.div<{ sidebarCollapsed: boolean }>`
 `;
 
 export const SideSection = styled.div<{ collapsed: boolean }>`
-  min-width: ${({ collapsed }) =>
+  width: ${({ collapsed }) =>
     collapsed ? SIDE_SECTION_COLLAPSED_WIDTH : SIDE_SECTION_WIDTH};
   display: flex;
   flex-direction: column;
@@ -98,11 +101,6 @@ export const SideSection = styled.div<{ collapsed: boolean }>`
 
   background-color: ${({ theme }) => theme.colors.neutral_400};
 
-  > div {
-    display: flex;
-    flex-direction: column;
-    gap: ${({ theme }) => theme.spacing.md};
-  }
   @media (max-width: 1198px) {
     display: none;
   }
@@ -131,6 +129,14 @@ export const MainSection = styled.div<{ sidebarCollapsed: boolean }>`
 
   @media (max-width: 1198px) {
     width: 100%;
+    margin: 0 ${({ theme }) => theme.spacing.lg};
+  }
+
+  @media (max-width: 538px) {
+    width: 100%;
+    margin: 0 ${({ theme }) => theme.spacing.xs};
+    padding: ${({ theme }) => theme.spacing.xs}
+      ${({ theme }) => theme.spacing.xs} 0 ${({ theme }) => theme.spacing.xs};
   }
 `;
 
@@ -146,8 +152,18 @@ export const HeaderButtonsContainer = styled.div`
 export const HeaderInputContainer = styled.div`
   width: 100%;
   display: flex;
+  grid-area: input;
 
-  @media (max-width: 538px) {
+  @media (max-width: 1198px) {
+    display: none;
+  }
+`;
+
+export const HeaderFiltersContainer = styled.div`
+  width: 100%;
+  grid-area: filter;
+
+  @media (max-width: 1198px) {
     display: none;
   }
 `;
@@ -155,9 +171,8 @@ export const HeaderInputContainer = styled.div`
 export const SubmenuInputContainer = styled.div`
   width: 100%;
   display: none;
-  padding: ${({ theme }) => theme.spacing.md};
 
-  @media (max-width: 538px) {
+  @media (max-width: 1198px) {
     display: flex;
   }
 `;
@@ -165,8 +180,8 @@ export const SubmenuInputContainer = styled.div`
 export const SideMenuSection = styled.div<{ collapsed: boolean }>`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: ${({ collapsed }) => (collapsed ? "min-content" : "100%")};
+  align-items: flex-end;
+  width: 100%;
 
   padding: ${({ theme, collapsed }) => theme.spacing[collapsed ? "xs" : "md"]};
   gap: ${({ theme, collapsed }) => theme.spacing[collapsed ? "xs" : "md"]};
@@ -208,9 +223,10 @@ export const SubmenuContainer = styled.div<{ collapsed: boolean }>`
   z-index: 100;
   background-color: ${({ theme }) => theme.colors.neutral_400};
   overflow-y: auto;
-  width: ${({ collapsed }) => (collapsed ? "0px" : "280px")};
+  width: ${({ collapsed }) => (collapsed ? "0px" : "264px")};
   transition: width 0.3s ease-in-out;
   white-space: nowrap;
+  overflow: hidden;
 
   @media (min-width: 1200px) {
     display: none;

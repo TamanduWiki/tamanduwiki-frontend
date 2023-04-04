@@ -143,7 +143,7 @@ const HomePage = () => {
               disabled={loadMorePagesLoading}
               onClick={() => handleLoadMorePages(pagesMeta.page + 1)}
             >
-              Carregar mais páginas...
+              Carregar mais...
             </Button>
           )}
 

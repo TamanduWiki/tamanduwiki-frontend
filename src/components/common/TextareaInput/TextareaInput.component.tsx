@@ -3,7 +3,6 @@ import { TextareaHTMLAttributes } from "react";
 import {
   ErrorMsg,
   InputContainer,
-  LabelContainer,
   StyledTextarea,
   StyledLabel,
 } from "./TextareaInput.styles";
@@ -37,11 +36,7 @@ const Input = ({
     <Field name={name}>
       {({ meta, field }: FieldProps) => (
         <InputContainer fluid={fluid}>
-          <LabelContainer>
-            {label && <StyledLabel htmlFor="name">{label}</StyledLabel>}
-
-            {meta.touched && !!meta.error && <ErrorMsg>{meta.error}</ErrorMsg>}
-          </LabelContainer>
+          {label && <StyledLabel htmlFor="name">{label}</StyledLabel>}
 
           <StyledTextarea
             rows={15}
@@ -51,6 +46,8 @@ const Input = ({
             {...rest}
             {...field}
           />
+
+          {meta.touched && !!meta.error && <ErrorMsg>{meta.error}</ErrorMsg>}
         </InputContainer>
       )}
     </Field>

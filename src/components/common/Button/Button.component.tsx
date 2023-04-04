@@ -1,7 +1,6 @@
 import { ButtonHTMLAttributes } from "react";
 
 import loadingWhiteImg from "@/assets/animated/loading_balls_white.svg";
-import loadingBlackImg from "@/assets/animated/loading_balls_black.svg";
 
 import { ButtonVariant, SpinnerImg, StyledButton } from "./Button.styles";
 
@@ -14,11 +13,6 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
 }
 
-const spinnerImgSrc: { [key in ButtonVariant]: string } = {
-  primary: loadingWhiteImg as string,
-  secondary: loadingBlackImg as string,
-};
-
 const Button = ({
   children,
   variant = "primary",
@@ -30,11 +24,7 @@ const Button = ({
   const button = (
     <StyledButton variant={variant} fluid={fluid} {...rest}>
       {!!loading && (
-        <SpinnerImg
-          height={48}
-          alt="button_loading"
-          src={spinnerImgSrc[variant]}
-        />
+        <SpinnerImg height={40} alt="button_loading" src={loadingWhiteImg} />
       )}
 
       {!loading && <>{children}</>}

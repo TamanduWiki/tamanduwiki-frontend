@@ -20,25 +20,22 @@ const SidebarNavLink = ({
 }: SidebarNavLinkProps) => {
   const { pathname } = useRouter();
 
-  if (smaller) {
-    return (
-      <StyledLink href={href} selected={pathname === href}>
-        <Container smaller={smaller}>
-          <IconButton
-            size="sm"
-            icon={Icon}
-            variant="secondary"
-            onClick={() => {}}
-          />
-        </Container>
-      </StyledLink>
-    );
-  }
-
   return (
     <StyledLink href={href} selected={pathname === href}>
       <Container smaller={smaller}>
-        <Icon size={24} style={{ flexShrink: "0" }} /> {label}
+        <IconButton
+          size="md"
+          icon={Icon}
+          variant="tertiary"
+          onClick={() => {}}
+        />{" "}
+        <div
+          style={{
+            visibility: smaller ? "hidden" : "visible",
+          }}
+        >
+          {label}
+        </div>
       </Container>
     </StyledLink>
   );

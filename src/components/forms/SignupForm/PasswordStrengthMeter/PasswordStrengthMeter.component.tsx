@@ -35,7 +35,7 @@ interface Props {
 
 const PasswordStrengthMeter = ({ password }: Props) => {
   return (
-    <Flex direction="column">
+    <Flex direction="column" gap="sm">
       <PasswordRule
         obeyed={containsLowercaseChar(password)}
         label="Contém pelo menos 1 letra minúscula"

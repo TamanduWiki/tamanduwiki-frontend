@@ -57,6 +57,7 @@ export const PreviewSectionContainer = styled.div`
 export const ButtonsContainer = styled.div`
   display: flex;
   gap: 16px;
+  height: 100%;
 `;
 
 export const ImageInputContainer = styled.div`

@@ -10,8 +10,8 @@ export const StyledForm = styled(Form)`
 
 export const NameInputsContainer = styled.div`
   display: flex;
-  width: 100%;
   gap: ${({ theme }) => theme.spacing.md};
+  width: 100%;
 
   @media (max-width: 538px) {
     flex-direction: column;
