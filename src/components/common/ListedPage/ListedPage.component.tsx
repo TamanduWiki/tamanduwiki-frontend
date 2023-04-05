@@ -3,8 +3,11 @@ import Badge from "@/components/common/Badge";
 
 import {
   ImageContainer,
+  ImageContainerContainer,
   PageContainer,
+  PageData,
   PageDescription,
+  PageTitle,
 } from "./ListedPage.styles";
 
 interface Props {
@@ -26,29 +29,23 @@ const ListedPage = ({
 }: Props) => {
   return (
     <PageContainer onClick={onClick}>
-      <ImageContainer imageUrl={imageUrl} pageUpdatedAt={pageLastUpdatedAt} />
+      <ImageContainerContainer>
+        <ImageContainer imageUrl={imageUrl} pageUpdatedAt={pageLastUpdatedAt} />
+      </ImageContainerContainer>
 
-      <Flex
-        gap="xs"
-        direction="column"
-        width="fit-parent"
-        height="fit-parent"
-        justify="space-between"
-        padding="md"
-        style={{ overflowY: "auto" }}
-      >
+      <PageData>
         <Flex direction="column" width="fit-parent" gap="xs">
-          <h3>{title}</h3>
+          <PageTitle>{title}</PageTitle>
 
           <PageDescription>{description}</PageDescription>
         </Flex>
 
-        <Flex width="fit-parent" gap="md" style={{ flexWrap: "wrap" }}>
+        <Flex width="fit-parent" gap="xs" style={{ flexWrap: "wrap" }}>
           {badges.map((badgeTitle) => (
             <Badge key={badgeTitle}>{badgeTitle}</Badge>
           ))}
         </Flex>
-      </Flex>
+      </PageData>
     </PageContainer>
   );
 };

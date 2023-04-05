@@ -5,9 +5,5 @@ export const StyledForm = styled(Form)`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.lg};
-
-  @media (max-width: 540px) {
-    gap: ${({ theme }) => theme.spacing.md};
-  }
+  gap: ${({ theme }) => theme.spacing["3xl"]};
 `;

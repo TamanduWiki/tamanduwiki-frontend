@@ -10,7 +10,7 @@ const BuildingBlocksImg = styled(Image)`
   width: 360px;
   height: 360px;
 
-  @media (max-width: 540px) {
+  @media (max-width: 538px) {
     width: 240px;
     height: 240px;
   }

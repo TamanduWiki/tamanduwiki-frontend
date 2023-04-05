@@ -1,10 +1,10 @@
 :root {
   --toastify-color-light: #ffffff;
-  --toastify-color-dark: #2f2f2f;
-  --toastify-color-info: #295ac2;
-  --toastify-color-success: #67cd37;
-  --toastify-color-warning: #ebb64c;
-  --toastify-color-error: #e04424;
+  --toastify-color-dark: #111219;
+  --toastify-color-info: #3581cc;
+  --toastify-color-success: #5ac229;
+  --toastify-color-warning: #be9400;
+  --toastify-color-error: #eb0a68;
   --toastify-color-transparent: rgba(255, 255, 255, 0.7);
 
   --toastify-icon-color-info: var(--toastify-color-info);
@@ -20,7 +20,7 @@
   --toastify-z-index: 9999;
 
   --toastify-text-color-light: #2f2f2f;
-  --toastify-text-color-dark: #ffffff;
+  --toastify-text-color-dark: #a4a5ac;
 
   /* //Used only for colored theme */
   --toastify-text-color-info: #ffffff;
@@ -49,4 +49,8 @@
   --toastify-color-progress-success: var(--toastify-color-success);
   --toastify-color-progress-warning: var(--toastify-color-warning);
   --toastify-color-progress-error: var(--toastify-color-error);
+}
+
+.Toastify__toast {
+  border: 1px solid #4b4e5c;
 }

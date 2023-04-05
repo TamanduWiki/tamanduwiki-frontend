@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useCallback, useContext, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { FiEdit3 } from "react-icons/fi";
+import { FiBookmark, FiCalendar, FiEdit, FiEdit3 } from "react-icons/fi";
 
 import { apiGetPage } from "@/api";
 
@@ -22,7 +22,7 @@ import {
 import { AuthContext } from "@/contexts/auth/authContext";
 
 import { handleError } from "@/utils";
-import Tooltip from "@/components/common/Tooltip";
+import { theme } from "@/styles/theme";
 
 interface IPage {
   id: string;
@@ -74,43 +74,74 @@ const PageViewPage = () => {
           <img
             src={`${page?.imageUrl}?lastmod=${page?.updatedAt}`}
             width="100%"
-            height={240}
+            height={244}
             alt="page-img"
             style={{ objectFit: "cover" }}
           />
         </ImageContainer>
 
-        <Flex direction="column" width="fit-parent" gap="md">
+        <Flex
+          direction="column"
+          width="fit-parent"
+          height="fit-parent"
+          gap="md"
+        >
           <Flex width="fit-parent" align="flex-start" justify="space-between">
-            <PageTitle noContainer>{page?.title}</PageTitle>
+            <PageTitle>{page?.title}</PageTitle>
 
             {logged && (
-              <Tooltip content="Editar página" placement="left">
-                <IconButton
-                  icon={FiEdit3}
-                  variant="secondary"
-                  onClick={() => push(`/pages/${page?.slug}/edit`)}
+              <Flex gap="md" align="center">
+                <FiBookmark
+                  size={24}
+                  color={theme.colors.neutral_200}
+                  style={{ cursor: "pointer", marginTop: "2px" }}
                 />
-              </Tooltip>
+
+                <FiEdit
+                  onClick={() => push(`/pages/${page?.slug}/edit`)}
+                  size={24}
+                  color={theme.colors.neutral_200}
+                  style={{ cursor: "pointer" }}
+                />
+              </Flex>
             )}
           </Flex>
 
-          <Flex gap="lg" direction="column">
+          <Flex
+            gap="lg"
+            direction="column"
+            height="fit-parent"
+            justify="space-between"
+          >
             <Flex gap="xs" direction="column">
-              <p>
-                <strong>Criada em:</strong>{" "}
-                {moment(page?.createdAt).format("DD/MM/yyyy, h:mm")}
-              </p>
+              <Flex align="center" gap="xs">
+                <FiCalendar color={theme.colors.neutral_200} />
 
-              <p>
-                <strong>Última edição:</strong>{" "}
-                {moment(page?.updatedAt).format("DD/MM/yyyy, h:mm")}
-              </p>
+                <p style={{ fontWeight: 500, color: theme.colors.neutral_100 }}>
+                  Criada em:
+                </p>
+
+                <p style={{ fontWeight: 500, color: theme.colors.neutral_200 }}>
+                  {moment(page?.createdAt).format("DD/MM/yyyy, h:mm")}
+                </p>
+              </Flex>
+
+              <Flex align="center" gap="xs">
+                <FiCalendar color={theme.colors.neutral_200} />
+
+                <p style={{ fontWeight: 500, color: theme.colors.neutral_100 }}>
+                  Última edição:
+                </p>
+
+                <p style={{ fontWeight: 500, color: theme.colors.neutral_200 }}>
+                  {moment(page?.updatedAt).format("DD/MM/yyyy, h:mm")}
+                </p>
+              </Flex>
             </Flex>
 
             <Flex gap="sm" style={{ flexWrap: "wrap" }}>
               {page?.categories.map((category) => (
-                <Badge>{category.title}</Badge>
+                <Badge key={category.title}>{category.title}</Badge>
               ))}
             </Flex>
           </Flex>

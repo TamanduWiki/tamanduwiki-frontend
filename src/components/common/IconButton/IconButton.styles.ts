@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 import { theme } from "@/styles/theme";
 
-export type IconButtonVariant = "primary" | "secondary" | "warning" | "info";
+export type IconButtonVariant = "primary" | "secondary" | "tertiary";
 
 interface StyledButtonProps {
   variant: IconButtonVariant;
@@ -12,19 +12,17 @@ interface StyledButtonProps {
 
 const variantStyles = {
   primary: css`
-    background: ${theme.colors.primary};
+    background: ${theme.colors.green_500};
     color: ${theme.colors.neutral_100};
   `,
   secondary: css`
-    background: ${theme.colors.neutral_200};
+    background: transparent;
+    border: 1px solid ${theme.colors.neutral_300};
+    color: ${theme.colors.neutral_200};
   `,
-  warning: css`
-    background: ${theme.colors.error};
-    color: ${theme.colors.neutral_100};
-  `,
-  info: css`
-    background: ${theme.colors.info};
-    color: ${theme.colors.neutral_100};
+  tertiary: css`
+    background: transparent;
+    color: ${theme.colors.neutral_200};
   `,
 };
 

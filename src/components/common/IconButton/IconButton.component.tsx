@@ -3,7 +3,7 @@ import { IconButtonVariant, StyledButton } from "./IconButton.styles";
 
 interface Props {
   icon: IconType;
-  variant: IconButtonVariant;
+  variant?: IconButtonVariant;
   size?: "lg" | "md" | "sm";
   onClick?: () => void | Promise<any>;
 }
@@ -21,7 +21,7 @@ const IconButton = ({
       size={size}
       onClick={onClick}
     >
-      <Icon size={20} />
+      <Icon size={24} />
     </StyledButton>
   );
 };

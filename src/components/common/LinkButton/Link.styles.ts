@@ -8,8 +8,8 @@ interface LinkButtonProps {
 const LinkButton = styled(Link)<LinkButtonProps>`
   color: ${({ theme, variant }) =>
     !variant || variant === "primary"
-      ? theme.colors.primary
-      : theme.colors.neutral_700};
+      ? theme.colors.neutral_200
+      : theme.colors.neutral_300};
 `;
 
 export default LinkButton;

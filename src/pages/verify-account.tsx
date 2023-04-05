@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import { apiConfirmAccount } from "@/api";
 
 import SimplePageLayout from "@/components/layouts/SimplePageLayout";
+import { FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { theme } from "@/styles/theme";
 
 const VerifyAccountPage = () => {
   const {
@@ -17,10 +19,13 @@ const VerifyAccountPage = () => {
       await apiConfirmAccount(token);
 
       toast.success(
-        "Conta confirmada com successo! Você pode fazer login agora :)"
+        "Conta confirmada com successo! Você pode fazer login agora :)",
+        { icon: <FiCheckCircle size={24} color={theme.colors.green_400} /> }
       );
     } catch {
-      toast.error("Houve um erro ao confirmar sua conta...");
+      toast.error("Houve um erro ao confirmar sua conta...", {
+        icon: <FiXCircle size={24} color={theme.colors.error} />,
+      });
     } finally {
       push("/login");
     }
@@ -35,7 +40,7 @@ const VerifyAccountPage = () => {
   return (
     <SimplePageLayout
       pageHead="Verificando Conta - UFABCwiki"
-      bottomLink={{ href: "/login", label: "Voltar para página de login" }}
+      bottomLinks={[{ href: "/login", label: "Voltar para página de login" }]}
     >
       <p>Verificando conta, aguarde alguns segundos...</p>
     </SimplePageLayout>

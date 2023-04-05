@@ -10,9 +10,9 @@ export const MainContainer = styled.div`
   min-width: 100%;
   width: 100%;
 
-  background-color: ${({ theme }) => theme.colors.neutral_100};
+  background-color: ${({ theme }) => theme.colors.neutral_400};
 
-  @media (max-width: 540px) {
+  @media (max-width: 538px) {
     padding: ${({ theme }) => theme.spacing.md};
   }
 `;

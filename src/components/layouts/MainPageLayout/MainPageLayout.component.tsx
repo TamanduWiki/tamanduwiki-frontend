@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useContext, useEffect, useState } from "react";
 import {
-  FiArrowLeft,
-  FiArrowRight,
+  FiArrowLeftCircle,
+  FiArrowRightCircle,
   FiBookmark,
   FiFeather,
   FiFilePlus,
@@ -19,9 +19,6 @@ import {
   FiUserPlus,
   FiX,
 } from "react-icons/fi";
-
-import logoImg from "@/assets/images/logo.svg";
-import loadingImg from "@/assets/animated/loading_balls_black.svg";
 
 import { AuthContext } from "@/contexts/auth/authContext";
 
@@ -51,7 +48,7 @@ import {
   FullHeightContainer,
   LoadingTitle,
   HamburguerMenuContainer,
-  CollapseSidebarButtonContainer,
+  HeaderFiltersContainer,
 } from "./MainPageLayout.styles";
 import { parseCookies, setCookie } from "nookies";
 
@@ -103,18 +100,11 @@ const SecondaryNavigation = ({
   collapsed?: boolean;
   mobile?: boolean;
 }) => {
-  const router = useRouter();
   const { logged, handleLogout } = useContext(AuthContext);
 
   if (logged)
     return (
       <>
-        {!collapsed && !mobile && (
-          <Flex justify="center" align="center" width="fit-parent">
-            <ProfilePic onClick={() => router.push("/profile")} />
-          </Flex>
-        )}
-
         <SidebarNavLink
           href="/profile"
           icon={FiUser}
@@ -125,7 +115,7 @@ const SecondaryNavigation = ({
         <SidebarNavLink
           href="/contributions"
           icon={FiFilePlus}
-          label="Minhas contribuições"
+          label="Contribuições"
           smaller={collapsed}
         />
 
@@ -176,37 +166,42 @@ const MainSubmenu = ({
       {!collapsed && <Backdrop />}
 
       <SubmenuContainer collapsed={collapsed}>
-        <SubmenuInputContainer>
-          <Input
-            fluid
-            name="search"
-            placeholder="Pesquisar..."
-            onChange={(event) => setSearch(event.target.value)}
-            value={search}
-            style={{ height: "40px", width: "100%" }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSearch(search);
-            }}
-          />
+        <Flex direction="column" gap="md" padding="md">
+          <SubmenuInputContainer>
+            <Input
+              fluid
+              name="search"
+              placeholder="Pesquisar..."
+              onChange={(event) => setSearch(event.target.value)}
+              value={search}
+              style={{ height: "40px", width: "100%" }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSearch(search);
+              }}
+            />
 
-          <IconButton
-            icon={FiSearch}
-            size="md"
-            variant="secondary"
-            onClick={() => {
-              handleSearch(search);
-              onClose();
-            }}
-          />
-        </SubmenuInputContainer>
+            <IconButton
+              icon={FiSearch}
+              size="md"
+              onClick={() => {
+                handleSearch(search);
+                onClose();
+              }}
+            />
+          </SubmenuInputContainer>
 
-        <SubmenuSubcontainer>
+          {/* Not implemented yet */}
+
+          {/* <Button variant="secondary" fluid>
+            Selecionar filtros
+          </Button> */}
+        </Flex>
+
+        <Flex direction="column" gap="md" padding="md">
           <PrimaryNavigation />
-        </SubmenuSubcontainer>
 
-        <SubmenuSubcontainer style={{ paddingTop: 0 }}>
           <SecondaryNavigation mobile />
-        </SubmenuSubcontainer>
+        </Flex>
       </SubmenuContainer>
     </>
   );
@@ -235,6 +230,7 @@ const MainPageLayout = ({
   const handleSearch = useCallback(async (searchParam: string) => {
     if (pathname?.length > 1) {
       await push(`/?searchPage=${searchParam}`);
+
       return;
     }
 
@@ -260,12 +256,12 @@ const MainPageLayout = ({
       <PageContainer>
         <MainHeaderContainer>
           <MainHeader>
-            <Link href="/">
+            <Link href="/" style={{ gridArea: "logo", marginLeft: "16px" }}>
               <Image
-                src={logoImg as string}
+                src="/images/ufabcwiki_logotipo_white.svg"
                 alt="logo"
-                width={264}
-                height={38}
+                width={140}
+                height={24}
               />
             </Link>
 
@@ -282,17 +278,22 @@ const MainPageLayout = ({
                 }}
               />
 
-              <Button
-                size="md"
-                variant="secondary"
+              <IconButton
+                variant="primary"
                 onClick={() => handleSearch(search)}
-              >
-                <FiSearch style={{ marginRight: "8px" }} />
-                Pesquisar
-              </Button>
+                icon={FiSearch}
+              />
             </HeaderInputContainer>
 
-            <HamburguerMenuContainer>
+            {/* Not implemented yet */}
+
+            {/* <HeaderFiltersContainer>
+              <Button variant="secondary" fluid>
+                Selecionar filtros
+              </Button>
+            </HeaderFiltersContainer> */}
+
+            <HamburguerMenuContainer style={{ gridArea: "menu" }}>
               <IconButton
                 size="md"
                 variant="secondary"
@@ -324,25 +325,20 @@ const MainPageLayout = ({
                 </SideMenuSection>
               </div>
 
-              <SideMenuSection collapsed>
-                <CollapseSidebarButtonContainer>
-                  <SidebarNavBtn
-                    smaller
-                    icon={sidebarCollapsed ? FiArrowRight : FiArrowLeft}
-                    label={
-                      sidebarCollapsed
-                        ? "Descolapsar barra lateral"
-                        : "Colapsar barra lateral"
-                    }
-                    onClick={() =>
-                      setSidebarCollapsed((prev) => {
-                        setCookie(null, "sidebarCollapsed", (!prev).toString());
+              <SideMenuSection collapsed={sidebarCollapsed}>
+                <SidebarNavBtn
+                  smaller={sidebarCollapsed}
+                  icon={
+                    sidebarCollapsed ? FiArrowRightCircle : FiArrowLeftCircle
+                  }
+                  onClick={() =>
+                    setSidebarCollapsed((prev) => {
+                      setCookie(null, "sidebarCollapsed", (!prev).toString());
 
-                        return !prev;
-                      })
-                    }
-                  />
-                </CollapseSidebarButtonContainer>
+                      return !prev;
+                    })
+                  }
+                />
               </SideMenuSection>
             </SideSection>
 
@@ -351,17 +347,18 @@ const MainPageLayout = ({
                 {loading || noContent ? (
                   <FullHeightContainer>
                     {loading ? (
-                      <>
+                      <Flex direction="column" gap="sm" align="center">
                         <Image
-                          src={loadingImg as string}
+                          src="/images/loading_gears_n_500.svg"
                           alt="loading_img"
                           width={48}
+                          height={48}
                         />
 
                         <LoadingTitle>
                           {loadingText || "Carregando"}
                         </LoadingTitle>
-                      </>
+                      </Flex>
                     ) : (
                       <>{noContent && <strong>{noContentText}</strong>}</>
                     )}

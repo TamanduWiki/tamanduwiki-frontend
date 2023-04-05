@@ -1,30 +1,22 @@
 import { Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
-import AsyncSelect from "react-select/async";
-import remarkGfm from "remark-gfm";
-import ReactMarkdown from "react-markdown";
+import { FiCheckCircle } from "react-icons/fi";
 
 import { apiCreatePage, apiListCategories, apiUpdatePage } from "@/api";
 
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
-import TextareaInput from "@/components/common/TextareaInput";
-import MarkdownContainer from "@/components/common/MarkdownContainer";
+import MarkdownTextarea from "@/components/common/MakdownTextarea";
+import ImageInput from "@/components/common/ImageInput";
+import TagPicker from "@/components/common/TagPicker";
+
+import { theme } from "@/styles/theme";
 
 import { handleError } from "@/utils";
 
-import {
-  ButtonsContainer,
-  Container,
-  EditContentContainer,
-  ImageContainer,
-  ImageInputContainer,
-  PreviewSection,
-  PreviewSectionContainer,
-  StyledForm,
-} from "./PageForm.styles";
+import { ButtonsContainer, StyledForm } from "./PageForm.styles";
 import { schema } from "./PageForm.validations";
 
 interface Values {
@@ -74,8 +66,6 @@ const PageForm = ({ currentPage }: Props) => {
   const router = useRouter();
 
   const [image, setImage] = useState<File | undefined>();
-  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | undefined>();
-  const [previewMd, setPreviewMd] = useState(false);
 
   const onSubmit = async (
     values: Values,
@@ -92,7 +82,9 @@ const PageForm = ({ currentPage }: Props) => {
           imageFileType: imageBase64 ? "png" : undefined, // TODO rever isso (só png)
         });
 
-        toast.success("Página editada com sucesso");
+        toast.success("Página editada com sucesso", {
+          icon: <FiCheckCircle size={24} color={theme.colors.green_400} />,
+        });
 
         await router.push(`/pages/${currentPage?.slug}`);
       } else {
@@ -102,7 +94,9 @@ const PageForm = ({ currentPage }: Props) => {
           imageFileType: "png", // TODO rever isso
         });
 
-        toast.success("Página criada com sucesso");
+        toast.success("Página criada com sucesso", {
+          icon: <FiCheckCircle size={24} color={theme.colors.green_400} />,
+        });
 
         await router.push(`/pages/${data.slug}`);
       }
@@ -127,26 +121,6 @@ const PageForm = ({ currentPage }: Props) => {
     return options;
   };
 
-  // create a preview as a side effect, whenever selected file is changed
-  useEffect(() => {
-    if (!image) {
-      setImagePreviewUrl(undefined);
-      return;
-    }
-
-    const objectUrl = URL.createObjectURL(image);
-    setImagePreviewUrl(objectUrl);
-
-    // free memory whenever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [image]);
-
-  useEffect(() => {
-    if (!!currentPage?.imageUrl) {
-      setImagePreviewUrl(`${currentPage?.imageUrl}?lastmod=${currentPage?.updatedAt}`);
-    }
-  }, [currentPage]);
-
   return (
     <Formik
       initialValues={{
@@ -159,7 +133,7 @@ const PageForm = ({ currentPage }: Props) => {
       onSubmit={onSubmit}
       validationSchema={schema}
     >
-      {({ isSubmitting, setFieldValue, values }) => (
+      {({ isSubmitting, setFieldValue }) => (
         <StyledForm>
           <Input
             fluid
@@ -178,73 +152,35 @@ const PageForm = ({ currentPage }: Props) => {
             disabled={!!currentPage}
           />
 
-          <Container>
-            Categorias
-            <AsyncSelect
-              name="categoriesTitles"
-              isMulti
-              cacheOptions
-              defaultOptions
-              loadOptions={loadCategoriesOptions}
-              onChange={(newValues) =>
-                setFieldValue(
-                  "categoriesTitles",
-                  newValues.map(({ value }) => value)
-                )
-              }
-              defaultValue={currentPage?.categories.map((category) => ({
-                label: category.title,
-                value: category.title,
-              }))}
-            />
-          </Container>
+          <TagPicker
+            label="Categorias"
+            name="categoriesTitles"
+            loadOptions={loadCategoriesOptions}
+            onChange={(newValues) =>
+              setFieldValue(
+                "categoriesTitles",
+                newValues.map(({ value }) => value)
+              )
+            }
+            defaultValue={currentPage?.categories.map((category) => ({
+              label: category.title,
+              value: category.title,
+            }))}
+          />
 
-          <Container>
-            Imagem da página
-            <ImageInputContainer>
-              <input
-                type="file"
-                name="image"
-                onChange={(event) => setImage(event.currentTarget.files[0])}
-                style={{ width: "100%" }}
-              />
+          <ImageInput
+            initialPreviewUrl={
+              !!currentPage?.imageUrl &&
+              `${currentPage?.imageUrl}?lastmod=${currentPage?.updatedAt}`
+            }
+            image={image}
+            setImage={setImage}
+          />
 
-              {imagePreviewUrl && <ImageContainer url={imagePreviewUrl} />}
-            </ImageInputContainer>
-          </Container>
-
-          <EditContentContainer previewActive={previewMd}>
-            <TextareaInput
-              fluid
-              name="content"
-              label="Conteúdo"
-              placeholder="Ex.: A expressão Lorem ipsum em design gráfico e editoração é um texto padrão em latim utilizado na produção gráfica para preencher os espaços de texto em publicações para testar e ajustar aspectos visuais antes de utilizar conteúdo real..."
-              formikField
-            />
-
-            {previewMd && (
-              <PreviewSectionContainer>
-                <p>Preview</p>
-
-                <PreviewSection>
-                  <MarkdownContainer>
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                      {values?.content}
-                    </ReactMarkdown>
-                  </MarkdownContainer>
-                </PreviewSection>
-              </PreviewSectionContainer>
-            )}
-          </EditContentContainer>
-
-          <Button
-            type="button"
-            variant="secondary"
-            size="md"
-            onClick={() => setPreviewMd((prev) => !prev)}
-          >
-            {previewMd ? "Fechar preview" : "Preview markdown"}
-          </Button>
+          <MarkdownTextarea
+            name="content"
+            placeholder="Ex.: A expressão Lorem ipsum em design gráfico e editoração é um texto padrão em latim utilizado na produção gráfica para preencher os espaços de texto em publicações para testar e ajustar aspectos visuais antes de utilizar conteúdo real..."
+          />
 
           <ButtonsContainer>
             <Button

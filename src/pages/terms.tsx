@@ -1,10 +1,10 @@
 import SimplePageLayout from "@/components/layouts/SimplePageLayout";
 import PageUnderDevelopment from "@/components/common/PageUnderDevelopment";
 
-const PrivacyPage = () => {
+const TermsPage = () => {
   return (
     <SimplePageLayout
-      pageHead="Privacidade - UFABCwiki"
+      pageHead="Termos - UFABCwiki"
       bottomLinks={[{ href: "/", label: "Voltar ao início" }]}
     >
       <PageUnderDevelopment />
@@ -12,4 +12,4 @@ const PrivacyPage = () => {
   );
 };
 
-export default PrivacyPage;
+export default TermsPage;

@@ -10,8 +10,15 @@ import Input from "@/components/common/Input";
 import { handleError } from "@/utils";
 
 import PasswordStrengthMeter from "./PasswordStrengthMeter";
-import { StyledForm } from "./SignupForm.styles";
+import {
+  ButtonsContainer,
+  NameInputsContainer,
+  StyledForm,
+} from "./SignupForm.styles";
 import { schema } from "./SignupForm.validations";
+import Flex from "@/components/common/Flex";
+import { FiCheckCircle } from "react-icons/fi";
+import { theme } from "@/styles/theme";
 
 interface Values {
   email: string;
@@ -37,7 +44,10 @@ const SignupForm = () => {
     try {
       await apiSignup({ ...values, universityTie: "student" });
 
-      toast.success("Usuário criado com sucesso, por favor verifique seu e-mail para confirmar a conta.");
+      toast.success(
+        "Usuário criado com sucesso, por favor verifique seu e-mail para confirmar a conta.",
+        { icon: <FiCheckCircle size={24} color={theme.colors.green_400} /> }
+      );
 
       await router.push("/login");
     } catch (error) {
@@ -55,48 +65,64 @@ const SignupForm = () => {
     >
       {({ isSubmitting, values }) => (
         <StyledForm>
-          <Input
-            fluid
-            name="firstName"
-            label="Nome"
-            placeholder="Ex.: João"
-            formikField
-          />
+          <Flex gap="md" direction="column">
+            <NameInputsContainer>
+              <Input
+                fluid
+                name="firstName"
+                label="Nome"
+                placeholder="Ex.: João"
+                formikField
+              />
 
-          <Input
-            fluid
-            name="lastName"
-            label="Sobrenome"
-            placeholder="Ex.: Silva Carvalho"
-            formikField
-          />
+              <Input
+                fluid
+                name="lastName"
+                label="Sobrenome"
+                placeholder="Ex.: Silva Carvalho"
+                formikField
+              />
+            </NameInputsContainer>
 
-          <Input
-            fluid
-            name="email"
-            label="E-mail"
-            placeholder="Ex.: exemplo@aluno.ufabc.edu.br"
-            formikField
-          />
+            <Input
+              fluid
+              name="email"
+              label="E-mail"
+              placeholder="Ex.: exemplo@aluno.ufabc.edu.br"
+              formikField
+            />
 
-          <Input
-            fluid
-            name="password"
-            label="Senha"
-            placeholder="Ex.: bvsdUg0234$%"
-            formikField
-          />
+            <Input
+              fluid
+              name="password"
+              label="Senha"
+              placeholder="Ex.: bvsdUg0234$%"
+              formikField
+            />
 
-          <PasswordStrengthMeter password={values.password} />
+            <PasswordStrengthMeter password={values.password} />
+          </Flex>
 
-          <Button
-            fluid
-            type="submit"
-            disabled={isSubmitting}
-            loading={isSubmitting}
-          >
-            Criar Conta
-          </Button>
+          <ButtonsContainer>
+            <Button
+              fluid
+              type="button"
+              disabled={isSubmitting}
+              variant="secondary"
+              href="/login"
+            >
+              Voltar
+            </Button>
+
+            <Button
+              fluid
+              type="submit"
+              disabled={isSubmitting}
+              loading={isSubmitting}
+            >
+              Criar Conta
+            </Button>
+          </ButtonsContainer>
         </StyledForm>
       )}
     </Formik>

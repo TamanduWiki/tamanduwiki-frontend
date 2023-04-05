@@ -14,6 +14,9 @@ import { handleError } from "@/utils";
 
 import { StyledForm } from "./LoginForm.styles";
 import { schema } from "./LoginForm.validations";
+import Flex from "@/components/common/Flex";
+import { FiCheckCircle } from "react-icons/fi";
+import { theme } from "@/styles/theme";
 
 interface Values {
   email: string;
@@ -42,7 +45,9 @@ const LoginForm = ({ destinationAfterLogin }: Props) => {
 
       handleLogin({ token });
 
-      toast.success("Login realizado com sucesso");
+      toast.success("Login realizado com sucesso", {
+        icon: <FiCheckCircle size={24} color={theme.colors.green_400} />,
+      });
 
       await router.push(destinationAfterLogin || "/");
     } catch (error) {
@@ -53,37 +58,42 @@ const LoginForm = ({ destinationAfterLogin }: Props) => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={onSubmit}
-      validationSchema={schema}
-    >
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({ isSubmitting }) => (
         <StyledForm>
-          <Input
-            fluid
-            name="email"
-            label="E-mail"
-            placeholder="Ex.: exemplo@aluno.ufabc.edu.br"
-            formikField
-          />
+          <Flex direction="column" gap="md">
+            <Input
+              fluid
+              name="email"
+              label="E-mail"
+              placeholder="Ex.: exemplo@aluno.ufabc..."
+              formikField
+            />
 
-          <Input
-            fluid
-            name="password"
-            label="Senha"
-            placeholder="Ex.: bvsdug0234$%"
-            formikField
-          />
+            <Input
+              fluid
+              name="password"
+              label="Senha"
+              placeholder="Ex.: bvsdug0234$%"
+              formikField
+              type="password"
+            />
+          </Flex>
 
-          <Button
-            fluid
-            type="submit"
-            disabled={isSubmitting}
-            loading={isSubmitting}
-          >
-            Fazer Login
-          </Button>
+          <Flex direction="column" gap="md">
+            <Button
+              fluid
+              type="submit"
+              disabled={isSubmitting}
+              loading={isSubmitting}
+            >
+              Entrar
+            </Button>
+
+            <Button variant="secondary" fluid type="button" href="/signup">
+              Cadastro
+            </Button>
+          </Flex>
         </StyledForm>
       )}
     </Formik>

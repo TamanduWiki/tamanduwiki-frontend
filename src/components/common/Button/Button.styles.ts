@@ -2,39 +2,44 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 import { theme } from "@/styles/theme";
+import Image from "next/image";
 
-export type ButtonVariant = "primary" | "secondary" | "tertiary" | "warning";
+export type ButtonVariant = "primary" | "secondary";
 
 interface StyledButtonProps {
   variant: ButtonVariant;
   fluid?: boolean;
-  size?: "lg" | "md";
 }
 
 const variantStyles = {
   primary: css`
-    background: ${theme.colors.primary};
+    background: ${theme.colors.green_500};
     color: ${theme.colors.neutral_100};
+
+    &:hover {
+      background: ${theme.colors.green_400};
+    }
+
+    &:active {
+      background: ${theme.colors.green_500};
+    }
   `,
   secondary: css`
-    background: ${theme.colors.neutral_200};
-  `,
-  tertiary: css`
     background: transparent;
-    color: ${theme.colors.primary};
-    padding: 0;
-    min-height: auto;
-    max-height: auto;
-  `,
-  warning: css`
-    background: ${theme.colors.error};
-    color: ${theme.colors.neutral_100};
+    border: 1px solid ${theme.colors.neutral_300};
+    color: ${theme.colors.neutral_200};
+
+    &:active {
+      border: 1px solid ${theme.colors.neutral_400};
+      color: ${theme.colors.neutral_300};
+    }
   `,
 };
 
 export const StyledButton = styled.button<StyledButtonProps>`
   display: flex;
   align-items: center;
+  box-sizing: border-box;
   justify-content: center;
   gap: ${({ theme }) => theme.spacing.xxs};
   padding: 0 ${({ theme }) => theme.spacing.md};
@@ -43,16 +48,22 @@ export const StyledButton = styled.button<StyledButtonProps>`
   transition: all 0.05s;
   line-height: 1;
   position: relative;
-  min-height: ${({ size }) => (size === "md" ? "40px" : "48px")};
-  max-height: ${({ size }) => (size === "md" ? "40px" : "48px")};
-
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
   white-space: nowrap;
+  min-height: 40px;
+  max-height: 40px;
+  font-weight: 600;
 
-  ${({ fluid }) =>
-    fluid &&
-    css`
-      width: 100%;
-    `};
+  ${({ fluid }) => fluid && "width: 100%"};
 
   ${({ variant }) => variantStyles[variant]};
+`;
+
+export const SpinnerImg = styled(Image)`
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 `;

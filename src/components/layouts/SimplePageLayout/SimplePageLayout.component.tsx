@@ -2,9 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
 
-import logoImg from "@/assets/images/logo.svg";
-
 import LinkButton from "@/components/common/LinkButton";
+import Flex from "@/components/common/Flex";
 
 import {
   Content,
@@ -14,11 +13,17 @@ import {
 
 interface Props {
   children: React.ReactNode;
-  bottomLink: { label: string; href: string };
+  bottomLinks: { label: string; href: string }[];
   pageHead: string;
+  contentSize?: "sm" | "md";
 }
 
-const SimplePageLayout = ({ children, bottomLink, pageHead }: Props) => {
+const SimplePageLayout = ({
+  children,
+  bottomLinks,
+  pageHead,
+  contentSize = "sm",
+}: Props) => {
   return (
     <>
       <Head>
@@ -28,14 +33,25 @@ const SimplePageLayout = ({ children, bottomLink, pageHead }: Props) => {
       <PageContainer>
         <Content>
           <Link href="/">
-            <Image src={logoImg as string} alt="logo" />
+            <Image
+              src="/images/ufabcwiki_logotipo_fullwhite.svg"
+              alt="logo"
+              width={180}
+              height={32}
+            />
           </Link>
 
-          <MainAreaContent>{children}</MainAreaContent>
+          <MainAreaContent contentSize={contentSize}>
+            {children}
+          </MainAreaContent>
 
-          <LinkButton variant="secondary" href={bottomLink.href}>
-            {bottomLink.label}
-          </LinkButton>
+          <Flex direction="column" gap="xs" align="center">
+            {bottomLinks.map((link) => (
+              <LinkButton variant="secondary" href={link.href}>
+                {link.label}
+              </LinkButton>
+            ))}
+          </Flex>
         </Content>
       </PageContainer>
     </>
