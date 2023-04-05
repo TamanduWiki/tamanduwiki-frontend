@@ -12,7 +12,7 @@ interface StyledButtonProps {
 
 const variantStyles = {
   primary: css`
-    background: ${theme.colors.primary};
+    background: ${theme.colors.green_500};
     color: ${theme.colors.neutral_100};
   `,
   secondary: css`

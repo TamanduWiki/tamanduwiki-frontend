@@ -53,6 +53,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   white-space: nowrap;
   min-height: 40px;
   max-height: 40px;
+  font-weight: 600;
 
   ${({ fluid }) => fluid && "width: 100%"};
 

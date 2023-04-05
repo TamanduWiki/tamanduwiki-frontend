@@ -76,6 +76,7 @@ const LoginForm = ({ destinationAfterLogin }: Props) => {
               label="Senha"
               placeholder="Ex.: bvsdug0234$%"
               formikField
+              type="password"
             />
           </Flex>
 

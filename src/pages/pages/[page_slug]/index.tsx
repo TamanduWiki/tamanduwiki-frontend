@@ -107,7 +107,7 @@ const PageViewPage = () => {
 
             <Flex gap="sm" style={{ flexWrap: "wrap" }}>
               {page?.categories.map((category) => (
-                <Badge>{category.title}</Badge>
+                <Badge key={category.title}>{category.title}</Badge>
               ))}
             </Flex>
           </Flex>
