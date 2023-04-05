@@ -6,14 +6,11 @@ import { apiGetUserInfo } from "@/api";
 
 import PageTitle from "@/components/common/PageTitle";
 import MainPageLayout from "@/components/layouts/MainPageLayout";
-import {
-  Banner,
-  Container,
-  PicContainer,
-  ProfilePic,
-} from "@/components/pages/profile";
+import { Container, ProfilePic } from "@/components/pages/profile";
 
 import { handleError, serverSideAuthCheck } from "@/utils";
+import Flex from "@/components/common/Flex";
+import { theme } from "@/styles/theme";
 
 interface IUser {
   id: string;
@@ -61,30 +58,49 @@ const ProfilePage = () => {
     >
       <PageTitle>Meu perfil</PageTitle>
 
-      <Banner />
-
       <Container>
-        <PicContainer>
-          <ProfilePic />
-        </PicContainer>
+        <ProfilePic />
 
-        <p>
-          <strong>Membro desde:</strong>{" "}
-          {moment(user?.createdAt).format("DD/MM/yyyy, h:mm")}
-        </p>
+        <Flex direction="column" gap="sm">
+          <Flex gap="xs">
+            <p style={{ fontWeight: 500, color: theme.colors.neutral_100 }}>
+              Membro desde:
+            </p>
 
-        <p>
-          <strong>Última atualização:</strong>{" "}
-          {moment(user?.updatedAt).format("DD/MM/yyyy, h:mm")}
-        </p>
+            <p style={{ fontWeight: 500, color: theme.colors.neutral_200 }}>
+              {moment(user?.createdAt).format("DD/MM/yyyy, h:mm")}
+            </p>
+          </Flex>
 
-        <p>
-          <strong>Nome:</strong> {`${user?.firstName} ${user?.lastName}`}
-        </p>
+          <Flex gap="xs">
+            <p style={{ fontWeight: 500, color: theme.colors.neutral_100 }}>
+              Última atualização:
+            </p>
 
-        <p>
-          <strong>E-mail:</strong> {user?.email}
-        </p>
+            <p style={{ fontWeight: 500, color: theme.colors.neutral_200 }}>
+              {moment(user?.updatedAt).format("DD/MM/yyyy, h:mm")}
+            </p>
+          </Flex>
+
+          <Flex gap="xs">
+            <p style={{ fontWeight: 500, color: theme.colors.neutral_100 }}>
+              Nome:
+            </p>
+
+            <p style={{ fontWeight: 500, color: theme.colors.neutral_200 }}>
+              {`${user?.firstName} ${user?.lastName}`}
+            </p>
+          </Flex>
+          <Flex gap="xs">
+            <p style={{ fontWeight: 500, color: theme.colors.neutral_100 }}>
+              E-mail:
+            </p>
+
+            <p style={{ fontWeight: 500, color: theme.colors.neutral_200 }}>
+              {user?.email}
+            </p>
+          </Flex>
+        </Flex>
       </Container>
     </MainPageLayout>
   );
