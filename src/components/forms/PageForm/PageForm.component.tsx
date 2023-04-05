@@ -2,7 +2,6 @@ import { Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import AsyncSelect from "react-select/async";
 import { FiCheckCircle } from "react-icons/fi";
 
 import { apiCreatePage, apiListCategories, apiUpdatePage } from "@/api";
@@ -11,13 +10,14 @@ import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import MarkdownTextarea from "@/components/common/MakdownTextarea";
 import ImageInput from "@/components/common/ImageInput";
+import TagPicker from "@/components/common/TagPicker";
+
+import { theme } from "@/styles/theme";
 
 import { handleError } from "@/utils";
 
-import { ButtonsContainer, Container, StyledForm } from "./PageForm.styles";
+import { ButtonsContainer, StyledForm } from "./PageForm.styles";
 import { schema } from "./PageForm.validations";
-
-import { theme } from "@/styles/theme";
 
 interface Values {
   title: string;
@@ -152,26 +152,21 @@ const PageForm = ({ currentPage }: Props) => {
             disabled={!!currentPage}
           />
 
-          <Container>
-            Categorias
-            <AsyncSelect
-              name="categoriesTitles"
-              isMulti
-              cacheOptions
-              defaultOptions
-              loadOptions={loadCategoriesOptions}
-              onChange={(newValues) =>
-                setFieldValue(
-                  "categoriesTitles",
-                  newValues.map(({ value }) => value)
-                )
-              }
-              defaultValue={currentPage?.categories.map((category) => ({
-                label: category.title,
-                value: category.title,
-              }))}
-            />
-          </Container>
+          <TagPicker
+            label="Categorias"
+            name="categoriesTitles"
+            loadOptions={loadCategoriesOptions}
+            onChange={(newValues) =>
+              setFieldValue(
+                "categoriesTitles",
+                newValues.map(({ value }) => value)
+              )
+            }
+            defaultValue={currentPage?.categories.map((category) => ({
+              label: category.title,
+              value: category.title,
+            }))}
+          />
 
           <ImageInput
             initialPreviewUrl={

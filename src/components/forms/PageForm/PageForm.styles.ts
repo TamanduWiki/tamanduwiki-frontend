@@ -18,9 +18,3 @@ export const ButtonsContainer = styled.div`
   gap: 16px;
   height: 100%;
 `;
-
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.xs};
-`;
