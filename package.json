@@ -1,8 +1,8 @@
 {
-  "name": "ufabcwiki-frontend",
+  "name": "tamanduwiki-frontend",
   "version": "1.0.0",
   "main": "index.ts",
-  "repository": "git@github.com:UFABCwiki/ufabcwiki-frontend.git",
+  "repository": "git@github.com:TamanduWiki/tamanduwiki-frontend.git",
   "author": "abacchi00 <andre.rossini.bacchi@gmail.com>",
   "license": "MIT",
   "scripts": {

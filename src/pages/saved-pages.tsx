@@ -7,7 +7,7 @@ import { serverSideAuthCheck } from "@/utils";
 
 const SavedPagesPage = () => {
   return (
-    <MainPageLayout pageHead="Páginas salvas - UFABCwiki">
+    <MainPageLayout pageHead="Páginas salvas - TamanduWiki">
       <PageUnderDevelopment />
     </MainPageLayout>
   );

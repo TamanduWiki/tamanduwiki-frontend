@@ -4,7 +4,7 @@ import PageUnderDevelopment from "@/components/common/PageUnderDevelopment";
 const TermsPage = () => {
   return (
     <SimplePageLayout
-      pageHead="Termos - UFABCwiki"
+      pageHead="Termos - TamanduWiki"
       bottomLinks={[{ href: "/", label: "Voltar ao início" }]}
     >
       <PageUnderDevelopment />

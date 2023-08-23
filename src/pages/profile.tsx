@@ -50,7 +50,7 @@ const ProfilePage = () => {
 
   return (
     <MainPageLayout
-      pageHead={`${pageHeadInitial} | UFABCwiki`}
+      pageHead={`${pageHeadInitial} | TamanduWiki`}
       noContent={!user}
       noContentText="Erro: Conteúdo inexistente"
       loading={loading}

@@ -7,7 +7,7 @@ const SignupPage = () => {
   return (
     <SimplePageLayout
       contentSize="md"
-      pageHead="Cadastro - UFABCwiki"
+      pageHead="Cadastro - TamanduWiki"
       bottomLinks={[
         { href: "/privacy", label: "Política de Privacidade" },
         { href: "/terms", label: "Termos de uso" },

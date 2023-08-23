@@ -25,7 +25,7 @@ const LoginPage = ({ destinationAfterLogin }: Props) => {
 
   return (
     <SimplePageLayout
-      pageHead="Login - UFABCwiki"
+      pageHead="Login - TamanduWiki"
       bottomLinks={[
         { href: "/privacy", label: "Política de Privacidade" },
         { href: "/terms", label: "Termos de uso" },

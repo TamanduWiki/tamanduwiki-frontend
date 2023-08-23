@@ -34,7 +34,7 @@ const SimplePageLayout = ({
         <Content>
           <Link href="/">
             <Image
-              src="/images/ufabcwiki_logotipo_fullwhite.svg"
+              src="/images/tamanduwiki_logotipo_fullwhite.svg"
               alt="logo"
               width={180}
               height={32}

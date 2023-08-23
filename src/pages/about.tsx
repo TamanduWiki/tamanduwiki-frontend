@@ -18,7 +18,7 @@ const BuildingBlocksImg = styled(Image)`
 
 const AboutPage = () => {
   return (
-    <MainPageLayout pageHead="Sobre - UFABCwiki">
+    <MainPageLayout pageHead="Sobre - TamanduWiki">
       <Flex
         height="fit-parent"
         align="center"

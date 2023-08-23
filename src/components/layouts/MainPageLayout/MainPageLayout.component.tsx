@@ -258,7 +258,7 @@ const MainPageLayout = ({
           <MainHeader>
             <Link href="/" style={{ gridArea: "logo", marginLeft: "16px" }}>
               <Image
-                src="/images/ufabcwiki_logotipo_white.svg"
+                src="/images/tamanduwiki_logotipo_white.svg"
                 alt="logo"
                 width={140}
                 height={24}

@@ -39,7 +39,7 @@ const VerifyAccountPage = () => {
 
   return (
     <SimplePageLayout
-      pageHead="Verificando Conta - UFABCwiki"
+      pageHead="Verificando Conta - TamanduWiki"
       bottomLinks={[{ href: "/login", label: "Voltar para página de login" }]}
     >
       <p>Verificando conta, aguarde alguns segundos...</p>

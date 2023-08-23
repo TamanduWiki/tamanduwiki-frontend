@@ -38,7 +38,7 @@ function App({ Component, pageProps }: AppProps) {
     <AuthProvider>
       <ThemeProvider theme={theme}>
         <Head>
-          <link rel="icon" href="/images/ufabcwiki_icon.ico" />
+          <link rel="icon" href="/images/tamanduwiki_icon.ico" />
         </Head>
 
         <Global styles={globalStyles} />

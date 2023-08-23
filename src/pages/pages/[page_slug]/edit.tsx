@@ -47,7 +47,7 @@ const PageEditionPage = () => {
   }, [handleGetPage, page_slug]);
 
   return (
-    <MainPageLayout pageHead="Criar Página - UFABCwiki" loading={loading}>
+    <MainPageLayout pageHead="Criar Página - TamanduWiki" loading={loading}>
       <PageTitle>Editar página</PageTitle>
 
       <MainContainer>

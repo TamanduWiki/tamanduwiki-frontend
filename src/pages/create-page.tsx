@@ -9,7 +9,7 @@ import { serverSideAuthCheck } from "@/utils";
 
 const PageCreationPage = () => {
   return (
-    <MainPageLayout pageHead="Criar Página - UFABCwiki">
+    <MainPageLayout pageHead="Criar Página - TamanduWiki">
       <PageTitle>Criar página</PageTitle>
 
       <MainContainer>

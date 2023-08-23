@@ -7,7 +7,7 @@ import PageUnderDevelopment from "@/components/common/PageUnderDevelopment";
 
 const ContributionsPage = () => {
   return (
-    <MainPageLayout pageHead="Minhas contribuições - UFABCwiki">
+    <MainPageLayout pageHead="Minhas contribuições - TamanduWiki">
       <PageUnderDevelopment />
     </MainPageLayout>
   );

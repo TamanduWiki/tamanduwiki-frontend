@@ -112,7 +112,7 @@ const HomePage = () => {
 
   return (
     <MainPageLayout
-      pageHead="UFABCwiki"
+      pageHead="TamanduWiki"
       onSearch={handleSearchPages}
       loading={somethingIsLoading}
       loadingText={loadingTitle}

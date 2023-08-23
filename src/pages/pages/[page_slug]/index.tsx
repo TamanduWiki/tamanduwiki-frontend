@@ -63,7 +63,7 @@ const PageViewPage = () => {
 
   return (
     <MainPageLayout
-      pageHead={`${page?.title || "Página desconhecida"} | UFABCwiki`}
+      pageHead={`${page?.title || "Página desconhecida"} | TamanduWiki`}
       noContent={!page}
       noContentText="Erro: Conteúdo inexistente"
       loading={loading}
